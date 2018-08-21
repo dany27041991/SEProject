@@ -51,4 +51,13 @@ public class User {
     @NotNull(message = "The course of study cannot be empty!")
     private int id_course_of_study;
 
+    public User(String name, String surname, String email, String password, int type, int id_course_of_study) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+        this.id_course_of_study = id_course_of_study;
+    }
+
 }
