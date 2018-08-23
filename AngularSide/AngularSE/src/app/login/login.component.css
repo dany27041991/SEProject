@@ -1,0 +1,12 @@
+.text-credential {
+  color:rgb(17, 22, 22);
+}
+
+.text-credential[_ngcontent-c3] {
+  color: rgb(17, 22, 22);
+  margin-bottom: -10px;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}

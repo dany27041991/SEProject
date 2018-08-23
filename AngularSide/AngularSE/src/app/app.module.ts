@@ -7,19 +7,27 @@ import {HttpClientModule} from '@angular/common/http';
 import {RoutingModuleModule} from './routing-module.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import {FormsModule} from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LoginComponent,
+    SignupComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     AngularFontAwesomeModule,
     HttpClientModule,
-    RoutingModuleModule
+    RoutingModuleModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
