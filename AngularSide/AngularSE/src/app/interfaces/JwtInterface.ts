@@ -1,4 +1,4 @@
 export interface JwtInterface {
-  access_token: string;
+  Jwt: string;
   expires_in: number;
 }

@@ -11,6 +11,8 @@ import {FormsModule} from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import {AuthService} from './services/auth.service';
+import {CookieService} from 'angular2-cookie/core';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     RoutingModuleModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

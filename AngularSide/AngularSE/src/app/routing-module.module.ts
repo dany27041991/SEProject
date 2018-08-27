@@ -1,18 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
+import {RouteGuardService} from './route-guard.service';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: ''
+    redirectTo: '',
+    pathMatch: 'full',
   }
 ]
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forRoot(routes)
   ],
-  declarations: []
+  declarations: [],
+  exports: [
+    RouterModule
+  ],
+  providers: [
+    RouteGuardService
+  ]
 })
 export class RoutingModuleModule { }

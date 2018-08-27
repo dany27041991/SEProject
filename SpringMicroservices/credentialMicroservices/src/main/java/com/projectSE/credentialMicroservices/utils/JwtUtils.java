@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class JwtUtils {
 
+    public static final int EXPIRES_IN = 2700*1000;
+
     //metodo usato per generare il JWT
     public static String generateJwt(String subject, Date date, String name, String scope) throws java.io.UnsupportedEncodingException {
         String jwt = Jwts.builder()
@@ -65,5 +67,4 @@ public class JwtUtils {
         }
         return jwt;
     }
-
 }
