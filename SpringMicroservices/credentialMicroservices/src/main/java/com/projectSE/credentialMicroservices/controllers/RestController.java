@@ -71,7 +71,6 @@ public class RestController {
                 userLogged.put("email", user.getEmail());
                 userLogged.put("type", user.getType());
                 userLogged.put("id_course_of_study", user.getId_course_of_study());
-                userLogged.put("token", jwt);
                 return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(new JsonResponseBody(HttpStatus.OK.value(), userLogged));
             }
         } catch (UserNotLoggedException exception1) {
