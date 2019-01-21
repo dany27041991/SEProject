@@ -1,4 +1,4 @@
-package com.projectSE.credentialMicroservices.entities;
+package com.projectSE.credentialMicroservices.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

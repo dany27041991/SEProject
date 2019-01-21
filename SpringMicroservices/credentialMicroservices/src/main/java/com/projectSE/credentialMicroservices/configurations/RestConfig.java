@@ -21,7 +21,7 @@ public class RestConfig {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
-        config.addExposedHeader("Access-Control-Max-Age");
+        config.addExposedHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE);
         config.addExposedHeader(HttpHeaders.AUTHORIZATION);
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);

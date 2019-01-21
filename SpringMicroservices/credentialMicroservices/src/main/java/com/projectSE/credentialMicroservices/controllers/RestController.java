@@ -1,10 +1,9 @@
 package com.projectSE.credentialMicroservices.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.projectSE.credentialMicroservices.entities.JsonResponseBody;
-import com.projectSE.credentialMicroservices.entities.LoginForm;
+import com.projectSE.credentialMicroservices.dtos.LoginForm;
 import com.projectSE.credentialMicroservices.entities.User;
 import com.projectSE.credentialMicroservices.exceptions.UserNotLoggedException;
 import com.projectSE.credentialMicroservices.services.LoginService;
@@ -17,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Optional;
@@ -54,7 +54,7 @@ public class RestController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<JsonResponseBody> logiUser(@RequestBody LoginForm loginForm) {
+    public ResponseEntity<JsonResponseBody> loginUser(@Valid @RequestBody LoginForm loginForm) {
         try {
             Optional<User> userr = loginService.getUserFromDbAndVerifyPassword(loginForm.getEmail(), loginForm.getPassword());
             if(userr.isPresent()) {
