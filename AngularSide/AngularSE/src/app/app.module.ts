@@ -5,14 +5,15 @@ import { AppComponent } from './app.component';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
 import {RoutingModuleModule} from './routing-module.module';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 import {FormsModule} from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import {AuthService} from './services/auth.service';
 import {CookieService} from 'angular2-cookie/core';
+import {CompareValidatorDirective} from './shared/compare-validator.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {CookieService} from 'angular2-cookie/core';
     FooterComponent,
     LoginComponent,
     SignupComponent,
-    NavbarComponent
+    NavbarComponent,
+    CompareValidatorDirective
   ],
   imports: [
     BrowserModule,
