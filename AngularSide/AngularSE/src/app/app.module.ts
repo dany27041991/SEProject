@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
 import {RoutingModuleModule} from './routing-module.module';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,7 +11,6 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {AuthService} from './services/auth.service';
-import {CookieService} from 'angular2-cookie/core';
 import {CompareValidatorDirective} from './shared/compare-validator.directive';
 
 @NgModule({
@@ -28,7 +26,6 @@ import {CompareValidatorDirective} from './shared/compare-validator.directive';
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
-    AngularFontAwesomeModule,
     HttpClientModule,
     RoutingModuleModule,
     FormsModule
