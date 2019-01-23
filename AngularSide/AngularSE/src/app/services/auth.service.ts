@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {User} from '../classes/User';
+import {User} from '../models/User';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Injectable()
