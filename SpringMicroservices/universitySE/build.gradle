@@ -10,10 +10,10 @@ buildscript {
 	}
 }
 
-/*plugins {
+plugins {
 	id 'org.akhikhl.gretty' version '2.0.0'
 	id "org.hibernate.gradle.tools" version "1.2.5"
-}*/
+}
 
 
 apply plugin: 'java'
@@ -33,11 +33,11 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	compileOnly 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	//compile 'org.hibernate:hibernate-core:5.2.13.Final'
+	compile 'org.hibernate:hibernate-core:5.2.13.Final'
 	compile group: 'javax.ejb', name: 'javax.ejb-api', version: '3.2'
 }
 
-/*import org.hibernate.gradle.tools.*
+import org.hibernate.gradle.tools.*
 
 database{
 	catalog =  [ "se_database": new Schema()]
@@ -48,4 +48,4 @@ database{
 	password = "root"
 	dialect = "org.hibernate.dialect.MySQLDialect"
 	driver = "org.gjt.mm.mysql.Driver"
-}*/
+}
