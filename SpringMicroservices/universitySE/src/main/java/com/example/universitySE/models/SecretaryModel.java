@@ -1,12 +1,13 @@
 package com.example.universitySE.models;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor @NoArgsConstructor
-public class PersonModel {
+public class SecretaryModel {
 
     @Getter @Setter
     private int id;
@@ -15,9 +16,12 @@ public class PersonModel {
     private String username;
 
     @Getter @Setter
-    private String password;
+    private int person_type;
 
     @Getter @Setter
-    private int person_type;
+    private int faculty;
+
+    @Getter @Setter
+    private String venue;
 
 }

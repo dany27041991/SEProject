@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor @NoArgsConstructor
-public class PersonModel {
+public class ProfessorModel {
 
     @Getter @Setter
     private int id;
@@ -15,9 +15,21 @@ public class PersonModel {
     private String username;
 
     @Getter @Setter
-    private String password;
+    private int person_type;
 
     @Getter @Setter
-    private int person_type;
+    private String firstname;
+
+    @Getter @Setter
+    private String lastname;
+
+    @Getter @Setter
+    private String biography;
+
+    @Getter @Setter
+    private String receptiontime;
+
+    @Getter @Setter
+    private int subject;
 
 }

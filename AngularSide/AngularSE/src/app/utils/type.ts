@@ -1,6 +1,5 @@
 export enum Type {
-  Nothing,
-  Student,
-  Professor,
-  Secretary
+  Secretary = 1,
+  Professor = 2,
+  Student = 3,
 }

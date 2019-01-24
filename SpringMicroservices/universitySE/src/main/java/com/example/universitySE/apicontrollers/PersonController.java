@@ -6,14 +6,14 @@ import com.example.universitySE.exceptions.ProblemConnectionDbException;
 import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.shared.JSONResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @RestController
 @RequestMapping("user")
@@ -22,11 +22,14 @@ public class PersonController {
     @Autowired
     LoginServiceInterface loginService;
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", headers = "Content-Type=application/json")
     public ResponseEntity<JSONResponseBody> loginUser(@Valid @RequestBody PersonLoginDTO personLoginDTO) {
         try {
-            loginService.getPersonAndVerifyPassword(personLoginDTO.getUsername(), personLoginDTO.getPassword());
-            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), "ok"));
+            String jwt = loginService.createJwt("TeamGM", new Date(), "Unisalento","PersonalUnisalento");
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set(HttpHeaders.AUTHORIZATION,jwt);
+            Object person = loginService.getPersonAndVerifyPassword(personLoginDTO.getUsername(), personLoginDTO.getPassword());
+            return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(new JSONResponseBody(HttpStatus.OK.value(), person));
         } catch (PersonNotLoggedInException personNotLoggedInException) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new JSONResponseBody(HttpStatus.UNAUTHORIZED.value(), personNotLoggedInException.getMessage()));
         } catch (ProblemConnectionDbException problemConnectionDbException) {
