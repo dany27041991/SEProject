@@ -52,4 +52,4 @@ database{
 	password = "root"
 	dialect = "org.hibernate.dialect.MySQLDialect"
 	driver = "org.gjt.mm.mysql.Driver"
-}*/
+}*/dss
