@@ -3,7 +3,7 @@
 !gradle/wrapper/gradle-wrapper.jar
 /src/main/java/com/example/universitySE/domain/
 /src/main/resources/
-*.gradle
+!build.gradle
 
 ### STS ###
 .apt_generated
