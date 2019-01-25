@@ -12,6 +12,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {AuthService} from './services/auth.service';
 import {CompareValidatorDirective} from './shared/compare-validator.directive';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {CompareValidatorDirective} from './shared/compare-validator.directive';
     LoginComponent,
     SignupComponent,
     NavbarComponent,
-    CompareValidatorDirective
+    CompareValidatorDirective,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

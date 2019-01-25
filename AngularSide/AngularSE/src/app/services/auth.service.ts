@@ -1,37 +1,74 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
-import {ResponseInterface} from '../interfaces/ResponseInterface';
+import { Type} from '../utils/type';
 
 @Injectable()
 export class AuthService {
   private isUserLogged = false;
   private APIAUTHURL = 'http://localhost:8090/';
   constructor(private http: HttpClient) {}
+
   isUserLoggedIn() {}
   login(username: string, password: string) {
-    console.log(username);
-    console.log(password)
     this.http.post(this.APIAUTHURL + 'user/login',
       {
         username: username,
         password: password
-      }
+      }, {observe: 'response'}
     ).subscribe(
-      (payload: ResponseInterface) => {
-        console.log(payload.server);
-        console.log(payload.response);
-        /* localStorage.setItem('user_id', payload.body.response.id_user);
-        localStorage.setItem('name', payload.body.response.name);
-        localStorage.setItem('surname', payload.body.response.surname);
-        localStorage.setItem('email', payload.body.response.email);
-        localStorage.setItem('type', payload.body.response.type);
-        localStorage.setItem('id_course_of_study', payload.body.response.id_course_of_study); */
-        // Cookie.set('token', payload.headers.get('Authorization'), Number(payload.headers.get('Access-Control-Max-Age')));
-        // this.isUserLogged = true;
+      (payload) => {
+        const token: string = payload.headers.get('Authorization');
+        Cookie.set('Jwt', token);
+        const personType: number = payload.body['response'].person_type;
+        switch (personType) {
+          case Type.Secretary: {
+            // console.log('Secretary')
+            localStorage.setItem('Secretary', JSON.stringify(payload.body['response']));
+            this.isUserLogged = true;
+            break;
+          }
+          case Type.Professor: {
+            // console.log('Professor')
+            localStorage.setItem('Professor', JSON.stringify(payload.body['response']));
+            this.isUserLogged = true;
+            break;
+          }
+          case Type.Student: {
+            // console.log('Student')
+            localStorage.setItem('Student', JSON.stringify(payload.body['response']));
+            this.isUserLogged = true;
+            break;
+          }
+          default: {
+            // console.log('Default')
+            break;
+          }
+        }
       }, (httpResp: HttpErrorResponse) => {
-        console.log(httpResp.error['response']);
-        console.log(httpResp.error['server']);
+        const errorCode: number = httpResp.error['server'];
+        switch (errorCode) {
+          case 401: {
+            console.log('Unauthorized');
+            console.log(httpResp.error['response']);
+            break;
+          }
+          case 404: {
+            console.log('Not Found');
+            console.log(httpResp.error['response']);
+            break;
+          }
+          case 403: {
+            console.log('Forbidden');
+            console.log(httpResp.error['response']);
+            break;
+          }
+          default: {
+            console.log('Default')
+            console.log(httpResp.error['response']);
+            break;
+          }
+        }
       }
     );
   }
