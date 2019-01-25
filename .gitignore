@@ -2,3 +2,5 @@
 /src/main/resources/
 *.gradle
 *.properties
+SpringMicroservices/universitySE/src/main/resources/application.properties
+SpringMicroservices/universitySE/build.gradle
