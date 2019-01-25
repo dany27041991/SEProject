@@ -1,9 +1,6 @@
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
-/SpringMicroservices/universitySE/src/main/java/com/example/universitySE/domain/
-/SpringMicroservices/universitySE/src/main/resources/
-/SpringMicroservices/universitySE/build.gradle
 
 ### STS ###
 .apt_generated
