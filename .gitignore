@@ -2,4 +2,4 @@
 
 /src/main/resources/
 
-!build.gradle
+.gradle
