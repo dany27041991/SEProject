@@ -1,6 +1,5 @@
-/src/main/java/com/example/universitySE/domain/
-/src/main/resources/
-*.gradle
-*.properties
+SpringMicroservices/universitySE/src/main/java/com/example/universitySE/domain/
+
 SpringMicroservices/universitySE/src/main/resources/application.properties
+
 SpringMicroservices/universitySE/build.gradle
