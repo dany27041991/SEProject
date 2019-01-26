@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {ResponseInterface} from '../../interfaces/ResponseInterface';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-exception-get-data',
@@ -13,9 +13,12 @@ export class ExceptionGetDataComponent implements OnInit {
   public code: string;
   public message: string;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.code = this.route.snapshot.paramMap.get('code');
     this.message = this.route.snapshot.paramMap.get('message');
+    setTimeout(() => {
+      this.router.navigate(['']);
+    }, 5000);
   }
 
   ngOnInit() {

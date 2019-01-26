@@ -14,6 +14,9 @@ import {AuthService} from './services/auth.service';
 import {CompareValidatorDirective} from './shared/compare-validator.directive';
 import { HomeComponent } from './components/home/home.component';
 import { ExceptionGetDataComponent } from './exceptions/exception-get-data/exception-get-data.component';
+import { StudentComponent } from './components/student/student.component';
+import { ProfessorComponent } from './components/professor/professor.component';
+import { SecretaryComponent } from './components/secretary/secretary.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { ExceptionGetDataComponent } from './exceptions/exception-get-data/excep
     NavbarComponent,
     CompareValidatorDirective,
     HomeComponent,
-    ExceptionGetDataComponent
+    ExceptionGetDataComponent,
+    StudentComponent,
+    ProfessorComponent,
+    SecretaryComponent
   ],
   imports: [
     BrowserModule,

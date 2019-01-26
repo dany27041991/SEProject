@@ -13,40 +13,12 @@ import {Cookie} from 'ng2-cookies/ng2-cookies';
 export class LoginComponent implements OnInit {
   @Input() checkLogin: boolean;
   constructor(private auth: AuthService, private router: Router) {
-    if (this.checkLogin) {
-      const personLogged = JSON.parse(localStorage.getItem('Person'));
-      switch (personLogged.person_type) {
-        case Type.Secretary: {
 
-          break;
-        }
-        case Type.Professor: {
-
-          break;
-        }
-        case Type.Student: {
-
-          break;
-        }
-        default: {
-          this.checkLogin = false;
-          localStorage.removeItem('Person');
-          Cookie.delete('Jwt');
-          break;
-        }
-      }
-    } else {
-      // console.log('no jwt');
-    }
   }
   ngOnInit(): void { }
 
   logOut() {
-    if (this.auth.logout()) {
-      setTimeout(() => {
-        this.router.navigate(['']);
-      }, 300);
-    }
+      this.auth.logout();
   }
   signIn(form: NgForm) {
     if (!form.valid) {

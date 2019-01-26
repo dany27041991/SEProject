@@ -26,7 +26,11 @@ export class AuthService {
       }, (httpResp: HttpErrorResponse) => {
         const errorBody: ResponseInterface = httpResp.error;
         this.isUserLogged.emit(false);
-        this.router.navigate(['error', {code: errorBody.server, message: errorBody.response}]);
+        if (errorBody.server !== undefined && errorBody.response !== undefined) {
+          this.router.navigate(['error', {code: errorBody.server, message: errorBody.response}]);
+        } else {
+          this.router.navigate(['error', {code: 500, message: 'Service not available. Try after!'}]);
+        }
       }
     );
   }

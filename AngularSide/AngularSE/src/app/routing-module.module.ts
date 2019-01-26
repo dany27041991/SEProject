@@ -4,6 +4,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {RouteGuardService} from './route-guard.service';
 import {HomeComponent} from './components/home/home.component';
 import {ExceptionGetDataComponent} from './exceptions/exception-get-data/exception-get-data.component';
+import {StudentComponent} from './components/student/student.component';
+import {ProfessorComponent} from './components/professor/professor.component';
+import {SecretaryComponent} from './components/secretary/secretary.component';
 
 const routes: Routes = [
   {
@@ -15,6 +18,18 @@ const routes: Routes = [
   {
     path: 'error',
     component: ExceptionGetDataComponent
+  },
+  {
+    path: 'user/student/:id',
+    component: StudentComponent
+  },
+  {
+    path: 'user/professor/:id',
+    component: ProfessorComponent
+  },
+  {
+    path: 'user/secretary/:id',
+    component: SecretaryComponent
   }
 ]
 
