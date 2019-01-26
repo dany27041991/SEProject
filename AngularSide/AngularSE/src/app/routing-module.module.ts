@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {RouteGuardService} from './route-guard.service';
+import {RouteGuardService} from './route-guard.service.guard';
 import {HomeComponent} from './components/home/home.component';
 import {ExceptionGetDataComponent} from './exceptions/exception-get-data/exception-get-data.component';
 import {StudentComponent} from './components/student/student.component';
@@ -21,15 +21,18 @@ const routes: Routes = [
   },
   {
     path: 'user/student/:id',
-    component: StudentComponent
+    component: StudentComponent,
+    canActivate: [RouteGuardService]
   },
   {
     path: 'user/professor/:id',
-    component: ProfessorComponent
+    component: ProfessorComponent,
+    canActivate: [RouteGuardService],
   },
   {
     path: 'user/secretary/:id',
-    component: SecretaryComponent
+    component: SecretaryComponent,
+    canActivate: [RouteGuardService]
   }
 ]
 

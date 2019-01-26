@@ -12,6 +12,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
   login(username: string, password: string) {
+    localStorage.clear();
+    Cookie.deleteAll('lochalost');
     this.http.post(this.APIAUTHURL + 'user/login',
       {
         username: username,
@@ -35,9 +37,9 @@ export class AuthService {
     );
   }
 
-  logout() {
-    localStorage.removeItem('Person');
-    Cookie.delete('Jwt');
+  logout() {localStorage.clear();
+    localStorage.clear();
+    Cookie.deleteAll('lochalost');
     this.isUserLogged.emit(false);
   }
 

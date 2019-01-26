@@ -3,6 +3,7 @@ import {AuthService} from '../../services/auth.service';
 import {Type} from '../../utils/type';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Router} from '@angular/router';
+import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
 
 @Component({
   selector: 'app-header',
@@ -26,14 +27,13 @@ export class HeaderComponent implements OnInit {
             break;
           }
           case Type.Student: {
-            console.log('student')
             router.navigate(['user/student/' + personLogged.id]);
             break;
           }
           default: {
             this.isLogged = false;
-            localStorage.removeItem('Person');
-            Cookie.delete('Jwt');
+            localStorage.clear();
+            Cookie.deleteAll();
             router.navigate(['']);
             break;
           }
@@ -42,6 +42,11 @@ export class HeaderComponent implements OnInit {
         router.navigate(['']);
       }
     });
+    if (!AccessToLocalStorage.getJwt()) {
+      this.isLogged = false;
+    } else {
+      this.isLogged = true;
+    }
   }
 
   ngOnInit() {
