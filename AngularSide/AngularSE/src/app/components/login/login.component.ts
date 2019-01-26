@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
@@ -36,11 +36,18 @@ export class LoginComponent implements OnInit {
         }
       }
     } else {
-      console.log('no jwt');
+      // console.log('no jwt');
     }
   }
   ngOnInit(): void { }
 
+  logOut() {
+    if (this.auth.logout()) {
+      setTimeout(() => {
+        this.router.navigate(['']);
+      }, 300);
+    }
+  }
   signIn(form: NgForm) {
     if (!form.valid) {
       return false;

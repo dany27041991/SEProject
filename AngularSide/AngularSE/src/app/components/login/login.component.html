@@ -34,6 +34,6 @@
 
 <ng-template #logout>
   <div class="form-group align-content-sm-center text-right">
-    <button [disabled]="!f.valid" class="btn btn-danger btn-sm" style="margin-right: 5px;">Logout</button>
+    <button class="btn btn-danger btn-sm" style="margin-right: 5px;" (click)="logOut()">Logout</button>
   </div>
 </ng-template>

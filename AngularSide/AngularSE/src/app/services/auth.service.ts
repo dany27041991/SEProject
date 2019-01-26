@@ -1,14 +1,16 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Cookie} from 'ng2-cookies/ng2-cookies';
+import {ResponseInterface} from '../interfaces/ResponseInterface';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
+
   private APIAUTHURL = 'http://localhost:8090/';
   @Output() public isUserLogged = new EventEmitter<boolean>();
-  constructor(private http: HttpClient) {}
 
-  isUserLoggedIn() {}
+  constructor(private http: HttpClient, private router: Router) {}
   login(username: string, password: string) {
     this.http.post(this.APIAUTHURL + 'user/login',
       {
@@ -22,21 +24,24 @@ export class AuthService {
         localStorage.setItem('Person', JSON.stringify(payload.body['response']));
         this.isUserLogged.emit(true);
       }, (httpResp: HttpErrorResponse) => {
-        console.log(httpResp);
+        const errorBody: ResponseInterface = httpResp.error;
         this.isUserLogged.emit(false);
+        this.router.navigate(['error', {code: errorBody.server, message: errorBody.response}]);
       }
     );
   }
-  signUp() {}
+
   logout() {
+    localStorage.removeItem('Person');
     Cookie.delete('Jwt');
-    return true;
+    this.isUserLogged.emit(false);
   }
+
   getUser(): Object {
-    const data = JSON.parse(localStorage.getItem('person'));
-    return null;
+    return JSON.parse(localStorage.getItem('Person'));
   }
+
   getToken() {
-    return localStorage.getItem('token');
+    return Cookie.get('Jwt');
   }
 }

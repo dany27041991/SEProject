@@ -13,6 +13,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import {AuthService} from './services/auth.service';
 import {CompareValidatorDirective} from './shared/compare-validator.directive';
 import { HomeComponent } from './components/home/home.component';
+import { ExceptionGetDataComponent } from './exceptions/exception-get-data/exception-get-data.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HomeComponent } from './components/home/home.component';
     SignupComponent,
     NavbarComponent,
     CompareValidatorDirective,
-    HomeComponent
+    HomeComponent,
+    ExceptionGetDataComponent
   ],
   imports: [
     BrowserModule,
