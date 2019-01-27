@@ -1,9 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
-import {Type} from '../../utils/type';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-login',

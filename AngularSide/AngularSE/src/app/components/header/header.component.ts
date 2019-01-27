@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Type} from '../../utils/type';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {Router} from '@angular/router';
-import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +11,9 @@ import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
 })
 export class HeaderComponent implements OnInit {
   public isLogged = false;
-  constructor(private auth: AuthService, private router: Router) {
+
+  constructor(private auth: AuthService, private router: Router, private cookie: CookieService) {
+    this.isLogged = false;
     this.auth.isUserLogged.subscribe((bool: boolean) => {
       this.isLogged = bool;
       if (this.isLogged) {
@@ -32,8 +33,6 @@ export class HeaderComponent implements OnInit {
           }
           default: {
             this.isLogged = false;
-            localStorage.clear();
-            Cookie.deleteAll();
             router.navigate(['']);
             break;
           }
@@ -42,11 +41,6 @@ export class HeaderComponent implements OnInit {
         router.navigate(['']);
       }
     });
-    if (!AccessToLocalStorage.getJwt()) {
-      this.isLogged = false;
-    } else {
-      this.isLogged = true;
-    }
   }
 
   ngOnInit() {

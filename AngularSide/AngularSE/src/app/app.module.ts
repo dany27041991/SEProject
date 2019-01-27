@@ -17,6 +17,7 @@ import { ExceptionGetDataComponent } from './exceptions/exception-get-data/excep
 import { StudentComponent } from './components/student/student.component';
 import { ProfessorComponent } from './components/professor/professor.component';
 import { SecretaryComponent } from './components/secretary/secretary.component';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { SecretaryComponent } from './components/secretary/secretary.component';
     RoutingModuleModule,
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

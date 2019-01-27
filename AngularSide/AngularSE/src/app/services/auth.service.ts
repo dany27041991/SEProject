@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Cookie} from 'ng2-cookies/ng2-cookies';
 import {ResponseInterface} from '../interfaces/ResponseInterface';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthService {
@@ -10,10 +10,8 @@ export class AuthService {
   private APIAUTHURL = 'http://localhost:8090/';
   @Output() public isUserLogged = new EventEmitter<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) {}
   login(username: string, password: string) {
-    localStorage.clear();
-    Cookie.deleteAll('lochalost');
     this.http.post(this.APIAUTHURL + 'user/login',
       {
         username: username,
@@ -22,7 +20,10 @@ export class AuthService {
     ).subscribe(
       (payload) => {
         const token: string = payload.headers.get('Authorization');
-        Cookie.set('Jwt', token);
+        const date = new Date();
+        const expiredDateCookie = date.setTime(date.getTime() + (1 * 60 * 1000));
+        console.log(expiredDateCookie);
+        this.cookie.set('Jwt', token, expiredDateCookie);
         localStorage.setItem('Person', JSON.stringify(payload.body['response']));
         this.isUserLogged.emit(true);
       }, (httpResp: HttpErrorResponse) => {
@@ -39,7 +40,7 @@ export class AuthService {
 
   logout() {localStorage.clear();
     localStorage.clear();
-    Cookie.deleteAll('lochalost');
+    this.cookie.deleteAll(null, 'localhost');
     this.isUserLogged.emit(false);
   }
 
@@ -48,6 +49,6 @@ export class AuthService {
   }
 
   getToken() {
-    return Cookie.get('Jwt');
+    return this.cookie.get('Jwt');
   }
 }
