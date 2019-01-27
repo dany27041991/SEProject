@@ -18,7 +18,7 @@ import { StudentComponent } from './components/student/student.component';
 import { ProfessorComponent } from './components/professor/professor.component';
 import { SecretaryComponent } from './components/secretary/secretary.component';
 import {CookieService} from 'ngx-cookie-service';
-import { NotificationComponent } from './components/notification/notification.component';
+import { ProfreportingComponent } from './components/profreporting/profreporting.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { NotificationComponent } from './components/notification/notification.co
     StudentComponent,
     ProfessorComponent,
     SecretaryComponent,
-    NotificationComponent
+    ProfreportingComponent
   ],
   imports: [
     BrowserModule,

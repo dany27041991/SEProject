@@ -16,7 +16,6 @@ export class NavbarComponent implements OnInit {
   @Input() public checkPerson: TypeLoggedInterface;
   public secretary = Type.Secretary;
   public professor = Type.Professor;
-  public id: number;
 
   constructor(private router: Router, private auth: AuthService, private cookie: CookieService) { }
 
@@ -28,16 +27,15 @@ export class NavbarComponent implements OnInit {
   }
 
   goToNotifications(): void {
-    console.log(this.auth.getUser()['id']);
-    if (this.id === Type.Professor) {
-      // this.router.navigate(['user/professor/' + this.id + '/notifications']);
+    if (AccessToLocalStorage.getTypePerson() === Type.Professor) {
+      this.router.navigate(['user/professor/' + AccessToLocalStorage.getUser()['id'] + '/profreporting']);
     }
   }
 
   goToUploadMaterial(): void {
-    console.log(this.auth.getUser()['id']);
-    if (this.id === Type.Professor) {
-      // this.router.navigate(['user/professor/' + this.auth.getUser()['id'] + '/upload']);
+    if (AccessToLocalStorage.getTypePerson() === Type.Professor) {
+      console.log('ok')
+      this.router.navigate(['user/professor/' + AccessToLocalStorage.getUser()['id'] + '/upload']);
     }
   }
 }

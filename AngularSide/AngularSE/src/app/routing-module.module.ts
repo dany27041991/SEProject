@@ -7,6 +7,7 @@ import {ExceptionGetDataComponent} from './exceptions/exception-get-data/excepti
 import {StudentComponent} from './components/student/student.component';
 import {ProfessorComponent} from './components/professor/professor.component';
 import {SecretaryComponent} from './components/secretary/secretary.component';
+import {ProfreportingComponent} from './components/profreporting/profreporting.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
   {
     path: 'user/secretary/:id',
     component: SecretaryComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/professor/:id/profreporting',
+    component: ProfreportingComponent,
     canActivate: [RouteGuardService]
   }
 ]

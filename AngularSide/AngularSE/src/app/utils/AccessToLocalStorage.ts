@@ -16,5 +16,9 @@ export class AccessToLocalStorage {
     }
     return false;
   }
+
+  public static getUser(): Object {
+    return JSON.parse(localStorage.getItem('Person'));
+  }
 }
 

@@ -43,10 +43,6 @@ export class AuthService {
     this.isUserLogged.emit(false);
   }
 
-  getUser(): Object {
-    return JSON.parse(localStorage.getItem('Person'));
-  }
-
   getToken() {
     return this.cookie.get('Jwt');
   }
