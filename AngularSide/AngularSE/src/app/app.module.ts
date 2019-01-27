@@ -18,6 +18,7 @@ import { StudentComponent } from './components/student/student.component';
 import { ProfessorComponent } from './components/professor/professor.component';
 import { SecretaryComponent } from './components/secretary/secretary.component';
 import {CookieService} from 'ngx-cookie-service';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {CookieService} from 'ngx-cookie-service';
     ExceptionGetDataComponent,
     StudentComponent,
     ProfessorComponent,
-    SecretaryComponent
+    SecretaryComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

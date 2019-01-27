@@ -21,3 +21,7 @@ a:not([href]):not([tabindex]) {
 .navbar-light[_ngcontent-c4] {
   z-index: 1000;
 }
+
+li:hover > a{
+  cursor: pointer;
+}

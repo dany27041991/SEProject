@@ -5,7 +5,6 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <i class="fas fa-bars fa-1x" style="color: white;"></i>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" *ngIf="!checkPerson.logged">
@@ -13,29 +12,29 @@
       </li>
       <li class="nav-item dropdown" *ngIf="checkPerson.type === secretary">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Aggiungi
+          Add
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Corso</a>
-          <a class="dropdown-item" href="#">Materia</a>
-          <a class="dropdown-item" href="#">Docente</a>
+          <a class="dropdown-item" href="#">Course</a>
+          <a class="dropdown-item" href="#">Material</a>
+          <a class="dropdown-item" href="#">Professor</a>
           <a class="dropdown-item" href="#">Student</a>
-          <a class="dropdown-item" href="#">Lezione</a>
-          <a class="dropdown-item" href="#">Esame</a>
-          <a class="dropdown-item" href="#">Aula</a>
+          <a class="dropdown-item" href="#">Lesson</a>
+          <a class="dropdown-item" href="#">Exam</a>
+          <a class="dropdown-item" href="#">Classroom</a>
         </div>
       </li>
       <li class="nav-item" *ngIf="checkPerson.type === secretary">
-        <a class="nav-link" href="#">Segnalazioni</a>
+        <a class="nav-link" >Notifications</a>
       </li>
       <li class="nav-item" *ngIf="checkPerson.type === secretary">
-        <a class="nav-link" href="#">Calendario Didattico</a>
+        <a class="nav-link" >Didactic Calendar</a>
       </li>
       <li class="nav-item" *ngIf="checkPerson.type === professor">
-        <a class="nav-link" href="#">Carica Materiale</a>
+        <a class="nav-link" (click)="goToUploadMaterial()">Upload Material</a>
       </li>
       <li class="nav-item" *ngIf="checkPerson.type === professor">
-        <a class="nav-link" href="#">Segnalazioni</a>
+        <a class="nav-link" (click)="goToNotifications()">Notifications</a>
       </li>
     </ul>
   </div>

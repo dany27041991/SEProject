@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Type} from '../../utils/type';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +15,7 @@ export class HeaderComponent implements OnInit {
   public isLogged = false;
   public typeLogged = {logged: false, type: 0};
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private cookie: CookieService) {
     this.auth.isUserLogged.subscribe((bool: boolean) => {
       this.isLogged = bool;
       this.typeLogged.logged = bool;
@@ -43,6 +45,7 @@ export class HeaderComponent implements OnInit {
           }
         }
       } else {
+        this.isLogged = false;
         this.typeLogged.logged = false;
         this.typeLogged.type = 0;
         router.navigate(['']);
@@ -51,5 +54,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.cookie.get('Jwt') && AccessToLocalStorage.getPerson()) {
+      this.isLogged = true;
+      this.typeLogged = {logged: false, type: AccessToLocalStorage.getTypePerson()};
+    }
   }
 }

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +11,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   @Input() checkLogin: boolean;
-  constructor(private auth: AuthService, private router: Router) {
-
-  }
+  constructor(private auth: AuthService, private router: Router) { }
   ngOnInit(): void { }
 
   logOut() {

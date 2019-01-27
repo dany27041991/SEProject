@@ -8,5 +8,13 @@ export class AccessToLocalStorage {
     }
     return 0;
   }
+
+  public static getPerson(): boolean {
+    const person = JSON.parse(localStorage.getItem('Person'));
+    if (person) {
+      return true;
+    }
+    return false;
+  }
 }
 
