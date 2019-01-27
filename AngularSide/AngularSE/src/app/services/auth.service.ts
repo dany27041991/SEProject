@@ -21,8 +21,7 @@ export class AuthService {
       (payload) => {
         const token: string = payload.headers.get('Authorization');
         const date = new Date();
-        const expiredDateCookie = date.setTime(date.getTime() + (1 * 60 * 1000));
-        console.log(expiredDateCookie);
+        const expiredDateCookie = date.setTime(date.getTime() + (60 * 60 * 1000));
         this.cookie.set('Jwt', token, expiredDateCookie);
         localStorage.setItem('Person', JSON.stringify(payload.body['response']));
         this.isUserLogged.emit(true);

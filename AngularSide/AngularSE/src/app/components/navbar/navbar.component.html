@@ -8,24 +8,34 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!checkPerson.logged">
         <a class="nav-link" href="#">Home</a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" *ngIf="checkPerson.type === secretary">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Facoltà
+          Aggiungi
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Medicina e Chirurgia</a>
-          <a class="dropdown-item" href="#">Ingegneria dell'Informazione</a>
-          <a class="dropdown-item" href="#">Giurisprudenza</a>
+          <a class="dropdown-item" href="#">Corso</a>
+          <a class="dropdown-item" href="#">Materia</a>
+          <a class="dropdown-item" href="#">Docente</a>
+          <a class="dropdown-item" href="#">Student</a>
+          <a class="dropdown-item" href="#">Lezione</a>
+          <a class="dropdown-item" href="#">Esame</a>
+          <a class="dropdown-item" href="#">Aula</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Docenti</a>
+      <li class="nav-item" *ngIf="checkPerson.type === secretary">
+        <a class="nav-link" href="#">Segnalazioni</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="checkPerson.type === secretary">
         <a class="nav-link" href="#">Calendario Didattico</a>
+      </li>
+      <li class="nav-item" *ngIf="checkPerson.type === professor">
+        <a class="nav-link" href="#">Carica Materiale</a>
+      </li>
+      <li class="nav-item" *ngIf="checkPerson.type === professor">
+        <a class="nav-link" href="#">Segnalazioni</a>
       </li>
     </ul>
   </div>
