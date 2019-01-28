@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 24-gen-2019 10.24.30 by Hibernate Tools 5.2.0.Final
+// Generated 28-gen-2019 15.27.51 by Hibernate Tools 5.2.0.Final
 
 
 import org.apache.commons.logging.Log;

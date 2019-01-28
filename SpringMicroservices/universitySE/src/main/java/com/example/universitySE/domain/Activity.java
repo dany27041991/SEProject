@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 24-gen-2019 10.24.28 by Hibernate Tools 5.2.0.Final
+// Generated 28-gen-2019 15.27.48 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -22,11 +22,12 @@ public class Activity  implements java.io.Serializable {
      private Date start;
      private Date end;
      private int classroomName;
+     private int activityType;
 
     public Activity() {
     }
 
-    public Activity(int id, int studyCourse, int subject, int idProf, Date start, Date end, int classroomName) {
+    public Activity(int id, int studyCourse, int subject, int idProf, Date start, Date end, int classroomName, int activityType) {
        this.id = id;
        this.studyCourse = studyCourse;
        this.subject = subject;
@@ -34,6 +35,7 @@ public class Activity  implements java.io.Serializable {
        this.start = start;
        this.end = end;
        this.classroomName = classroomName;
+       this.activityType = activityType;
     }
    
      @Id 
@@ -106,6 +108,16 @@ public class Activity  implements java.io.Serializable {
     
     public void setClassroomName(int classroomName) {
         this.classroomName = classroomName;
+    }
+
+    
+    @Column(name="activity_type", nullable=false)
+    public int getActivityType() {
+        return this.activityType;
+    }
+    
+    public void setActivityType(int activityType) {
+        this.activityType = activityType;
     }
 
 

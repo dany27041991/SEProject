@@ -10,19 +10,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Home object for domain model class Message.
- * @see Message
+ * Home object for domain model class ActivityType.
+ * @see ActivityType
  * @author Hibernate Tools
  */
 @Stateless
-public class MessageHome {
+public class ActivityTypeHome {
 
-    private static final Log log = LogFactory.getLog(MessageHome.class);
+    private static final Log log = LogFactory.getLog(ActivityTypeHome.class);
 
     @PersistenceContext private EntityManager entityManager;
     
-    public void persist(Message transientInstance) {
-        log.debug("persisting Message instance");
+    public void persist(ActivityType transientInstance) {
+        log.debug("persisting ActivityType instance");
         try {
             entityManager.persist(transientInstance);
             log.debug("persist successful");
@@ -33,8 +33,8 @@ public class MessageHome {
         }
     }
     
-    public void remove(Message persistentInstance) {
-        log.debug("removing Message instance");
+    public void remove(ActivityType persistentInstance) {
+        log.debug("removing ActivityType instance");
         try {
             entityManager.remove(persistentInstance);
             log.debug("remove successful");
@@ -45,10 +45,10 @@ public class MessageHome {
         }
     }
     
-    public Message merge(Message detachedInstance) {
-        log.debug("merging Message instance");
+    public ActivityType merge(ActivityType detachedInstance) {
+        log.debug("merging ActivityType instance");
         try {
-            Message result = entityManager.merge(detachedInstance);
+            ActivityType result = entityManager.merge(detachedInstance);
             log.debug("merge successful");
             return result;
         }
@@ -58,10 +58,10 @@ public class MessageHome {
         }
     }
     
-    public Message findById( int id) {
-        log.debug("getting Message instance with id: " + id);
+    public ActivityType findById( Integer id) {
+        log.debug("getting ActivityType instance with id: " + id);
         try {
-            Message instance = entityManager.find(Message.class, id);
+            ActivityType instance = entityManager.find(ActivityType.class, id);
             log.debug("get successful");
             return instance;
         }
