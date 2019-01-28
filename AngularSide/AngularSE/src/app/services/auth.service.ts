@@ -20,9 +20,7 @@ export class AuthService {
     ).subscribe(
       (payload) => {
         const token: string = payload.headers.get('Authorization');
-        const date = new Date();
-        const expiredDateCookie = date.setTime(date.getTime() + (60 * 60 * 1000));
-        this.cookie.set('Jwt', token, expiredDateCookie);
+        this.cookie.set('Jwt', token, 0.02);
         localStorage.setItem('Person', JSON.stringify(payload.body['response']));
         this.isUserLogged.emit(true);
       }, (httpResp: HttpErrorResponse) => {

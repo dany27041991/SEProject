@@ -1,10 +1,10 @@
 <div class="container-fluid">
-  <div class="row" id="reporting">
+  <div class="row" id="reporting" *ngIf="supportMaterial.length>0; else exception">
     <div class="col-12 p-0 text-center">
       <h1 style="font-size:2.7vw; font-weight: bold; color: lightcyan">Welcome in your Reporting Page Prof. {{lastname}}</h1>
       <h2 style="font-size:2.7vw; font-weight: bold; color: lightcyan">Make your report:</h2>
       <div>
-        <form name="signupForm" #f="ngForm" (ngSubmit)="signUp(f)">
+        <form name="signupForm" #f="ngForm" (ngSubmit)="reporting(f)">
           <div class="row ml-5 mr-5">
             <div class="col-3"></div>
             <div class="col-6 col-offset-3">
@@ -25,7 +25,7 @@
               <div class="form-group small">
                 <label for="selectmaterial"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: gray()">SelectMaterial</h4></label>
                 <select class="form-control" id="selectmaterial" required ngModel #selectmaterial="ngModel" name="selectmaterial">
-                  <option [value]="material" *ngFor="let supportedMaterial of material">{{null}}</option>
+                  <option [value]="material.id" *ngFor="let material of supportMaterial">{{material.name}}</option>
                 </select>
               </div>
               <div *ngIf="selectmaterial.invalid && (selectmaterial.dirty || selectmaterial.touched)">
@@ -47,4 +47,10 @@
       </div>
     </div>
   </div>
+
+  <ng-template #exception>
+    <div class="form-group align-content-sm-center text-center">
+      <h4 class="text-credential label-auth" style="font-size:2.7vw; font-weight: bold; color: black">Service not available try again later!</h4>
+    </div>
+  </ng-template>
 </div>

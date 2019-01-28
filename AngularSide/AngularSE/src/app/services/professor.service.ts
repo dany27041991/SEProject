@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {EventEmitter, Injectable, OnInit, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
@@ -14,9 +14,9 @@ import {SupportMaterial} from '../models/SupportMaterial';
 })
 export class ProfessorService implements OnInit {
 
-  private APIAUTHURL = 'http://localhost:8090/user/';
-  public professor: Professor;
-  public supportMaterial: SupportMaterial;
+  private APIAUTHURL = 'http://localhost:8090/user/professor/';
+  private professor: Professor;
+  @Output() public supportMaterial = new EventEmitter();
 
   constructor(private http: HttpClient, private router: Router, private cookie: CookieService, private auth: AuthService) {
   }
@@ -28,7 +28,7 @@ export class ProfessorService implements OnInit {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
     this.professor = <Professor>AccessToLocalStorage.getUser();
     this.professor.subject = null;
-    this.http.get(this.APIAUTHURL + 'professor/subject/' + AccessToLocalStorage.getUser()['person_type'], {headers}).subscribe(
+    this.http.get(this.APIAUTHURL + 'subject/' + AccessToLocalStorage.getUser()['person_type'], {headers}).subscribe(
       (payload: ResponseInterface) => {
         this.professor.subject = <Subject>payload.response;
         localStorage.setItem('Subject', JSON.stringify(payload.response));
@@ -41,20 +41,18 @@ export class ProfessorService implements OnInit {
     return this.professor;
   }
 
-  getSupportMaterial(): SupportMaterial {
+  getSupportMaterial() {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
-
-    this.http.get(this.APIAUTHURL + 'professor/support-material/' + AccessToLocalStorage.getUser()['person_type'], {headers}).subscribe(
+    this.http.post(this.APIAUTHURL + 'materials/', {}, {headers}).subscribe(
       (payload: ResponseInterface) => {
-        this.supportMaterial = <SupportMaterial>payload.response;
-        localStorage.setItem('Support-Material', JSON.stringify(payload.response));
+        localStorage.setItem('SupportMaterial', JSON.stringify(payload.response));
+        this.supportMaterial.emit(payload.response);
       }, (httpResp: HttpErrorResponse) => {
         if (httpResp.error['server'] !== 404 || !httpResp.error) {
           this.auth.logout();
         }
       }
     );
-    return this.supportMaterial;
   }
 }
 
