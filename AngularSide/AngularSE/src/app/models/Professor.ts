@@ -1,4 +1,5 @@
 import {ProfessorInterface} from '../interfaces/ProfessorInterface';
+import {Subject} from './Subject';
 
 export class Professor implements ProfessorInterface {
   id: number;
@@ -8,6 +9,6 @@ export class Professor implements ProfessorInterface {
   lastname: string;
   biography?: string;
   receptiontime: string;
-  subject: number;
+  subject?: Subject;
   constructor() {}
 }

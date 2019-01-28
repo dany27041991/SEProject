@@ -1,6 +1,7 @@
 package com.example.universitySE.intservices;
 
 import com.example.universitySE.exceptions.*;
+import io.jsonwebtoken.ExpiredJwtException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -13,7 +14,7 @@ public interface LoginServiceInterface {
 
     String createJwt(String subject, Date date, String name, String scope) throws UnsupportedEncodingException;
 
-    Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws UserNotLoggedException, UnsupportedEncodingException;
+    Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws UserNotLoggedException, UnsupportedEncodingException, ExpiredJwtException;
 
 }
 

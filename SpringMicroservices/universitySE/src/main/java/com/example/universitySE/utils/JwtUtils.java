@@ -31,7 +31,7 @@ public class JwtUtils {
     //recupero dal JWT una mappa con i dati del client
     public static Map<String, Object> jwt2Map(String jwt) throws java.io.UnsupportedEncodingException, ExpiredJwtException {
         Jws<Claims> claim = Jwts.parser()
-                .setSigningKey("myPersonalSecretKey12345".getBytes("UTF-8"))
+                .setSigningKey("myPersonalSecretKeyForPPS".getBytes("UTF-8"))
                 .parseClaimsJws(jwt);
 
         String name = claim.getBody().get("name", String.class);
@@ -56,12 +56,12 @@ public class JwtUtils {
     //si analizza la presenza di un JWT all'interno dell'header o dei cookies
     public static String getJwtFromHttpRequest(HttpServletRequest request) {
         String jwt = null;
-        if(request.getHeader("jwt") != null) {
-            jwt = request.getHeader("jwt");
+        if(request.getHeader("Authorization") != null) {
+            jwt = request.getHeader("Authorization");
         } else if (request.getCookies() != null) {
             Cookie[] cookies = request.getCookies();
             for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("jwt")){
+                if(cookie.getName().equals("Authorization")){
                     jwt = cookie.getValue();
                 }
             }

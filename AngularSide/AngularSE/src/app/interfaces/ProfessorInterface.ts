@@ -1,3 +1,5 @@
+import {Subject} from '../models/Subject';
+
 export interface ProfessorInterface {
   id: number;
   username: string;
@@ -6,5 +8,5 @@ export interface ProfessorInterface {
   lastname: string;
   biography?: string;
   receptiontime: string;
-  subject: number;
+  subject?: Subject;
 }

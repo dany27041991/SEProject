@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
 
 @Component({
   selector: 'app-profreporting',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfreportingComponent implements OnInit {
 
-  constructor() { }
+  public lastname: string;
+
+  constructor() {
+    this.lastname = AccessToLocalStorage.getUser()['lastname'];
+  }
 
   ngOnInit() {
   }

@@ -15,6 +15,7 @@ import com.example.universitySE.repositories.ProfessorRepository;
 import com.example.universitySE.repositories.SecretaryRepository;
 import com.example.universitySE.repositories.StudentRepository;
 import com.example.universitySE.utils.JwtUtils;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +101,13 @@ public class LoginService implements LoginServiceInterface{
     }
 
     @Override
-    public Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws UserNotLoggedException, UnsupportedEncodingException {
-        return null;
+    public Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws UserNotLoggedException, UnsupportedEncodingException, ExpiredJwtException {
+        //controllo il Jwt della request del client
+        String jwt = JwtUtils.getJwtFromHttpRequest(request);
+        if(jwt == null){
+            throw new UserNotLoggedException("Authentication token not found in the request");
+        }
+        Map<String, Object> userData = JwtUtils.jwt2Map(jwt);
+        return userData;
     }
 }
