@@ -12,6 +12,13 @@ import { SignupComponent } from './components/signup/signup.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {AuthService} from './services/auth.service';
 import {CompareValidatorDirective} from './shared/compare-validator.directive';
+import { HomeComponent } from './components/home/home.component';
+import { ExceptionGetDataComponent } from './exceptions/exception-get-data/exception-get-data.component';
+import { StudentComponent } from './components/student/student.component';
+import { ProfessorComponent } from './components/professor/professor.component';
+import { SecretaryComponent } from './components/secretary/secretary.component';
+import {CookieService} from 'ngx-cookie-service';
+import { ProfreportingComponent } from './components/profreporting/profreporting.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +28,13 @@ import {CompareValidatorDirective} from './shared/compare-validator.directive';
     LoginComponent,
     SignupComponent,
     NavbarComponent,
-    CompareValidatorDirective
+    CompareValidatorDirective,
+    HomeComponent,
+    ExceptionGetDataComponent,
+    StudentComponent,
+    ProfessorComponent,
+    SecretaryComponent,
+    ProfreportingComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +43,7 @@ import {CompareValidatorDirective} from './shared/compare-validator.directive';
     RoutingModuleModule,
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
