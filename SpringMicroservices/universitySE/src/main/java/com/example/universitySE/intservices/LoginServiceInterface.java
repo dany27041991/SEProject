@@ -1,12 +1,20 @@
 package com.example.universitySE.intservices;
 
-import com.example.universitySE.exceptions.PersonNotLoggedInException;
-import com.example.universitySE.exceptions.ProblemConnectionDbException;
-import com.example.universitySE.models.PersonModel;
+import com.example.universitySE.exceptions.*;
+import io.jsonwebtoken.ExpiredJwtException;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Map;
 
 public interface LoginServiceInterface {
-    Optional<PersonModel> getPersonAndVerifyPassword(String username, String password) throws PersonNotLoggedInException, ProblemConnectionDbException;
+
+    Object getPersonAndVerifyPassword(String username, String password) throws PersonNotLoggedInException, ProblemConnectionDbException;
+
+    String createJwt(String subject, Date date, String name, String scope) throws UnsupportedEncodingException;
+
+    Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws UserNotLoggedException, UnsupportedEncodingException, ExpiredJwtException;
+
 }
 

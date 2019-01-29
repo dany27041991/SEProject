@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
-
 @AllArgsConstructor @NoArgsConstructor
 public class PersonModel {
 
@@ -20,42 +18,6 @@ public class PersonModel {
     private String password;
 
     @Getter @Setter
-    private int idstudent;
-
-    @Getter @Setter
-    private String firstnamestudent;
-
-    @Getter @Setter
-    private String lastnamestudent;
-
-    @Getter @Setter
-    private Date birthdatestudent;
-
-    @Getter @Setter
-    private int badgenumberstudent;
-
-    @Getter @Setter
-    private int studycoursestudent;
-
-    @Getter @Setter
-    private Date enrollmentyearstudent;
-
-    @Getter @Setter
-    private int idprofessor;
-
-    @Getter @Setter
-    private String firstnameprofessor;
-
-    @Getter @Setter
-    private String lastnameprofessor;
-
-    @Getter @Setter
-    private String biographyprofessor;
-
-    @Getter @Setter
-    private String receptiontime;
-
-    @Getter @Setter
-    private int subjectprofessor;
+    private int person_type;
 
 }

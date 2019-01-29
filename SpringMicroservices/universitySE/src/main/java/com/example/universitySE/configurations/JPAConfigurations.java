@@ -1,4 +1,4 @@
-package com.example.universitySE.configurations;
+/*package com.example.universitySE.configurations;
 
 import java.util.Properties;
 
@@ -76,4 +76,4 @@ public class JPAConfigurations {
         return transactionManager;
     }
 
-}
+}*/
