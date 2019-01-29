@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 28-gen-2019 15.27.48 by Hibernate Tools 5.2.0.Final
+// Generated 29-gen-2019 8.53.01 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -19,15 +19,17 @@ public class BookExam  implements java.io.Serializable {
      private int badgeStudent;
      private int idExam;
      private Date date;
+     private int evaluation;
 
     public BookExam() {
     }
 
-    public BookExam(int id, int badgeStudent, int idExam, Date date) {
+    public BookExam(int id, int badgeStudent, int idExam, Date date, int evaluation) {
        this.id = id;
        this.badgeStudent = badgeStudent;
        this.idExam = idExam;
        this.date = date;
+       this.evaluation = evaluation;
     }
    
      @Id 
@@ -70,6 +72,16 @@ public class BookExam  implements java.io.Serializable {
     
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    
+    @Column(name="evaluation", nullable=false)
+    public int getEvaluation() {
+        return this.evaluation;
+    }
+    
+    public void setEvaluation(int evaluation) {
+        this.evaluation = evaluation;
     }
 
 
