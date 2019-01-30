@@ -19,6 +19,8 @@ import { ProfessorComponent } from './components/professor/professor.component';
 import { SecretaryComponent } from './components/secretary/secretary.component';
 import {CookieService} from 'ngx-cookie-service';
 import { ProfreportingComponent } from './components/profreporting/profreporting.component';
+import { SuccessfulComponent } from './messages/successful/successful.component';
+import { UploadComponent } from './components/upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { ProfreportingComponent } from './components/profreporting/profreporting
     StudentComponent,
     ProfessorComponent,
     SecretaryComponent,
-    ProfreportingComponent
+    ProfreportingComponent,
+    SuccessfulComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,

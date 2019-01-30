@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 29-gen-2019 8.53.03 by Hibernate Tools 5.2.0.Final
+// Generated 29-gen-2019 18.51.34 by Hibernate Tools 5.2.0.Final
 
 
 import org.apache.commons.logging.Log;
@@ -58,7 +58,7 @@ public class ReportingHome {
         }
     }
     
-    public Reporting findById( int id) {
+    public Reporting findById( Integer id) {
         log.debug("getting Reporting instance with id: " + id);
         try {
             Reporting instance = entityManager.find(Reporting.class, id);

@@ -14,7 +14,6 @@ import {SupportMaterial} from '../../models/SupportMaterial';
 export class ProfessorComponent implements OnInit {
 
   public professor: Professor;
-  public supportMaterial: SupportMaterial[];
 
   constructor(private route: Router, private profservice: ProfessorService) {
     if (AccessToLocalStorage.getTypePerson() !== Type.Professor) {

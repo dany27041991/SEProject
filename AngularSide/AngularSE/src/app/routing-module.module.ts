@@ -8,6 +8,9 @@ import {StudentComponent} from './components/student/student.component';
 import {ProfessorComponent} from './components/professor/professor.component';
 import {SecretaryComponent} from './components/secretary/secretary.component';
 import {ProfreportingComponent} from './components/profreporting/profreporting.component';
+import {SuccessfulComponent} from './messages/successful/successful.component';
+import {AccessToLocalStorage} from './utils/AccessToLocalStorage';
+import {UploadComponent} from './components/upload/upload.component';
 
 const routes: Routes = [
   {
@@ -38,6 +41,16 @@ const routes: Routes = [
   {
     path: 'user/professor/:id/profreporting',
     component: ProfreportingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/successful',
+    component: SuccessfulComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/professor/:id/upload',
+    component: UploadComponent,
     canActivate: [RouteGuardService]
   }
 ]
