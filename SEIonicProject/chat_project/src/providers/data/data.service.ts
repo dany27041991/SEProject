@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject, AngularFireList } from '@angular/fire/database';
 import { User, database } from 'firebase/app';
 import { Profile } from '../../models/profile/profile.interface';
-import { UUID } from 'angular2-uuid';
 
 @Injectable()
 export class DataProvider {

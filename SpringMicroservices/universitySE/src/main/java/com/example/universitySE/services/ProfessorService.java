@@ -1,19 +1,15 @@
 package com.example.universitySE.services;
 
-import com.example.universitySE.domain.Classroom;
-import com.example.universitySE.domain.Subject;
-import com.example.universitySE.domain.SupportMaterial;
+import com.example.universitySE.domain.*;
 import com.example.universitySE.dtos.ReportingDTO;
 import com.example.universitySE.exceptions.ClassroomException;
 import com.example.universitySE.exceptions.MaterialException;
 import com.example.universitySE.exceptions.SubjectException;
 import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.intservices.ProfessorServiceInterface;
+import com.example.universitySE.models.ReportingModel;
 import com.example.universitySE.models.SubjectModel;
-import com.example.universitySE.repositories.ClassroomRepository;
-import com.example.universitySE.repositories.ReportingRepository;
-import com.example.universitySE.repositories.SupportMaterialRepository;
-import com.example.universitySE.repositories.SubjectRepository;
+import com.example.universitySE.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +22,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.core.io.UrlResource;
@@ -51,6 +48,12 @@ public class ProfessorService implements ProfessorServiceInterface {
 
     @Autowired
     ClassroomRepository classroomRepository;
+
+    @Autowired
+    SecretaryRepository secretaryRepository;
+
+    @Autowired
+    ProfessorRepository professorRepository;
 
     @Override
     public SubjectModel getSubject(int id) throws SubjectException {
@@ -96,6 +99,37 @@ public class ProfessorService implements ProfessorServiceInterface {
             throw new ClassroomException("Classroom is not present!");
         }
     }
+
+    @Override
+    public List<ReportingModel> getAllReporting() {
+        List<ReportingModel> reportingModelList = new ArrayList<>();
+        List<Reporting> reportings = reportingRepository.findAll();
+        for(int i = 0; i<reportings.size(); i++) {
+            List<SupportMaterial> supportMaterials = supportMaterialRepository.findAll();
+
+            List<Secretary> secretaries = secretaryRepository.findAll();
+
+            Optional<Classroom> optionalClassroom = classroomRepository.findClassroomById(reportings.get(i).getIdClassroom());
+            Classroom classroom;
+            if(optionalClassroom.isPresent()) {
+                classroom = optionalClassroom.get();
+            } else {
+                classroom = null;
+            }
+
+            Optional<Professor> optionalProfessor = professorRepository.findProfessorById(reportings.get(i).getIdProf());
+            Professor professor;
+            if(optionalProfessor.isPresent()) {
+                professor = optionalProfessor.get();
+            } else {
+                professor = null;
+            }
+            reportingModelList.add(new ReportingModel(reportings.get(i).getId(), reportings.get(i).getNoteProf(), supportMaterials,
+                    reportings.get(i).getNoteSec(), reportings.get(i).getState(), professor, secretaries, classroom));
+        }
+        return reportingModelList;
+    }
+
 
     @Override
     public void store(MultipartFile file, String id) {

@@ -6,6 +6,7 @@ import com.example.universitySE.dtos.ReportingDTO;
 import com.example.universitySE.exceptions.ClassroomException;
 import com.example.universitySE.exceptions.MaterialException;
 import com.example.universitySE.exceptions.SubjectException;
+import com.example.universitySE.models.ReportingModel;
 import com.example.universitySE.models.SubjectModel;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,8 @@ public interface ProfessorServiceInterface {
     void addReporting(ReportingDTO reportingDTO);
 
     List<Classroom> getClassroom() throws ClassroomException;
+
+    List<ReportingModel> getAllReporting();
 
     void store(MultipartFile file, String id);
 

@@ -1,13 +1,12 @@
 package com.example.universitySE.domain;
-// Generated 31-gen-2019 19.40.01 by Hibernate Tools 5.2.0.Final
+// Generated 2-feb-2019 18.45.38 by Hibernate Tools 5.2.0.Final
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Home object for domain model class AttendLesson.

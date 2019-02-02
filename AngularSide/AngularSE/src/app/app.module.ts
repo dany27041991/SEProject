@@ -21,6 +21,7 @@ import {CookieService} from 'ngx-cookie-service';
 import { ProfreportingComponent } from './components/profreporting/profreporting.component';
 import { SuccessfulComponent } from './messages/successful/successful.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { ViewreportingComponent } from './components/viewreporting/viewreporting.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UploadComponent } from './components/upload/upload.component';
     SecretaryComponent,
     ProfreportingComponent,
     SuccessfulComponent,
-    UploadComponent
+    UploadComponent,
+    ViewreportingComponent
   ],
   imports: [
     BrowserModule,

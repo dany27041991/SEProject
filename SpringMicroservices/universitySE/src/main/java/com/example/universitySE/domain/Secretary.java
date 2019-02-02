@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 31-gen-2019 19.39.58 by Hibernate Tools 5.2.0.Final
+// Generated 2-feb-2019 18.45.35 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.Column;

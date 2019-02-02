@@ -14,6 +14,9 @@ import { DataProvider } from '../providers/data/data.service';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from '../providers/chat/chat.service';
 import {HttpClientModule} from "@angular/common/http";
+import {ProfessorProvider} from "../providers/professor/professor.service";
+import {SecretaryProvider} from "../providers/secretary/secretary.service";
+import {StudentProvider} from "../providers/student/student.service";
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import {HttpClientModule} from "@angular/common/http";
     AuthProvider,
     DataProvider,
     ChatService,
-    HttpClientModule
+    HttpClientModule,
+    ProfessorProvider,
+    SecretaryProvider,
+    StudentProvider
   ]
 })
 export class AppModule {}

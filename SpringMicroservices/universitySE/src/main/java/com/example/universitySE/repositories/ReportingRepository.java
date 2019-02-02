@@ -6,11 +6,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface ReportingRepository extends JpaRepository<Reporting, Integer> {
 
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO Reporting (note_prof, support_material_prof, state, id_prof, id_classroom) VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
     void addReporting(String note_prof, int support_material_prof, int state, int id_prof, int id_classroom);
+
+    List<Reporting> findAll();
 
 }

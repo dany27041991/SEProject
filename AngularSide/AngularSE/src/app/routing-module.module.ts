@@ -11,6 +11,7 @@ import {ProfreportingComponent} from './components/profreporting/profreporting.c
 import {SuccessfulComponent} from './messages/successful/successful.component';
 import {AccessToLocalStorage} from './utils/AccessToLocalStorage';
 import {UploadComponent} from './components/upload/upload.component';
+import {ViewreportingComponent} from './components/viewreporting/viewreporting.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,11 @@ const routes: Routes = [
   {
     path: 'user/professor/:id/upload',
     component: UploadComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/professor/:id/viewreporting',
+    component: ViewreportingComponent,
     canActivate: [RouteGuardService]
   }
 ]

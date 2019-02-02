@@ -36,7 +36,7 @@ public class ProfessorController {
     List<String> files = new ArrayList<String>();
 
     @RequestMapping(value = "/subject/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getContacts(HttpServletRequest request, @PathVariable(name = "id") int id) {
+    public ResponseEntity<JSONResponseBody> getSubject(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
             loginService.verifyJwtAndGetData(request);
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getSubject(id)));
@@ -54,7 +54,7 @@ public class ProfessorController {
     }
 
     @RequestMapping(value = "/materials", method = RequestMethod.POST)
-    public ResponseEntity<JSONResponseBody> getContacts(HttpServletRequest request) {
+    public ResponseEntity<JSONResponseBody> getMaterials(HttpServletRequest request) {
         try {
             loginService.verifyJwtAndGetData(request);
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getMaterial()));
@@ -101,6 +101,16 @@ public class ProfessorController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
         }catch (ExpiredJwtException e4){
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @PostMapping("/getAllReporting")
+    public ResponseEntity<JSONResponseBody> getAllReporting(HttpServletRequest request) {
+        try {
+            loginService.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getAllReporting()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
         }

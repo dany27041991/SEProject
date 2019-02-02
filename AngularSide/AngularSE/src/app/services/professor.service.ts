@@ -10,6 +10,8 @@ import {AuthService} from './auth.service';
 import {SupportMaterial} from '../models/SupportMaterial';
 import {State} from '../utils/state';
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/internal/operators';
+import {ReportingInterface} from '../interfaces/ReportingInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +94,12 @@ export class ProfessorService implements OnInit {
         }
       }
     );
+  }
+
+  getAllReportings() {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    return this.http.post(this.APIAUTHURL + 'getAllReporting', {}, {headers}).
+      pipe(map((res: ResponseInterface) => res.response)) as Observable<ReportingInterface>;
   }
 
   pushFileToStorage(file: File, id_prof: string): Observable<HttpEvent<{}>> {
