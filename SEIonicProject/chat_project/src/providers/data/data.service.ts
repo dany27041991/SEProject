@@ -16,8 +16,16 @@ export class DataProvider {
   async saveProfile(user: User, profile: Profile) {
     this.profileObject = this.database.object(`/profiles/${user.uid}`);
 
+    const allUser = JSON.parse(localStorage.getItem('AllUser'));
+    const userFilter = allUser.find(obj => obj.username === user.email);
+    profile.mykey = userFilter['id'];
+    profile.dateOfBirth = userFilter['birthdate'];
+    profile.firstName = userFilter['firstname'];
+    profile.lastName = userFilter['lastname'];
+    profile.person_type = userFilter['person_type'];
+    profile.email = user.email;
     try {
-      profile.mykey = UUID.UUID();
+      localStorage.setItem('selectedUser', JSON.stringify(profile));
       await this.profileObject.set(profile);
       return true;
     }
@@ -39,15 +47,18 @@ export class DataProvider {
   }
 
   setUserOnline(profile: Profile) {
-    const ref = database().ref(`online-users/${profile.mykey}`);
 
-    try {
-      ref.update({ ...profile});
-      ref.onDisconnect().remove();
-    }
-    catch(e) {
-      console.error(e);
-    }
+      if(profile.mykey){
+        const ref = database().ref(`online-users/${profile.mykey}`);
+
+        try {
+          ref.update({ ...profile});
+          ref.onDisconnect().remove();
+        }
+        catch(e) {
+          console.error(e);
+        }
+      }
   }
 
   getOnlineUsers(): AngularFireList<Profile[]> {

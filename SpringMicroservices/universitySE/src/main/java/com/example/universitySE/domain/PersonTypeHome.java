@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 29-gen-2019 18.51.34 by Hibernate Tools 5.2.0.Final
+// Generated 31-gen-2019 19.40.01 by Hibernate Tools 5.2.0.Final
 
 
 import org.apache.commons.logging.Log;
@@ -58,7 +58,7 @@ public class PersonTypeHome {
         }
     }
     
-    public PersonType findById( int id) {
+    public PersonType findById( Integer id) {
         log.debug("getting PersonType instance with id: " + id);
         try {
             PersonType instance = entityManager.find(PersonType.class, id);

@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 29-gen-2019 18.51.31 by Hibernate Tools 5.2.0.Final
+// Generated 31-gen-2019 19.39.58 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -23,24 +23,27 @@ public class Reporting  implements java.io.Serializable {
      private int state;
      private int idProf;
      private Integer idSecretary;
+     private int idClassroom;
 
     public Reporting() {
     }
 
 	
-    public Reporting(String noteProf, int supportMaterialProf, int state, int idProf) {
+    public Reporting(String noteProf, int supportMaterialProf, int state, int idProf, int idClassroom) {
         this.noteProf = noteProf;
         this.supportMaterialProf = supportMaterialProf;
         this.state = state;
         this.idProf = idProf;
+        this.idClassroom = idClassroom;
     }
-    public Reporting(String noteProf, int supportMaterialProf, String noteSec, int state, int idProf, Integer idSecretary) {
+    public Reporting(String noteProf, int supportMaterialProf, String noteSec, int state, int idProf, Integer idSecretary, int idClassroom) {
        this.noteProf = noteProf;
        this.supportMaterialProf = supportMaterialProf;
        this.noteSec = noteSec;
        this.state = state;
        this.idProf = idProf;
        this.idSecretary = idSecretary;
+       this.idClassroom = idClassroom;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -113,6 +116,16 @@ public class Reporting  implements java.io.Serializable {
     
     public void setIdSecretary(Integer idSecretary) {
         this.idSecretary = idSecretary;
+    }
+
+    
+    @Column(name="id_classroom", nullable=false)
+    public int getIdClassroom() {
+        return this.idClassroom;
+    }
+    
+    public void setIdClassroom(int idClassroom) {
+        this.idClassroom = idClassroom;
     }
 
 

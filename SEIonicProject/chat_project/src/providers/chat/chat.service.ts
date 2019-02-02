@@ -6,6 +6,16 @@ import { Message } from "../../models/messages/message.interface";
 import { UUID } from 'angular2-uuid';
 import { Observable} from "rxjs/Rx";
 import { Profile } from "../../models/profile/profile.interface";
+import {HttpClient} from "@angular/common/http";
+import {Response} from "../../models/response/response.interface";
+import {database} from "firebase";
+
+interface SubjectInterface {
+  id: number;
+  name: string;
+  studyCourse: number;
+  yearCourse: number;
+}
 
 @Injectable()
 export class ChatService {
@@ -14,17 +24,47 @@ export class ChatService {
     private userProfile: Profile;
     messages: Message[] = [];
     lastMessages: Message[] = [];
-    filteredArray: Message[];
+    private APIAUTHURL = 'http://localhost:8090/user/faculty/';
 
     @Output() chat = new EventEmitter<Message[]>();
     @Output() last = new EventEmitter<Message[]>();
 
-    constructor(private database: AngularFireDatabase) {
+    constructor(private database: AngularFireDatabase, private http: HttpClient) {
 
     }
 
+    addAllSubjectChannel() {
+      this.database.list(`channel-names`).valueChanges().subscribe((channelExisting: Array<SubjectInterface>) => {
+        localStorage.setItem('ExistingChannel', JSON.stringify(channelExisting));
+      });
+      setTimeout(() => {
+        this.http.post(this.APIAUTHURL + 'getAllSubject',{}).subscribe((data: Response) => {
+          const courseList: Array<SubjectInterface> = data.response;
+          localStorage.setItem('AllSubject', JSON.stringify(courseList));
+          const channelExisting: Array<SubjectInterface> = JSON.parse(localStorage.getItem('ExistingChannel'));
+          for(let i = 0; i<courseList.length ;i++) {
+            const el1 = courseList[i];
+            for(let k = 0; k<channelExisting.length ;k++) {
+              const el2 = channelExisting[k];
+              if(el1.id===el2['mykey']) {
+                courseList.splice(i,1);
+                i--;
+                break;
+              }
+            }
+          }
+          if(courseList.length>0) {
+            Object.keys(courseList).forEach(k => {
+              this.database.list(`channel-names`).push({ name: courseList[k].name, mykey: courseList[k].id,
+                studyCourse: courseList[k].studyCourse, yearCourse: courseList[k].yearCourse });
+            });
+          }
+        });
+      }, 3000);
+    }
+
     addChannel(channelName: string) {
-        this.database.list(`channel-names`).push({ name: channelName, mykey: UUID.UUID() });
+        this.database.list(`channel-names`).push({ name: channelName, mykey: UUID.UUID(), faculty: '0' });
     }
 
     getChannelListRef(): AngularFireList<Channel> {
@@ -52,7 +92,7 @@ export class ChatService {
             (message[k].userToId === userTwoId && message[k].userFromId === this.userProfile.mykey)){
               this.messages.push(message[k]);
           }
-        })
+        });
         this.chat.emit(this.messages);
       });
     }
@@ -72,5 +112,13 @@ export class ChatService {
           this.last.emit(this.lastMessages);
         })
       })
+    }
+
+    getUserLoggedSubject(): Observable<Object> {
+      const user: Profile = JSON.parse(localStorage.getItem('selectedUser'));
+      return this.http.post(this.APIAUTHURL + 'getSubjectUserLogged',{
+        id: user.mykey,
+        type: user.person_type
+      });
     }
 }

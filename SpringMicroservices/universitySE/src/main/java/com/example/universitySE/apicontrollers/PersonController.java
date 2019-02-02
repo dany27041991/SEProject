@@ -1,6 +1,7 @@
 package com.example.universitySE.apicontrollers;
 
 import com.example.universitySE.dtos.PersonLoginDTO;
+import com.example.universitySE.exceptions.MobileUserException;
 import com.example.universitySE.exceptions.PersonNotLoggedInException;
 import com.example.universitySE.exceptions.ProblemConnectionDbException;
 import com.example.universitySE.intservices.LoginServiceInterface;
@@ -36,6 +37,18 @@ public class PersonController {
         } catch (Exception exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), exception.getMessage()));
     }
+
+    }
+
+    @PostMapping(value = "/getAll")
+    public ResponseEntity<JSONResponseBody> getAllUser() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), loginService.getAllPersonMobile()));
+        } catch (MobileUserException e1) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JSONResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), e1.getMessage()));
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), exception.getMessage()));
+        }
 
     }
 }

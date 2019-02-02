@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from '@angular/fire';
-import { HttpModule } from '@angular/http';
 import { AngularFireDatabaseModule} from '@angular/fire/database';
 
 import { MyApp } from './app.component';
@@ -14,6 +13,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { DataProvider } from '../providers/data/data.service';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from '../providers/chat/chat.service';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -21,12 +21,12 @@ import { ChatService } from '../providers/chat/chat.service';
   ],
   imports: [
     BrowserModule,
-    HttpModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   bootstrap: [
     IonicApp
@@ -40,7 +40,8 @@ import { ChatService } from '../providers/chat/chat.service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     DataProvider,
-    ChatService
+    ChatService,
+    HttpClientModule
   ]
 })
 export class AppModule {}

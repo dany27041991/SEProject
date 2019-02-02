@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 29-gen-2019 18.51.34 by Hibernate Tools 5.2.0.Final
+// Generated 31-gen-2019 19.40.01 by Hibernate Tools 5.2.0.Final
 
 
 import org.apache.commons.logging.Log;
@@ -58,7 +58,7 @@ public class SupportMaterialHome {
         }
     }
     
-    public SupportMaterial findById( int id) {
+    public SupportMaterial findById( Integer id) {
         log.debug("getting SupportMaterial instance with id: " + id);
         try {
             SupportMaterial instance = entityManager.find(SupportMaterial.class, id);

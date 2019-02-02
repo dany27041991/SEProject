@@ -26,7 +26,9 @@ export class ChannelChatPage {
 
   sendMessage(content: string) {
     let channelMessage: ChannelMessage = {
-      content
+      content,
+      name: JSON.parse(localStorage.getItem('selectedUser')).firstName,
+      lastname: JSON.parse(localStorage.getItem('selectedUser')).lastName
     }
 
     this.chat.sendChannelChatMessage(this.channel.mykey, channelMessage);

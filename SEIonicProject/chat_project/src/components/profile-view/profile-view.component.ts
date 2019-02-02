@@ -15,10 +15,13 @@ export class ProfileViewComponent implements OnInit {
     private authUser: User;
     public userProfile: Profile;
     private loader: Loading;
+    person_type: number;
 
     @Output() existingProfile: EventEmitter<Profile>;
 
     constructor(private data: DataProvider, private auth: AuthProvider, private loading: LoadingController) {
+        const profile: Profile = JSON.parse(localStorage.getItem('selectedUser'));
+        this.person_type = profile.person_type;
         this.existingProfile = new EventEmitter<Profile>();
 
         this.loader = this.loading.create({
@@ -34,7 +37,7 @@ export class ProfileViewComponent implements OnInit {
             this.existingProfile.emit(this.userProfile);
             this.loader.dismiss();
             })*/
-        
+
         this.auth.getAuthenticatedUser().subscribe(auth => {
             this.authUser = auth;
 
@@ -48,5 +51,5 @@ export class ProfileViewComponent implements OnInit {
             }
         })
     }
-    
+
 }
