@@ -1,12 +1,13 @@
 package com.example.universitySE.domain;
-// Generated 2-feb-2019 18.45.38 by Hibernate Tools 5.2.0.Final
+// Generated 3-feb-2019 20.09.15 by Hibernate Tools 5.2.0.Final
 
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Home object for domain model class SupportMaterial.

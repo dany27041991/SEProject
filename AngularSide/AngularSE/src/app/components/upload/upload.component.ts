@@ -35,7 +35,8 @@ export class UploadComponent implements OnInit {
     this.progress.percentage = 0;
 
     this.currentFileUpload = this.selectedFiles.item(0);
-    this.professorService.pushFileToStorage(this.currentFileUpload, AccessToLocalStorage.getUser()['id']).subscribe(event => {
+    this.professorService.pushFileToStorage(this.currentFileUpload, AccessToLocalStorage.getUser()['id'],
+      AccessToLocalStorage.getUser()['subject']).subscribe(event => {
         switch (event['status']) {
         case 417: {
           this.auth.logout();

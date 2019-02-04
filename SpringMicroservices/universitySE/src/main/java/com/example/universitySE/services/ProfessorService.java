@@ -9,6 +9,7 @@ import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.intservices.ProfessorServiceInterface;
 import com.example.universitySE.models.ReportingModel;
 import com.example.universitySE.models.SubjectModel;
+import com.example.universitySE.models.TeachingMaterialModel;
 import com.example.universitySE.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.core.io.UrlResource;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.MalformedURLException;
 import java.io.IOException;
@@ -34,8 +36,8 @@ import java.util.UUID;
 @Service
 public class ProfessorService implements ProfessorServiceInterface {
 
+    private static final String pathStore = "http://localhost:8090/files/";
     private static final Logger log = LoggerFactory.getLogger(LoginServiceInterface.class);
-    private final Path rootLocation = Paths.get("files");
 
     @Autowired
     SubjectRepository subjectRepository;
@@ -54,6 +56,12 @@ public class ProfessorService implements ProfessorServiceInterface {
 
     @Autowired
     ProfessorRepository professorRepository;
+
+    @Autowired
+    TeachingMaterialRepository teachingMaterialRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     @Override
     public SubjectModel getSubject(int id) throws SubjectException {
@@ -132,25 +140,29 @@ public class ProfessorService implements ProfessorServiceInterface {
 
 
     @Override
-    public void store(MultipartFile file, String id) {
+    public void store(MultipartFile file, String id, int subject) {
         try {
             String uniqueID = UUID.randomUUID().toString();
-            Path rootLocation = Paths.get("files/"+id);
+            Path rootLocation = Paths.get("src/main/resources/static/files/"+id);
             Path filePath = Paths.get(rootLocation+"/"+file.getOriginalFilename());
             File directory = new File(String.valueOf(rootLocation));
             if (! directory.exists()){
                 directory.mkdir();
                 File f = new File(String.valueOf(filePath));
                 if(f.exists() && !f.isDirectory()) {
+                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+uniqueID+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(uniqueID+file.getOriginalFilename()));
                 } else {
+                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
                 }
             } else {
                 File f = new File(String.valueOf(filePath));
                 if(f.exists() && !f.isDirectory()) {
+                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+uniqueID+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(uniqueID+file.getOriginalFilename()));
                 } else {
+                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
                 }
             }
@@ -161,31 +173,22 @@ public class ProfessorService implements ProfessorServiceInterface {
     }
 
     @Override
-    public Resource loadFile(String filename) {
-        try {
-            Path file = rootLocation.resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("FAIL!");
+    public List<TeachingMaterialModel> getAllTeachingMaterialForStudent(int id) {
+        List<TeachingMaterialModel> teachingMaterialModels = new ArrayList<>();
+        Optional<Student> optionalStudent = studentRepository.findStudentById(id);
+        if(optionalStudent.isPresent()) {
+            Student student = optionalStudent.get();
+            List<Subject> subjectList = subjectRepository.findSubjectByStudyCourse(student.getStudyCourse());
+            for(int i=0; i<subjectList.size(); i++){
+                List<TeachingMaterial> materials = teachingMaterialRepository.getTeachingMaterialBySubject(subjectList.get(i).getId());
+                for(int k=0; k<materials.size(); k++){
+                    teachingMaterialModels.add(new TeachingMaterialModel(materials.get(k).getId(), subjectList.get(i),
+                            materials.get(k).getMedia()));
+                }
             }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("FAIL!");
         }
+        return teachingMaterialModels;
     }
 
-    @Override
-    public void deleteAll() {
-        FileSystemUtils.deleteRecursively(rootLocation.toFile());
-    }
 
-    @Override
-    public void init() {
-        try {
-            Files.createDirectory(rootLocation);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not initialize storage!");
-        }
-    }
 }

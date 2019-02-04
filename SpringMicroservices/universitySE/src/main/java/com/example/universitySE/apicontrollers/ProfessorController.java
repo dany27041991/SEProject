@@ -117,11 +117,12 @@ public class ProfessorController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<JSONResponseBody> handleFileUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam("id_prof") String id_prof) {
+    public ResponseEntity<JSONResponseBody> handleFileUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam("id_prof") String id_prof, @RequestParam("subject") int subject) {
         try {
             loginService.verifyJwtAndGetData(request);
-            professorService.store(file, id_prof);
-            files.add(file.getOriginalFilename());return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), true));
+            professorService.store(file, id_prof, subject);
+            files.add(file.getOriginalFilename());
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), true));
         } catch (UnsupportedEncodingException e2){
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
         }catch (UserNotLoggedException e3){
@@ -133,22 +134,13 @@ public class ProfessorController {
         }
     }
 
-    @GetMapping("/getallfiles")
-    public ResponseEntity<List<String>> getListFiles(Model model) {
-        List<String> fileNames = files
-                .stream().map(fileName -> MvcUriComponentsBuilder
-                        .fromMethodName(ProfessorController.class, "getFile", fileName).build().toString())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok().body(fileNames);
+    @PostMapping("/getAllTeachingMaterials")
+    public ResponseEntity<JSONResponseBody> getAllTeachingMaterials(@RequestParam(value = "id") int id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getAllTeachingMaterialForStudent(id)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
     }
 
-    @GetMapping("/files/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = professorService.loadFile(filename);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .body(file);
-    }
 }

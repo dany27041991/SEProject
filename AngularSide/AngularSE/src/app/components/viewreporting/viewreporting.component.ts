@@ -26,6 +26,12 @@ export class ViewreportingComponent implements OnInit {
         if (value.toUpperCase() === key.professors.lastName.toUpperCase() || value.toUpperCase() === key.professors.firstName.toUpperCase()
           || value.toUpperCase() === key.classrooms.name.toUpperCase()) {
           return key;
+        } else {
+          if (key.professors.lastName.toUpperCase().search(value.toUpperCase()) !== -1
+            || key.professors.firstName.toUpperCase().search(value.toUpperCase()) !== -1
+            || key.classrooms.name.toUpperCase().search(value.toUpperCase()) !== -1) {
+            return key;
+          }
         }
       });
     } else {

@@ -102,12 +102,13 @@ export class ProfessorService implements OnInit {
       pipe(map((res: ResponseInterface) => res.response)) as Observable<ReportingInterface>;
   }
 
-  pushFileToStorage(file: File, id_prof: string): Observable<HttpEvent<{}>> {
+  pushFileToStorage(file: File, id_prof: string, subject: string): Observable<HttpEvent<{}>> {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
     const formdata: FormData = new FormData();
 
     formdata.append('file', file);
     formdata.append('id_prof', id_prof);
+    formdata.append('subject', subject);
     const req = new HttpRequest('POST', this.APIAUTHURL + 'upload', formdata, {
       reportProgress: true,
       responseType: 'text',

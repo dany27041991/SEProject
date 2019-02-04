@@ -10,31 +10,34 @@ import { SendMessageBoxComponent } from './send-message-box/send-message-box.com
 import { OnlineUsersComponent } from './online-users/online-users.component';
 import { LastMessageListComponent } from './last-message-list/last-message-list.component';
 import { CommonModule } from '@angular/common';
+import { DownloadStudentComponent } from './download-student/download-student.component';
 
 @NgModule({
     declarations: [
-        LoginFormComponent,
-        RegisterFormComponent,
-        EditProfileFormComponent,
-        ProfileViewComponent,
-        ProfileSearchComponent,
-        SendMessageBoxComponent,
-        OnlineUsersComponent,
-        LastMessageListComponent
+      LoginFormComponent,
+      RegisterFormComponent,
+      EditProfileFormComponent,
+      ProfileViewComponent,
+      ProfileSearchComponent,
+      SendMessageBoxComponent,
+      OnlineUsersComponent,
+      LastMessageListComponent,
+      DownloadStudentComponent
     ],
     imports: [
-        IonicModule,
-        CommonModule
+      IonicModule,
+      CommonModule
     ],
     exports: [
-        LoginFormComponent,
-        RegisterFormComponent,
-        EditProfileFormComponent,
-        ProfileViewComponent,
-        ProfileSearchComponent,
-        SendMessageBoxComponent,
-        OnlineUsersComponent,
-        LastMessageListComponent
+      LoginFormComponent,
+      RegisterFormComponent,
+      EditProfileFormComponent,
+      ProfileViewComponent,
+      ProfileSearchComponent,
+      SendMessageBoxComponent,
+      OnlineUsersComponent,
+      LastMessageListComponent,
+      DownloadStudentComponent
     ]
 })
 
