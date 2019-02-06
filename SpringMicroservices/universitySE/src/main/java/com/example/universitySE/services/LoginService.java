@@ -46,43 +46,8 @@ public class LoginService implements LoginServiceInterface{
         if(person.isPresent()) {
             log.info("Person exists!");
             Person personLogged = person.get();
-            if(person.get().getPersonType() == TypePerson.SECRETARY.ordinal()) {
-
-                log.info("Secretary found!");
-                //secretary
-                Optional<Secretary> userSecretary = secretaryRepository.findSecretaryById(person.get().getId());
-                Secretary secretaryLogged = userSecretary.get();
-                SecretaryModel secretaryModel = new SecretaryModel(personLogged.getId(), personLogged.getUsername(),
-                        personLogged.getPersonType(), secretaryLogged.getFaculty(), secretaryLogged.getVenue());
-                return secretaryModel;
-            }
-            else if(person.get().getPersonType() == TypePerson.PROFESSOR.ordinal()) {
-
-                log.info("Professor found!");
-                //professor
-                Optional<Professor> userProfessor = professorRepository.findProfessorById(person.get().getId());
-                Professor professorLogged = userProfessor.get();
-                ProfessorModel professorModel = new ProfessorModel(personLogged.getId(), personLogged.getUsername(),
-                        personLogged.getPersonType(), professorLogged.getFirstName(), professorLogged.getLastName(),
-                        professorLogged.getBiography(), professorLogged.getReceptionTime(), professorLogged.getSubject());
-                return professorModel;
-            }
-            else if(person.get().getPersonType() == TypePerson.STUDENT.ordinal()) {
-
-                log.info("Student found!");
-                //student
-                Optional<Student> userStudent = studentRepository.findStudentById(person.get().getId());
-                Student studentLogged = userStudent.get();
-                StudentModel studentModel = new StudentModel(personLogged.getId(), personLogged.getUsername(),
-                        personLogged.getPersonType(), studentLogged.getFirstName(), studentLogged.getLastName(),
-                        studentLogged.getDateOfBirth(), studentLogged.getBadgeNumber(), studentLogged.getStudyCourse(),
-                        studentLogged.getEnrollmentYear());
-                return studentModel;
-            }
-            else {
-
-                throw new ProblemConnectionDbException("Connection problem to database!");
-            }
+            PersonFactory personFactory = new PersonFactory();
+            return personFactory.getPerson(personLogged);
         }
         else {
             log.info("Person not exist or wrong password!");
@@ -152,4 +117,37 @@ public class LoginService implements LoginServiceInterface{
 
         return mobilePersonModels;
     }
+
+    private class PersonFactory {
+
+        public Object getPerson (Person person) throws ProblemConnectionDbException {
+
+            switch (person.getPersonType()){
+                case 1:
+                    Optional<Secretary> userSecretary = secretaryRepository.findSecretaryById(person.getId());
+                    Secretary secretaryLogged = userSecretary.get();
+                    SecretaryModel secretaryModel = new SecretaryModel(person.getId(), person.getUsername(),
+                            person.getPersonType(), secretaryLogged.getFaculty(), secretaryLogged.getVenue());
+                    return secretaryModel;
+                case 2:
+                    Optional<Professor> userProfessor = professorRepository.findProfessorById(person.getId());
+                    Professor professorLogged = userProfessor.get();
+                    ProfessorModel professorModel = new ProfessorModel(person.getId(), person.getUsername(),
+                            person.getPersonType(), professorLogged.getFirstName(), professorLogged.getLastName(),
+                            professorLogged.getBiography(), professorLogged.getReceptionTime(), professorLogged.getSubject());
+                    return professorModel;
+                case 3:
+                    Optional<Student> userStudent = studentRepository.findStudentById(person.getId());
+                    Student studentLogged = userStudent.get();
+                    StudentModel studentModel = new StudentModel(person.getId(), person.getUsername(),
+                            person.getPersonType(), studentLogged.getFirstName(), studentLogged.getLastName(),
+                            studentLogged.getDateOfBirth(), studentLogged.getBadgeNumber(), studentLogged.getStudyCourse(),
+                            studentLogged.getEnrollmentYear());
+                    return studentModel;
+                default:
+                    throw new ProblemConnectionDbException("Connection problem to database!");
+            }
+        }
+    }
+
 }
