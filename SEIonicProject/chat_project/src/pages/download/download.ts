@@ -12,7 +12,5 @@ export class DownloadPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DownloadPage');
   }
-
 }

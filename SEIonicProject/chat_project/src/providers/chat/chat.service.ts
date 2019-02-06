@@ -9,13 +9,8 @@ import { Profile } from "../../models/profile/profile.interface";
 import {HttpClient} from "@angular/common/http";
 import {Response} from "../../models/response/response.interface";
 import {database} from "firebase";
-
-interface SubjectInterface {
-  id: number;
-  name: string;
-  studyCourse: number;
-  yearCourse: number;
-}
+import {map} from "rxjs/internal/operators";
+import {SubjectInterface} from "../../models/subject/subject.interface";
 
 @Injectable()
 export class ChatService {
@@ -28,6 +23,7 @@ export class ChatService {
 
     @Output() chat = new EventEmitter<Message[]>();
     @Output() last = new EventEmitter<Message[]>();
+    @Output() lastChannelMessages = new EventEmitter<Array<ChannelMessage>>();
 
     constructor(private database: AngularFireDatabase, private http: HttpClient) {
 
@@ -75,8 +71,27 @@ export class ChatService {
         return <any>this.database.list(`channels/${channelKey}`).valueChanges();
     }
 
+    getLastChannelMessages() {
+      const user = JSON.parse(localStorage.getItem('selectedUser'));
+      let lastMessagesChannel = new Array<ChannelMessage>();
+      this.getUserLoggedSubject().pipe(map(res => res['response'])).subscribe(data => {
+        for (let subject of data) {
+          <any>this.database.list(`channels/${subject}`).valueChanges().subscribe((dataMex: Array<ChannelMessage>) => {
+            for (var _i = (dataMex.length-1); _i >= 0; _i--) {
+              if(dataMex[_i].id!=user['mykey']) {
+                lastMessagesChannel.push(dataMex[_i]);
+                break;
+              }
+            }
+          })
+        }
+        this.lastChannelMessages.emit(lastMessagesChannel);
+      });
+    }
+
     async sendChannelChatMessage(channelKey: string, message: ChannelMessage) {
         await this.database.list(`channels/${channelKey}`).push(message);
+        this.getLastChannelMessages();
     }
 
     async sendChat(message: Message) {

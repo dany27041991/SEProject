@@ -4,6 +4,8 @@ import { Account } from '../../models/account/account.interface';
 import { LoginResponse } from '../../models/login/login-response.interface';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Rx";
+import {Response} from "../../models/response/response.interface";
+import {SubjectInterface} from "../../models/subject/subject.interface";
 
 @Injectable()
 export class AuthProvider {
@@ -37,6 +39,13 @@ export class AuthProvider {
         error: e
       }
     }
+  }
+
+  getAllSubject() {
+    this.http.post(this.APIAUTHURL + 'getAllSubject',{}).subscribe((data: Response) => {
+      const courseList: Array<SubjectInterface> = data.response;
+      localStorage.setItem('AllSubject', JSON.stringify(courseList));
+    });
   }
 
   getAuthenticatedUser() {

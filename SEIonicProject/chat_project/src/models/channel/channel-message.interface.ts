@@ -1,5 +1,8 @@
 export interface ChannelMessage {
-    content: string;
-    name: string;
-    lastname: string;
+  content: string;
+  id: number;
+  name: string;
+  lastname: string;
+  person_type: number;
+  subject: string;
 }

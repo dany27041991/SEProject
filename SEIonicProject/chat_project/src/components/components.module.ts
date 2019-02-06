@@ -11,6 +11,8 @@ import { OnlineUsersComponent } from './online-users/online-users.component';
 import { LastMessageListComponent } from './last-message-list/last-message-list.component';
 import { CommonModule } from '@angular/common';
 import { DownloadStudentComponent } from './download-student/download-student.component';
+import { LastChannelMessageComponent } from './last-channel-message/last-channel-message';
+import { LastUploadMaterialComponent } from './last-upload-material/last-upload-material';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,9 @@ import { DownloadStudentComponent } from './download-student/download-student.co
       SendMessageBoxComponent,
       OnlineUsersComponent,
       LastMessageListComponent,
-      DownloadStudentComponent
+      DownloadStudentComponent,
+      LastChannelMessageComponent,
+    LastUploadMaterialComponent
     ],
     imports: [
       IonicModule,
@@ -37,7 +41,9 @@ import { DownloadStudentComponent } from './download-student/download-student.co
       SendMessageBoxComponent,
       OnlineUsersComponent,
       LastMessageListComponent,
-      DownloadStudentComponent
+      DownloadStudentComponent,
+      LastChannelMessageComponent,
+    LastUploadMaterialComponent
     ]
 })
 

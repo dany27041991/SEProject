@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ProfessorProvider} from "../../providers/professor/professor.service";
+import {Observable} from "rxjs/Rx";
+import {DownloadInterface} from "../../models/download/download.interface";
+import {NavController} from "ionic-angular";
+import {ModalRatePage} from "../../pages/modal-rate/modal-rate";
 
-/**
- * Generated class for the DownloadStudentComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'app-download-student',
   templateUrl: 'download-student.component.html'
 })
-export class DownloadStudentComponent {
+export class DownloadStudentComponent implements OnInit{
 
-  text: string;
+  public downloadMaterial: Observable<DownloadInterface>;
 
-  constructor() {
-    console.log('Hello DownloadStudentComponent Component');
-    this.text = 'Hello World';
+  constructor(private prof: ProfessorProvider, private navCtrl: NavController) {
+    this.downloadMaterial = this.prof.downloadTeachingMaterial();
   }
 
+  ngOnInit(): void {
+
+  }
+
+  addRating(i: number) {
+    this.navCtrl.push('ModalRatePage', {i});
+  }
 }

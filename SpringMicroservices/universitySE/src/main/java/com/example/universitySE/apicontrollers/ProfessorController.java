@@ -35,7 +35,7 @@ public class ProfessorController {
 
     List<String> files = new ArrayList<String>();
 
-    @RequestMapping(value = "/subject/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/subject/{id}")
     public ResponseEntity<JSONResponseBody> getSubject(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
             loginService.verifyJwtAndGetData(request);
@@ -53,7 +53,7 @@ public class ProfessorController {
         }
     }
 
-    @RequestMapping(value = "/materials", method = RequestMethod.POST)
+    @PostMapping(value = "/materials")
     public ResponseEntity<JSONResponseBody> getMaterials(HttpServletRequest request) {
         try {
             loginService.verifyJwtAndGetData(request);
@@ -71,7 +71,7 @@ public class ProfessorController {
         }
     }
 
-    @RequestMapping(value = "/addreporting", method = RequestMethod.POST)
+    @PostMapping(value = "/addreporting")
     public ResponseEntity<JSONResponseBody> addReporting(HttpServletRequest request, @Valid @RequestBody ReportingDTO reportingDTO) {
         try {
             loginService.verifyJwtAndGetData(request);
@@ -88,7 +88,7 @@ public class ProfessorController {
         }
     }
 
-    @RequestMapping(value = "/classrooms", method = RequestMethod.POST)
+    @PostMapping(value = "/classrooms")
     public ResponseEntity<JSONResponseBody> getClassroom(HttpServletRequest request) {
         try {
             loginService.verifyJwtAndGetData(request);
@@ -134,8 +134,8 @@ public class ProfessorController {
         }
     }
 
-    @PostMapping("/getAllTeachingMaterials")
-    public ResponseEntity<JSONResponseBody> getAllTeachingMaterials(@RequestParam(value = "id") int id) {
+    @GetMapping(value = "/getAllTeachingMaterials/{id}")
+    public ResponseEntity<JSONResponseBody> getAllTeachingMaterials(@Valid @PathVariable(name = "id") int id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getAllTeachingMaterialForStudent(id)));
         } catch (Exception e) {

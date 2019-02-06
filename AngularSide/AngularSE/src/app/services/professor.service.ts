@@ -117,10 +117,6 @@ export class ProfessorService implements OnInit {
 
     return this.http.request(req);
   }
-
-  getFiles(): Observable<any> {
-    return this.http.get('/getallfiles');
-  }
 }
 
 

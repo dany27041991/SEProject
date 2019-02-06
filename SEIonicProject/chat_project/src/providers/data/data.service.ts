@@ -47,7 +47,7 @@ export class DataProvider {
 
   setUserOnline(profile: Profile) {
 
-      if(profile.mykey){
+      if(profile){
         const ref = database().ref(`online-users/${profile.mykey}`);
 
         try {

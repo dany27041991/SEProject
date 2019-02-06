@@ -3,7 +3,7 @@
     <ion-title>{{ channel.name }}</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content padding #scroll>
   <ion-list>
     <ion-item text-wrap *ngFor="let message of channelMessages | async">
       <p style="color: black; font-size: 25px"><img width="25px" height="25px" src="assets/imgs/profile-placeholder.png" alt="Avatar"><b style="color: darkblue; font-size: 25px"> {{message.name}} {{message.lastname}}: </b>{{ message.content }}</p>

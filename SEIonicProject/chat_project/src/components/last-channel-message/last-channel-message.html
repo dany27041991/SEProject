@@ -1,0 +1,14 @@
+<ion-list>
+  <ion-item-divider style="font-weight: bold; color: orange" id="lastmessages">Last Channels Messages</ion-item-divider>
+
+  <ion-item *ngFor="let message of lastChannelMessages | async">
+    <ion-item text-wrap="" no-lines>
+      <h2 style="font-weight: bold; color: darkblue">{{ message.subject }}</h2>
+      <ion-avatar item-left>
+        <img src="assets/imgs/profile-placeholder.png" alt="Avatar">
+      </ion-avatar>
+      <h2 id="profile">{{ message.name }} {{ message.lastname }}:</h2>
+      <p>{{ message.content }}</p>
+    </ion-item>
+  </ion-item>
+</ion-list>

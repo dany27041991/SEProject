@@ -31,10 +31,11 @@ export class MyApp implements OnInit{
   rootPage: string;
   preLoad: boolean = false;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth: AuthProvider, private authFirebase: AngularFireAuth) {
+  constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private auth: AuthProvider, private authFirebase: AngularFireAuth) {
     //this.auth.getAuthenticatedUser().subscribe(auth => {
       //!auth ? this.rootPage = 'LoginPage' : this.rootPage = 'MessagePage';
     //})
+
 
     platform.ready().then(() => {
 
