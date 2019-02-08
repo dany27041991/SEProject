@@ -86,7 +86,6 @@ export class ProfessorService implements OnInit {
       }, {headers}
     ).subscribe(
       (payload: ResponseInterface) => {
-        console.log('ok')
         this.router.navigate(['user/successful']);
       }, (httpResp: HttpErrorResponse) => {
         if (httpResp.error['server'] !== 404 || !httpResp.error) {

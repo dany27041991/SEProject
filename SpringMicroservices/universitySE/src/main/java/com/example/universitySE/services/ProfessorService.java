@@ -5,18 +5,19 @@ import com.example.universitySE.dtos.ReportingDTO;
 import com.example.universitySE.exceptions.ClassroomException;
 import com.example.universitySE.exceptions.MaterialException;
 import com.example.universitySE.exceptions.SubjectException;
+import com.example.universitySE.intservices.FileSystem;
 import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.intservices.ProfessorServiceInterface;
 import com.example.universitySE.models.ReportingModel;
 import com.example.universitySE.models.SubjectModel;
 import com.example.universitySE.models.TeachingMaterialModel;
 import com.example.universitySE.repositories.*;
+import com.example.universitySE.shared.Folder;
+import com.example.universitySE.utils.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,17 +27,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.core.io.UrlResource;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.MalformedURLException;
 import java.io.IOException;
 import java.util.UUID;
 
 @Service
 public class ProfessorService implements ProfessorServiceInterface {
 
-    private static final String pathStore = "http://localhost:8090/files/";
     private static final Logger log = LoggerFactory.getLogger(LoginServiceInterface.class);
 
     @Autowired
@@ -142,7 +139,13 @@ public class ProfessorService implements ProfessorServiceInterface {
     @Override
     public void store(MultipartFile file, String id, int subject) {
         try {
-            String uniqueID = UUID.randomUUID().toString();
+            FileSystem directories = new Folder();
+            directories.add(file, "/files", subject);
+            directories.add(file, "/files/"+id, subject);
+            FileSystem filesUp = new FileUp();
+            filesUp.add(file, "/files/"+id, subject);
+
+            /*String uniqueID = UUID.randomUUID().toString();
             Path rootLocation = Paths.get("src/main/resources/static/files/"+id);
             Path filePath = Paths.get(rootLocation+"/"+file.getOriginalFilename());
             File directory = new File(String.valueOf(rootLocation));
@@ -150,22 +153,22 @@ public class ProfessorService implements ProfessorServiceInterface {
                 directory.mkdir();
                 File f = new File(String.valueOf(filePath));
                 if(f.exists() && !f.isDirectory()) {
-                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+uniqueID+file.getOriginalFilename());
+                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+uniqueID+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(uniqueID+file.getOriginalFilename()));
                 } else {
-                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+file.getOriginalFilename());
+                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
                 }
             } else {
                 File f = new File(String.valueOf(filePath));
                 if(f.exists() && !f.isDirectory()) {
-                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+uniqueID+file.getOriginalFilename());
+                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+uniqueID+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(uniqueID+file.getOriginalFilename()));
                 } else {
-                    teachingMaterialRepository.addTeachingMaterial(subject, pathStore+id+"/"+file.getOriginalFilename());
+                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+file.getOriginalFilename());
                     Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
                 }
-            }
+            }*/
         } catch (Exception e) {
             log.info("Problem loading!");
             throw new RuntimeException("FAIL!");
@@ -188,6 +191,38 @@ public class ProfessorService implements ProfessorServiceInterface {
             }
         }
         return teachingMaterialModels;
+    }
+
+    public class FileUp implements FileSystem {
+
+        @Override
+        public void add(MultipartFile file, String id, int subject) throws IOException {
+            String uniqueID = UUID.randomUUID().toString();
+            Path rootLocationFile = Paths.get(Constant.rootLocation+id);
+            Path filePath = Paths.get(rootLocationFile+"/"+file.getOriginalFilename());
+            File f = new File(String.valueOf(filePath));
+            if(f.exists() && !f.isDirectory()) {
+                addUploadToDb(subject, id, uniqueID+file.getOriginalFilename());
+                Files.copy(file.getInputStream(), rootLocationFile.resolve(uniqueID+file.getOriginalFilename()));
+            } else {
+                addUploadToDb(subject, id, file.getOriginalFilename());
+                Files.copy(file.getInputStream(), rootLocationFile.resolve(file.getOriginalFilename()));
+            }
+        }
+
+        @Override
+        public void remove(MultipartFile file, String id) {
+
+        }
+
+        private void addUploadToDb(int subject, String id, String nameFile) {
+            try {
+                teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+nameFile);
+            } catch (Exception e) {
+                log.info("Not added!");
+            }
+
+        }
     }
 
 

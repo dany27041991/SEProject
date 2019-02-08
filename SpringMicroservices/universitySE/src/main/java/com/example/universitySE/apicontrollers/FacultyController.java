@@ -18,7 +18,7 @@ public class FacultyController {
     FacultyServiceInterface facultyService;
 
     @PostMapping(value = "/getAllSubject")
-    public ResponseEntity<JSONResponseBody> getAllUser() {
+    public ResponseEntity<JSONResponseBody> getAllSubject() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), facultyService.getAllSubject()));
         } catch (Exception exception) {

@@ -12,6 +12,7 @@ import com.example.universitySE.repositories.ProfessorRepository;
 import com.example.universitySE.repositories.SecretaryRepository;
 import com.example.universitySE.repositories.StudentRepository;
 import com.example.universitySE.shared.TypePerson;
+import com.example.universitySE.utils.Constant;
 import com.example.universitySE.utils.JwtUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
@@ -123,20 +124,20 @@ public class LoginService implements LoginServiceInterface{
         public Object getPerson (Person person) throws ProblemConnectionDbException {
 
             switch (person.getPersonType()){
-                case 1:
+                case Constant.SECRETARY:
                     Optional<Secretary> userSecretary = secretaryRepository.findSecretaryById(person.getId());
                     Secretary secretaryLogged = userSecretary.get();
                     SecretaryModel secretaryModel = new SecretaryModel(person.getId(), person.getUsername(),
                             person.getPersonType(), secretaryLogged.getFaculty(), secretaryLogged.getVenue());
                     return secretaryModel;
-                case 2:
+                case Constant.PROFESSOR:
                     Optional<Professor> userProfessor = professorRepository.findProfessorById(person.getId());
                     Professor professorLogged = userProfessor.get();
                     ProfessorModel professorModel = new ProfessorModel(person.getId(), person.getUsername(),
                             person.getPersonType(), professorLogged.getFirstName(), professorLogged.getLastName(),
                             professorLogged.getBiography(), professorLogged.getReceptionTime(), professorLogged.getSubject());
                     return professorModel;
-                case 3:
+                case Constant.STUDENT:
                     Optional<Student> userStudent = studentRepository.findStudentById(person.getId());
                     Student studentLogged = userStudent.get();
                     StudentModel studentModel = new StudentModel(person.getId(), person.getUsername(),
