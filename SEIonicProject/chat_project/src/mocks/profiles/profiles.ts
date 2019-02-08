@@ -1,4 +1,4 @@
-import { Profile } from "../../models/profile/profile.interface";
+/*import { Profile } from "../../models/profile/profile.interface";
 
 const userList: Profile[] = [
     {
@@ -27,4 +27,4 @@ const userList: Profile[] = [
     }
 ];
 
-export const USER_LIST = userList;
+export const USER_LIST = userList;*/

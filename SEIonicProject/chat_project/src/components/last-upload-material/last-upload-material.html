@@ -1,0 +1,13 @@
+<ion-list>
+  <ion-item-divider style="color: red" id="lastmessages">Last Upload Material</ion-item-divider>
+
+  <ion-item *ngFor="let message of lastUpload">
+    <ion-item text-wrap no-lines>
+      <ion-avatar item-left>
+        <img src="assets/imgs/profile-placeholder.png" alt="Avatar">
+      </ion-avatar>
+      <h2 id="profile">{{ message.subject.name }}</h2>
+      <a target="_blank" href="{{ message.media }}"><p>{{ message.media }}</p></a>
+    </ion-item>
+  </ion-item>
+</ion-list>

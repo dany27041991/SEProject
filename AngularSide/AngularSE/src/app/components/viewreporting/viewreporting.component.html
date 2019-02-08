@@ -1,0 +1,62 @@
+<div class="container-fluid text-center pt-3" id="viewreporting">
+  <h1 style="font-size:2vw; font-weight: bold; color: #CB2222">Welcome in your View Reporting Page Prof. {{lastname}}</h1>
+
+  <div class="row pt-5">
+    <div class="offset-3 col-6">
+      <label style="font-size:1.8vw; font-weight: bold; color: lightgoldenrodyellow">FILTER BY PROFESSOR OR CLASSROOM:</label>
+      <input class="input-res" type="text" placeholder="Insert your text" (keyup)="onSearch($event.target.value)"/>
+    </div>
+  </div>
+
+  <div class="row p-4" *ngIf="flag">
+    <div class="col-12 p-0 text-center">
+      <div class="row">
+        <div class="offset-3 col-6">
+          <h2 style="font-size:1.8vw; font-weight: bold; color: lightgoldenrodyellow">FILTERED LIST:</h2>
+          <div class="m-2" *ngFor="let rep of reportingFilterd">
+            <div class="card">
+              <div class="card-body">
+                <h5 style="font-size:1.3vw; font-weight: bold; color: black" class="card-title">{{rep.professors.firstName}} {{rep.professors.lastName}}: {{rep.noteProf}}</h5>
+                <p class="card-text">Classroom: {{rep.classrooms.name}}</p>
+                <p *ngIf="rep.noteSec" class="card-text">Secretary's Note: {{rep.noteSec}}</p>
+                <div [ngSwitch]="rep.state">
+                  <p style="color: blue" class="card-text" *ngSwitchCase="1">Taken In</p>
+                  <p style="color: orange" class="card-text" *ngSwitchCase="2">In Progress</p>
+                  <p style="color: green" class="card-text" *ngSwitchCase="3">Resolved</p>
+                  <p style="color: red" class="card-text" *ngSwitchCase="4">Refused</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row p-4" *ngIf="!flag">
+    <div class="col-12 p-0 text-center">
+      <div class="row">
+        <div class="offset-3 col-6">
+          <h2 style="font-size:1.8vw; font-weight: bold; color: lightgoldenrodyellow">COMPLETE LIST OF ALL REPORTS:</h2>
+          <div class="m-2" *ngFor="let rep of reporting | async">
+            <div class="card">
+              <div class="card-body">
+                <h5 style="font-size:1.3vw; font-weight: bold; color: black" class="card-title">{{rep.professors.firstName}} {{rep.professors.lastName}}: {{rep.noteProf}}</h5>
+                <p class="card-text">Classroom: {{rep.classrooms.name}}</p>
+                <p *ngIf="rep.noteSec" class="card-text">Secretary's Note: {{rep.noteSec}}</p>
+                <div [ngSwitch]="rep.state">
+                  <p style="color: blue" class="card-text" *ngSwitchCase="1">Taken In</p>
+                  <p style="color: orange" class="card-text" *ngSwitchCase="2">In Progress</p>
+                  <p style="color: green" class="card-text" *ngSwitchCase="3">Resolved</p>
+                  <p style="color: red" class="card-text" *ngSwitchCase="4">Refused</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

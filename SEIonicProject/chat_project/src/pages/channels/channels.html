@@ -10,8 +10,10 @@
 </ion-header>
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let channel of channelList | async" (click)="selectChannel(channel)">
-      #{{ channel.name }}
-    </ion-item>
+    <div text-wrap *ngFor="let channel of channelList | async" (click)="selectChannel(channel)">
+      <div *ngFor="let subj of subject">
+        <ion-item text-wrap *ngIf="subj === channel.mykey">#{{ channel.name }}</ion-item>
+      </div>
+    </div>
   </ion-list>
 </ion-content>

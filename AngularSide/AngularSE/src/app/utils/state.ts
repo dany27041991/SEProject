@@ -1,4 +1,4 @@
-export enum Type {
+export enum State {
   TakenIn = 1,
   InProgress = 2,
   Resolved = 3,

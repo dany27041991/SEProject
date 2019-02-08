@@ -73,4 +73,10 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['user/professor/' + AccessToLocalStorage.getUser()['id']]);
     }
   }
+
+  viewNotifications(): void {
+    if (AccessToLocalStorage.getTypePerson() === Type.Professor) {
+      this.router.navigate(['user/professor/' + AccessToLocalStorage.getUser()['id'] + '/viewreporting']);
+    }
+  }
 }

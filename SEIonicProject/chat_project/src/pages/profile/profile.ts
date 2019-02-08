@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import {App, IonicPage, NavController} from 'ionic-angular';
 import { Profile } from '../../models/profile/profile.interface';
 import { AuthProvider } from '../../providers/auth/auth.service';
 import {DataProvider} from "../../providers/data/data.service";
@@ -13,7 +13,7 @@ export class ProfilePage {
 
   existingProfile = {} as Profile;
 
-  constructor(private navCtrl: NavController, private auth: AuthProvider, private data: DataProvider) {
+  constructor(private navCtrl: NavController, private auth: AuthProvider, private data: DataProvider, private app: App) {
   }
 
   getExistingProfile(profile: Profile) {
@@ -30,6 +30,6 @@ export class ProfilePage {
     this.auth.signOut();
     localStorage.removeItem('selectedUser');
     localStorage.removeItem('firebase:host:ionic-chat-44e31.firebaseio.com');
-    this.navCtrl.setRoot('LoginPage');
+    this.app.getRootNav().setRoot('LoginPage');
   }
 }

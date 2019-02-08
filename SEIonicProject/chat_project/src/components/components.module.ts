@@ -10,31 +10,40 @@ import { SendMessageBoxComponent } from './send-message-box/send-message-box.com
 import { OnlineUsersComponent } from './online-users/online-users.component';
 import { LastMessageListComponent } from './last-message-list/last-message-list.component';
 import { CommonModule } from '@angular/common';
+import { DownloadStudentComponent } from './download-student/download-student.component';
+import { LastChannelMessageComponent } from './last-channel-message/last-channel-message';
+import { LastUploadMaterialComponent } from './last-upload-material/last-upload-material';
 
 @NgModule({
     declarations: [
-        LoginFormComponent,
-        RegisterFormComponent,
-        EditProfileFormComponent,
-        ProfileViewComponent,
-        ProfileSearchComponent,
-        SendMessageBoxComponent,
-        OnlineUsersComponent,
-        LastMessageListComponent
+      LoginFormComponent,
+      RegisterFormComponent,
+      EditProfileFormComponent,
+      ProfileViewComponent,
+      ProfileSearchComponent,
+      SendMessageBoxComponent,
+      OnlineUsersComponent,
+      LastMessageListComponent,
+      DownloadStudentComponent,
+      LastChannelMessageComponent,
+    LastUploadMaterialComponent
     ],
     imports: [
-        IonicModule,
-        CommonModule
+      IonicModule,
+      CommonModule
     ],
     exports: [
-        LoginFormComponent,
-        RegisterFormComponent,
-        EditProfileFormComponent,
-        ProfileViewComponent,
-        ProfileSearchComponent,
-        SendMessageBoxComponent,
-        OnlineUsersComponent,
-        LastMessageListComponent
+      LoginFormComponent,
+      RegisterFormComponent,
+      EditProfileFormComponent,
+      ProfileViewComponent,
+      ProfileSearchComponent,
+      SendMessageBoxComponent,
+      OnlineUsersComponent,
+      LastMessageListComponent,
+      DownloadStudentComponent,
+      LastChannelMessageComponent,
+    LastUploadMaterialComponent
     ]
 })
 
