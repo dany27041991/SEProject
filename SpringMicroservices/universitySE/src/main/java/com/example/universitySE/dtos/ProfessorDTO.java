@@ -5,11 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor @NoArgsConstructor
 public class ProfessorDTO {
 
     @Getter @Setter
-    private int id;
+    private String username;
+
+    @Getter @Setter
+    private String password;
+
+    @Getter @Setter
+    private int personType;
 
     @Getter @Setter
     private String firstName;
@@ -25,4 +33,7 @@ public class ProfessorDTO {
 
     @Getter @Setter
     private int subject;
+
+    @Getter @Setter
+    private Date dateOfBirth;
 }

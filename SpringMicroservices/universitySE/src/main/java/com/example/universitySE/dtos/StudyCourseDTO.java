@@ -9,9 +9,6 @@ import lombok.Setter;
 public class StudyCourseDTO {
 
     @Getter @Setter
-    private int id;
-
-    @Getter @Setter
     private String name;
 
     @Getter @Setter

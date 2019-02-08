@@ -1,7 +1,6 @@
 package com.example.universitySE.services;
 
-import com.example.universitySE.domain.Subject;
-import com.example.universitySE.domain.SupportMaterial;
+import com.example.universitySE.domain.*;
 import com.example.universitySE.exceptions.MaterialException;
 import com.example.universitySE.exceptions.SubjectException;
 import com.example.universitySE.intservices.LoginServiceInterface;
@@ -29,7 +28,7 @@ public class ProfessorService implements ProfessorServiceInterface {
     SupportMaterialRepository supportMaterialRepository;
 
     @Override
-    public SubjectModel getSubject(int id) throws SubjectException {
+    public SubjectModel getSubject(long id) throws SubjectException {
         Optional<Subject> subject = subjectRepository.findSubjectById(id);
         if(subject.isPresent()) {
             log.info("Subject exists!");

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Type} from '../../utils/type';
 import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
 import {Router} from '@angular/router';
+import {Secretary} from '../../models/Secretary';
+import {SecretaryService} from '../../services/secretary.service';
 
 @Component({
   selector: 'app-secretary',
@@ -10,9 +12,13 @@ import {Router} from '@angular/router';
 })
 export class SecretaryComponent implements OnInit {
 
-  constructor(private route: Router) {
+  public secretary: Secretary;
+
+  constructor(private route: Router, private secService: SecretaryService) {
     if (AccessToLocalStorage.getTypePerson() !== Type.Secretary) {
       this.route.navigate(['']);
+    } else {
+      this.secretary = this.secService.getFaculty();
     }
   }
 

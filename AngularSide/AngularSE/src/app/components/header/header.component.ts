@@ -57,6 +57,8 @@ export class HeaderComponent implements OnInit {
     if (this.cookie.get('Jwt') && AccessToLocalStorage.getPerson()) {
       this.isLogged = true;
       this.typeLogged = {logged: false, type: AccessToLocalStorage.getTypePerson()};
+      console.log(this.cookie.get('Jwt'));
+      console.log(AccessToLocalStorage.getPerson());
     }
   }
 }

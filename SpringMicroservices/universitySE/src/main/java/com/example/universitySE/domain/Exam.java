@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 29-gen-2019 8.53.01 by Hibernate Tools 5.2.0.Final
+// Generated 2-feb-2019 18.39.07 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.Column;
@@ -17,12 +17,12 @@ import javax.persistence.Table;
 public class Exam  implements java.io.Serializable {
 
 
-     private int id;
+     private long id;
 
     public Exam() {
     }
 
-    public Exam(int id) {
+    public Exam(long id) {
        this.id = id;
     }
    
@@ -30,11 +30,11 @@ public class Exam  implements java.io.Serializable {
 
     
     @Column(name="id", unique=true, nullable=false)
-    public int getId() {
+    public long getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

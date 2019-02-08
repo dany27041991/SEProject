@@ -27,8 +27,7 @@ export class ProfessorService implements OnInit {
   getSubject(): Professor {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
     this.professor = <Professor>AccessToLocalStorage.getUser();
-    this.professor.subject = null;
-    this.http.get(this.APIAUTHURL + 'subject/' + AccessToLocalStorage.getUser()['person_type'], {headers}).subscribe(
+    this.http.get(this.APIAUTHURL + 'subject/' + AccessToLocalStorage.getUser()['subject'], {headers}).subscribe(
       (payload: ResponseInterface) => {
         this.professor.subject = <Subject>payload.response;
         localStorage.setItem('Subject', JSON.stringify(payload.response));

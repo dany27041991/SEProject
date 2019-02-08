@@ -1,0 +1,260 @@
+<div class="container-fluid">
+  <div class="row" id="insertuser">
+    <div class="col-12 p-0 text-center">
+      <h1 style="font-size:2.7vw; font-weight: bold; color: black">Insert the new User using the form below.</h1>
+      <div>
+        <form name="signupForm" #f="ngForm" (ngSubmit)="sending(f)">
+
+<!-- ----------------------------------------------------------- insert user -->
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="username"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Username</h4></label>
+                <textarea required class="form-control" type="username" rows="1" ngModel #username="ngModel" name="username" id="username"></textarea>
+              </div>
+              <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                <div class="alert-warning small" *ngIf="username.errors['required']">
+                  You must set a username!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="password"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Password</h4></label>
+                <textarea required class="form-control" type="password" rows="1" ngModel #password="ngModel" name="password" id="password"></textarea>
+              </div>
+              <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                <div class="alert-warning small" *ngIf="password.errors['required']">
+                  You must set a password!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="type"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the type of the user</h4></label>
+                <select class="form-control" id="type" required ngModel #type="ngModel" name="type" (ngModelChange)="onSelect(type.value)">
+                  <option [value]="pt.id" *ngFor="let pt of person_types">{{pt.name}}</option>
+                </select>
+
+                <div *ngIf="prof">
+  <!-- --------------------------------------------------------------- insert professor -->
+                  <div class="row ml-5 mr-5">
+                  <div class="col-3"></div>
+                  <div class="col-6 col-offset-3">
+                    <div class="form-group small">
+                      <label for="firstnameprof"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">First Name</h4></label>
+                      <textarea required class="form-control" type="firstnameprof" rows="1" ngModel #firstnameprof="ngModel" name="firstnameprof" id="firstnameprof"></textarea>
+                    </div>
+                    <div *ngIf="firstnameprof.invalid && (firstnameprof.dirty || firstnameprof.touched)">
+                      <div class="alert-warning small" *ngIf="firstnameprof.errors['required']">
+                        You must set a first name!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="lastnameprof"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Last Name</h4></label>
+                        <textarea required class="form-control" type="lastnameprof" rows="1" ngModel #lastnameprof="ngModel" name="lastnameprof" id="lastnameprof"></textarea>
+                      </div>
+                      <div *ngIf="lastnameprof.invalid && (lastnameprof.dirty || lastnameprof.touched)">
+                        <div class="alert-warning small" *ngIf="lastnameprof.errors['required']">
+                          You must set a last name!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="bio"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Biography</h4></label>
+                        <textarea required class="form-control" type="bio" rows="1" ngModel #bio="ngModel" name="bio" id="bio"></textarea>
+                      </div>
+                      <div *ngIf="bio.invalid && (bio.dirty || bio.touched)">
+                        <div class="alert-warning small" *ngIf="bio.errors['required']">
+                          You must set a biography!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="rectime"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Reception Time</h4></label>
+                        <textarea required class="form-control" type="rectime" rows="1" ngModel #rectime="ngModel" name="rectime" id="rectime"></textarea>
+                      </div>
+                      <div *ngIf="rectime.invalid && (rectime.dirty || rectime.touched)">
+                        <div class="alert-warning small" *ngIf="rectime.errors['required']">
+                          You must set a reception time!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="courseprof"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the course of study</h4></label>
+                        <select class="form-control" id="courseprof" required ngModel #courseprof="ngModel" name="courseprof" (ngModelChange)="checkCourse(courseprof.value)">
+                          <option [value]="c.id" *ngFor="let c of courses">{{c.name}}</option>
+                        </select>
+                      </div>
+                      <div *ngIf="courseprof.invalid && (courseprof.dirty || courseprof.touched)">
+                        <div class="alert-warning small" *ngIf="courseprof.errors['required']">
+                          You must choose a course of study!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="subject"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the subject</h4></label>
+                        <select class="form-control" id="subject" required ngModel #subject="ngModel" name="subject">
+                          <option [value]="s.id" *ngFor="let s of subjects">{{s.name}}</option>
+                        </select>
+                      </div>
+                      <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
+                        <div class="alert-warning small" *ngIf="subject.errors['required']">
+                          You must choose a subject!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the date of birth</h4>
+                          <input placeholder="Date of birth" [(ngModel)]="dateOfBirthprof" [ngModelOptions]="{standalone: true}" [owlDateTimeTrigger]="dobbis" [owlDateTime]="dobbis" (ngModelChange)="getBirthProf(dateOfBirthprof)">
+                          <owl-date-time [pickerType]="'calendar'" #dobbis></owl-date-time>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <div class="form-group align-content-sm-center">
+                        <button [disabled]="!f.valid" class="btn btn-success" type="submit">Insert Professor</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="stud">
+  <!-- -------------------------------------------------------------------- insert student -->
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="firstnamestud"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">First Name</h4></label>
+                        <textarea required class="form-control" type="firstnamestud" rows="1" ngModel #firstnamestud="ngModel" name="firstnamestud" id="firstnamestud"></textarea>
+                      </div>
+                      <div *ngIf="firstnamestud.invalid && (firstnamestud.dirty || firstnamestud.touched)">
+                        <div class="alert-warning small" *ngIf="firstnamestud.errors['required']">
+                          You must set a first name!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="lastnamestud"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Last Name</h4></label>
+                        <textarea required class="form-control" type="lastnamestud" rows="1" ngModel #lastnamestud="ngModel" name="lastnamestud" id="lastnamestud"></textarea>
+                      </div>
+                      <div *ngIf="lastnamestud.invalid && (lastnamestud.dirty || lastnamestud.touched)">
+                        <div class="alert-warning small" *ngIf="lastnamestud.errors['required']">
+                          You must set a last name!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the date of birth</h4>
+                          <input placeholder="Date of birth" [(ngModel)]="dateOfBirthstud" [ngModelOptions]="{standalone: true}" [owlDateTimeTrigger]="dob" [owlDateTime]="dob" (ngModelChange)="getBirthStud(dateOfBirthstud)">
+                          <owl-date-time [pickerType]="'calendar'" #dob></owl-date-time>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label for="coursestud"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the course of study</h4></label>
+                        <select class="form-control" id="coursestud" required ngModel #coursestud="ngModel" name="coursestud">
+                          <option [value]="c.id" *ngFor="let c of courses">{{c.name}}</option>
+                        </select>
+                      </div>
+                      <div *ngIf="coursestud.invalid && (coursestud.dirty || coursestud.touched)">
+                        <div class="alert-warning small" *ngIf="coursestud.errors['required']">
+                          You must choose a course of study!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row ml-5 mr-5">
+                    <div class="col-3"></div>
+                    <div class="col-6 col-offset-3">
+                      <div class="form-group small">
+                        <label><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the enrollment year</h4>
+                          <input placeholder="Enrollment year" [(ngModel)]="enrollment" [ngModelOptions]="{standalone: true}" [owlDateTimeTrigger]="ey" [owlDateTime]="ey" (ngModelChange)="getEnrollStud(enrollment)">
+                          <owl-date-time [pickerType]="'calendar'" #ey></owl-date-time>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-2">
+                    <div class="col-12">
+                      <div class="form-group align-content-sm-center">
+                        <button [disabled]="!f.valid" class="btn btn-success" type="submit">Insert Student</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div *ngIf="type.invalid && (type.dirty || type.touched)">
+                <div class="alert-warning small" *ngIf="type.errors['required']">
+                  You must choose a type for the user!
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

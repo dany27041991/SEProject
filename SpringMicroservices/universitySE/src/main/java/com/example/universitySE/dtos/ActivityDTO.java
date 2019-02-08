@@ -11,9 +11,6 @@ import java.util.Date;
 public class ActivityDTO {
 
     @Getter @Setter
-    private int id;
-
-    @Getter @Setter
     private int studyCourse;
 
     @Getter @Setter
@@ -27,9 +24,6 @@ public class ActivityDTO {
 
     @Getter @Setter
     private Date end;
-
-    @Getter @Setter
-    private int classroomName;
 
     @Getter @Setter
     private int activityType;

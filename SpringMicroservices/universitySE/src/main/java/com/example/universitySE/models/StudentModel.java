@@ -9,7 +9,7 @@ import lombok.Setter;
 public class StudentModel {
 
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String username;
@@ -27,7 +27,7 @@ public class StudentModel {
     private java.util.Date birthdate;
 
     @Getter @Setter
-    private int badgenumber;
+    private long badgenumber;
 
     @Getter @Setter
     private int studycourse;

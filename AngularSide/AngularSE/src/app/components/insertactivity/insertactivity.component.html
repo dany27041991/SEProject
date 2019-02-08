@@ -1,0 +1,112 @@
+<div class="container-fluid">
+  <div class="row" id="insertactivity">
+    <div class="col-12 p-0 text-center">
+      <h1 style="font-size:2.7vw; font-weight: bold; color: black">Insert the new Activity using the form below.</h1>
+      <div>
+        <form name="signupForm" #f="ngForm" (ngSubmit)="sending(f)">
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="type"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the type of the activity</h4></label>
+                <select class="form-control" id="type" required ngModel #type="ngModel" name="type">
+                  <option [value]="a.id" *ngFor="let a of activity_types">{{a.name}}</option>
+                </select>
+              </div>
+              <div *ngIf="type.invalid && (type.dirty || type.touched)">
+                <div class="alert-warning small" *ngIf="type.errors['required']">
+                  You must choose a type for the activity!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="course"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the course of study</h4></label>
+                <select class="form-control" id="course" required ngModel #course="ngModel" name="course" (ngModelChange)="checkCourse(course.value)">
+                  <option [value]="c.id" *ngFor="let c of study_courses">{{c.name}}</option>
+                </select>
+              </div>
+              <div *ngIf="course.invalid && (course.dirty || course.touched)">
+                <div class="alert-warning small" *ngIf="course.errors['required']">
+                  You must choose a course of study!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="subject"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the subject</h4></label>
+                <select class="form-control" id="subject" required ngModel #subject="ngModel" name="subject" (ngModelChange)="checkSubject(subject.value)">
+                  <option [value]="s.id" *ngFor="let s of subjects">{{s.name}}</option>
+                </select>
+              </div>
+              <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
+                <div class="alert-warning small" *ngIf="subject.errors['required']">
+                  You must choose a subject!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="prof"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the professor</h4></label>
+                <select class="form-control" id="prof" required ngModel #prof="ngModel" name="prof">
+                  <option [value]="p.id" *ngFor="let p of professors">{{p.lastname}} {{p.firstname}}</option>
+                </select>
+              </div>
+              <div *ngIf="prof.invalid && (prof.dirty || prof.touched)">
+                <div class="alert-warning small" *ngIf="prof.errors['required']">
+                  You must choose a professor!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the starting time</h4>
+                  <input placeholder="start" [(ngModel)]="startingTime" [ngModelOptions]="{standalone: true}" [owlDateTimeTrigger]="st" [owlDateTime]="st" (ngModelChange)="getStart(startingTime)">
+                  <owl-date-time #st></owl-date-time>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the ending time</h4>
+                  <input placeholder="end" [(ngModel)]="endingTime" [ngModelOptions]="{standalone: true}" [owlDateTimeTrigger]="et" [owlDateTime]="et" (ngModelChange)="getEnd(endingTime)">
+                  <owl-date-time #et></owl-date-time>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="form-group align-content-sm-center">
+                <button [disabled]="!f.valid" class="btn btn-success" type="submit">Insert</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

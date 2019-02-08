@@ -11,7 +11,7 @@ import {CookieService} from 'ngx-cookie-service';
 })
 export class LoginComponent implements OnInit {
   @Input() checkLogin: boolean;
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router, private cookie: CookieService) { }
   ngOnInit(): void { }
 
   logOut() {

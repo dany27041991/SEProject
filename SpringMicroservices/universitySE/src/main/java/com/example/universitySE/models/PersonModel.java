@@ -9,7 +9,7 @@ import lombok.Setter;
 public class PersonModel {
 
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String username;

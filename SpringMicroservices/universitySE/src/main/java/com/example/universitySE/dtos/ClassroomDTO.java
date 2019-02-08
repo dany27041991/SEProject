@@ -11,9 +11,6 @@ import java.math.BigDecimal;
 public class ClassroomDTO {
 
     @Getter @Setter
-    private int id;
-
-    @Getter @Setter
     private String name;
 
     @Getter @Setter

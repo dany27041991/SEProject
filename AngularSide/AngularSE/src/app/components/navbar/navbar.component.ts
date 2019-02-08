@@ -26,9 +26,39 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  goToInsertStudyCourse(): void {
+    if (AccessToLocalStorage.getTypePerson() === Type.Secretary) {
+      this.router.navigate(['user/secretary/' + AccessToLocalStorage.getUser()['id'] + '/insertstudycourse']);
+    }
+  }
+
+  goToInsertSubject(): void {
+    if (AccessToLocalStorage.getTypePerson() === Type.Secretary) {
+      this.router.navigate(['user/secretary/' + AccessToLocalStorage.getUser()['id'] + '/insertsubject']);
+    }
+  }
+
+  goToInsertUser(): void {
+    if (AccessToLocalStorage.getTypePerson() === Type.Secretary) {
+      this.router.navigate(['user/secretary/' + AccessToLocalStorage.getUser()['id'] + '/insertuser']);
+    }
+  }
+
   goToNotifications(): void {
     if (AccessToLocalStorage.getTypePerson() === Type.Professor) {
       this.router.navigate(['user/professor/' + AccessToLocalStorage.getUser()['id'] + '/profreporting']);
+    }
+  }
+
+  goToInsertActivity(): void {
+    if (AccessToLocalStorage.getTypePerson() === Type.Secretary) {
+      this.router.navigate(['user/secretary/' + AccessToLocalStorage.getUser()['id'] + '/insertactivity']);
+    }
+  }
+
+  goToInsertClassroom(): void {
+    if (AccessToLocalStorage.getTypePerson() === Type.Secretary) {
+      this.router.navigate(['user/secretary/' + AccessToLocalStorage.getUser()['id'] + '/insertclassroom']);
     }
   }
 

@@ -1,9 +1,5 @@
 package com.example.universitySE.domain;
-<<<<<<< HEAD
-// Generated 28-gen-2019 15.27.48 by Hibernate Tools 5.2.0.Final
-=======
-// Generated 29-gen-2019 8.53.01 by Hibernate Tools 5.2.0.Final
->>>>>>> master
+// Generated 2-feb-2019 18.39.07 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -20,18 +16,18 @@ import java.util.Date;
 public class Student  implements java.io.Serializable {
 
 
-     private int id;
+     private long id;
      private String firstName;
      private String lastName;
      private Date dateOfBirth;
-     private int badgeNumber;
+     private long badgeNumber;
      private int studyCourse;
      private Date enrollmentYear;
 
     public Student() {
     }
 
-    public Student(int id, String firstName, String lastName, Date dateOfBirth, int badgeNumber, int studyCourse, Date enrollmentYear) {
+    public Student(long id, String firstName, String lastName, Date dateOfBirth, long badgeNumber, int studyCourse, Date enrollmentYear) {
        this.id = id;
        this.firstName = firstName;
        this.lastName = lastName;
@@ -41,19 +37,15 @@ public class Student  implements java.io.Serializable {
        this.enrollmentYear = enrollmentYear;
     }
    
-<<<<<<< HEAD
-     @Id
-=======
      @Id 
->>>>>>> master
 
     
     @Column(name="id", unique=true, nullable=false)
-    public int getId() {
+    public long getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -88,12 +80,12 @@ public class Student  implements java.io.Serializable {
     }
 
     
-    @Column(name="badge_number", unique=true, nullable=false)
-    public int getBadgeNumber() {
+    @Column(name="badge_number", unique=true, nullable=false) @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public long getBadgeNumber() {
         return this.badgeNumber;
     }
     
-    public void setBadgeNumber(int badgeNumber) {
+    public void setBadgeNumber(long badgeNumber) {
         this.badgeNumber = badgeNumber;
     }
 

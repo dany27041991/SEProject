@@ -1,169 +1,661 @@
 package com.example.universitySE.apicontrollers;
 
+import com.example.universitySE.domain.Lesson;
 import com.example.universitySE.dtos.*;
+import com.example.universitySE.exceptions.*;
+import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.intservices.SecretaryServiceInterface;
 import com.example.universitySE.shared.JSONResponseBody;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 @RestController
-@RequestMapping("secretary")
+@RequestMapping("user/secretary")
 public class SecretaryController {
-
-    private static final Logger log = LoggerFactory.getLogger(SecretaryServiceInterface.class);
-    HttpHeaders httpHeaders = new HttpHeaders();
 
     @Autowired
     SecretaryServiceInterface secretaryServiceInterface;
 
-    // da dividere in tre metodi diversi
-    @PostMapping(value = "/adduser")
-    public ResponseEntity<JSONResponseBody> addUser(@RequestParam(value = "id") int id,
-                                                    @RequestParam(value = "username") String username,
-                                                    @RequestParam(value = "password") String password,
-                                                    @RequestParam(value = "personType") int personType,
-                                                    @RequestParam(value = "faculty") int faculty,
-                                                    @RequestParam(value = "venue") String venue,
-                                                    @RequestParam(value = "firstName") String firstName,
-                                                    @RequestParam(value = "lastName") String lastName,
-                                                    @RequestParam(value = "biography") String biography,
-                                                    @RequestParam(value = "receptionTime") String receptionTime,
-                                                    @RequestParam(value = "subject") int subject,
-                                                    @RequestParam(value = "dateOfBirth") String dateOfBirth,
-                                                    @RequestParam(value = "badgeNumber") int badgeNumber,
-                                                    @RequestParam(value = "studyCourse") int studyCourse,
-                                                    @RequestParam(value = "enrollmentYear") String enrollmentYear) throws ParseException {
+    @Autowired
+    LoginServiceInterface loginServiceInterface;
 
-        PersonDTO personDTO = new PersonDTO(id, username, password, personType);
+    // -------------------------------------------- INSERT METHODS
 
-        if (personType == 1) {
+    @PostMapping(value = "/insertperson")
+    public ResponseEntity<JSONResponseBody> addPerson(HttpServletRequest request, @Valid @RequestBody PersonDTO personDTO) {
 
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
             secretaryServiceInterface.savePerson(personDTO);
 
-            SecretaryDTO secretaryDTO = new SecretaryDTO(id, faculty, venue);
+            if (personDTO.getPersonType() == 2) {
+
+                ProfessorDTO professorDTO = new ProfessorDTO(personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType(), personDTO.getFirstName(),
+                        personDTO.getLastName(), personDTO.getBiography(), personDTO.getReceptionTime(), personDTO.getSubject(), personDTO.getDateOfBirth());
+                secretaryServiceInterface.saveProfessor(professorDTO);
+                return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorDTO));
+            } else if (personDTO.getPersonType() == 3) {
+
+                StudentDTO studentDTO = new StudentDTO(personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType(), personDTO.getFirstName(),
+                        personDTO.getLastName(), personDTO.getDateOfBirth(), personDTO.getBadgeNumber(), personDTO.getStudyCourse(), personDTO.getEnrollmentYear());
+                secretaryServiceInterface.saveStudent(studentDTO);
+                return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), studentDTO));
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), personDTO));
+        }
+        catch (PersonException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @PostMapping(value = "/insertsecretary")
+    public ResponseEntity<JSONResponseBody> addSecretary(HttpServletRequest request, @Valid @RequestBody SecretaryDTO secretaryDTO) {
+
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
             secretaryServiceInterface.saveSecretary(secretaryDTO);
-
-            log.info("added new secretary");
-            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryDTO));
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryDTO));
         }
-        else if (personType == 2) {
+        catch (SecretaryException e1) {
 
-            secretaryServiceInterface.savePerson(personDTO);
-
-            ProfessorDTO professorDTO = new ProfessorDTO(id, firstName, lastName, biography, receptionTime, subject);
-            secretaryServiceInterface.saveProfessor(professorDTO);
-
-            log.info("added new professor");
-            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), professorDTO));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
         }
-        else if (personType == 3) {
+        catch (UnsupportedEncodingException e2){
 
-            Date convDateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth);
-            Date convEnrollmentYear = new SimpleDateFormat("yyyy-MM-dd").parse(enrollmentYear);
-
-            secretaryServiceInterface.savePerson(personDTO);
-
-            StudentDTO studentDTO = new StudentDTO(id, firstName, lastName, convDateOfBirth, badgeNumber, studyCourse, convEnrollmentYear);
-            secretaryServiceInterface.saveStudent(studentDTO);
-
-            log.info("added new student");
-            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), studentDTO));
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
         }
-        else {
+        catch (UserNotLoggedException e3){
 
-            log.info("not a valid person type");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), "not found"));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
         }
     }
 
-    @PostMapping(value = "/addstudycourse")
-    public ResponseEntity<JSONResponseBody> addStudyCourse(@RequestParam(value = "id") int id,
-                                                           @RequestParam(value = "name") String name,
-                                                           @RequestParam(value = "faculty") int faculty) {
+    @PostMapping(value = "/insertstudycourse")
+    public ResponseEntity<JSONResponseBody> addStudyCourse(HttpServletRequest request, @Valid @RequestBody StudyCourseDTO studyCourseDTO) {
 
-        StudyCourseDTO studyCourseDTO = new StudyCourseDTO(id, name, faculty);
-        secretaryServiceInterface.saveStudyCourse(studyCourseDTO);
+        try {
 
-        log.info("added new course of study");
-        return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), studyCourseDTO));
-    }
-
-    @PostMapping(value = "/addsubject")
-    public ResponseEntity<JSONResponseBody> addSubject(@RequestParam(value = "id") int id,
-                                                       @RequestParam(value = "name") String name,
-                                                       @RequestParam(value = "studyCourse") int studyCourse,
-                                                       @RequestParam(value = "yearCourse") int yearCourse) {
-
-        SubjectDTO subjectDTO = new SubjectDTO(id, name, studyCourse, yearCourse);
-        secretaryServiceInterface.saveSubject(subjectDTO);
-
-        log.info("added new subject");
-        return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), subjectDTO));
-    }
-
-    @PostMapping(value = "/addclassroom")
-    public ResponseEntity<JSONResponseBody> addClassroom(@RequestParam(value = "id") int id,
-                                                         @RequestParam(value = "name") String name,
-                                                         @RequestParam(value = "latitude") BigDecimal latitude,
-                                                         @RequestParam(value = "longitude") BigDecimal longitude) {
-
-        ClassroomDTO classroomDTO = new ClassroomDTO(id, name, latitude, longitude);
-        secretaryServiceInterface.saveClassroom(classroomDTO);
-
-        log.info("added new classroom");
-        return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), classroomDTO));
-    }
-
-    // da dividere in due metodi diversi
-    @PostMapping(value = "/addactivity")
-    public ResponseEntity<JSONResponseBody> addActivity(@RequestParam(value = "id") int id,
-                                                        @RequestParam(value = "studyCourse") int studyCourse,
-                                                        @RequestParam(value = "subject") int subject,
-                                                        @RequestParam(value = "idProf") int idProf,
-                                                        @RequestParam(value = "start") String start,
-                                                        @RequestParam(value = "end") String end,
-                                                        @RequestParam(value = "classroomName") int classroomName,
-                                                        @RequestParam(value = "activityType") int activityType) throws ParseException {
-
-        Date convStart = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS").parse(start);
-        Date convEnd = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS").parse(end);
-
-        ActivityDTO activityDTO = new ActivityDTO(id, studyCourse, subject, idProf, convStart, convEnd, classroomName, activityType);
-
-        if (activityType == 1) {
-
-            secretaryServiceInterface.saveActivity(activityDTO);
-
-            LessonDTO lessonDTO = new LessonDTO(id);
-            secretaryServiceInterface.saveLesson(lessonDTO);
-
-            log.info("added new lesson");
-            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), lessonDTO));
+            loginServiceInterface.verifyJwtAndGetData(request);
+            secretaryServiceInterface.saveStudyCourse(studyCourseDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), studyCourseDTO));
         }
-        else if (activityType == 2) {
+        catch (StudyCourseException e1) {
 
-            secretaryServiceInterface.saveActivity(activityDTO);
-
-            ExamDTO examDTO = new ExamDTO(id);
-            secretaryServiceInterface.saveExam(examDTO);
-
-            log.info("added new exam");
-            return ResponseEntity.status(HttpStatus.OK).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.OK.value(), examDTO));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
         }
-        else {
+        catch (UnsupportedEncodingException e2){
 
-            log.info("not a valid activity type");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).header(String.valueOf(httpHeaders)).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), "not found"));
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @PostMapping(value = "/insertsubject")
+    public ResponseEntity<JSONResponseBody> addSubject(HttpServletRequest request, @Valid @RequestBody SubjectDTO subjectDTO) {
+
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            secretaryServiceInterface.saveSubject(subjectDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), subjectDTO));
+        }
+        catch (SubjectException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @PostMapping(value = "/insertclassroom")
+    public ResponseEntity<JSONResponseBody> addClassroom(HttpServletRequest request, @Valid @RequestBody ClassroomDTO classroomDTO) {
+
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            secretaryServiceInterface.saveClassroom(classroomDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), classroomDTO));
+        }
+        catch (ClassroomException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @PostMapping(value = "/insertactivity")
+    public ResponseEntity<JSONResponseBody> addActivity(HttpServletRequest request, @Valid @RequestBody ActivityDTO activityDTO) {
+
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            long id = secretaryServiceInterface.saveActivityRet(activityDTO);
+
+            if (activityDTO.getActivityType() == 1) {
+
+                LessonDTO lessonDTO = new LessonDTO(activityDTO.getStudyCourse(), activityDTO.getSubject(), activityDTO.getIdProf(), activityDTO.getStart(),
+                        activityDTO.getEnd(), activityDTO.getActivityType(), id);
+                secretaryServiceInterface.saveLesson(lessonDTO);
+                return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), lessonDTO));
+            } else if (activityDTO.getActivityType() == 2) {
+
+                ExamDTO examDTO = new ExamDTO(activityDTO.getStudyCourse(), activityDTO.getSubject(), activityDTO.getIdProf(), activityDTO.getStart(),
+                        activityDTO.getEnd(), activityDTO.getActivityType(), id);
+                secretaryServiceInterface.saveExam(examDTO);
+                return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), examDTO));
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), activityDTO));
+        }
+        catch (ActivityException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    // ------------------------- RETURN MODEL METHODS
+
+    @RequestMapping(value = "/faculty/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getFaculty(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getFaculty(id)));
+        }
+        catch (FacultyException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/persontype/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getPersonType(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getPersonType(id)));
+        }
+        catch (PersonTypeException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/activitytype/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getActivityType(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getActivityType(id)));
+        }
+        catch (ActivityTypeException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/state/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getState(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getState(id)));
+        }
+        catch (StateException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/supportmaterial/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getSupportMaterial(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getSupportMaterial(id)));
+        }
+        catch (SupportMaterialException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/person/{username}/{password}/{personType}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getPerson(HttpServletRequest request,
+                                                      @PathVariable(name = "username") String username,
+                                                      @PathVariable(name = "password") String password,
+                                                      @PathVariable(name = "personType") int personType) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getPerson(username, password, personType)));
+        }
+        catch (PersonException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    // ------------------------- RETURN LIST METHODS
+
+    @RequestMapping(value = "/courses/{faculty}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getStudyCourses(HttpServletRequest request, @PathVariable(name = "faculty") long faculty) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getStudyCourses(faculty)));
+        }
+        catch (StudyCourseException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/subjects/{studycourse}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getSubjects(HttpServletRequest request, @PathVariable(name = "studycourse") int studycourse) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getSubjects(studycourse)));
+        }
+        catch (SubjectException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/professors/{subject}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getProfessors(HttpServletRequest request, @PathVariable(name = "subject") int subject) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getProfessors(subject)));
+        }
+        catch (ProfessorException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/classrooms", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getClassrooms(HttpServletRequest request) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getClassrooms()));
+        }
+        catch (ClassroomException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/persontypes", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getPersonTypes(HttpServletRequest request) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getPersonTypes()));
+        }
+        catch (PersonTypeException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/activitytypes", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getActivityTypes(HttpServletRequest request) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getActivityTypes()));
+        }
+        catch (ActivityTypeException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/states", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getStates(HttpServletRequest request) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getStates()));
+        }
+        catch (StateException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/supportmaterials", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getSupportMaterials(HttpServletRequest request) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getSupportMaterials()));
+        }
+        catch (SupportMaterialException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
         }
     }
 

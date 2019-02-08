@@ -9,13 +9,13 @@ import lombok.Setter;
 public class SubjectModel {
 
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String name;
 
     @Getter @Setter
-    private int study_course;
+    private long study_course;
 
     @Getter @Setter
     private int year_course;

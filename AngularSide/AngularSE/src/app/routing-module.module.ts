@@ -8,6 +8,11 @@ import {StudentComponent} from './components/student/student.component';
 import {ProfessorComponent} from './components/professor/professor.component';
 import {SecretaryComponent} from './components/secretary/secretary.component';
 import {ProfreportingComponent} from './components/profreporting/profreporting.component';
+import {InsertstudycourseComponent} from './components/insertstudycourse/insertstudycourse.component';
+import {InsertsubjectComponent} from './components/insertsubject/insertsubject.component';
+import {InsertclassroomComponent} from './components/insertclassroom/insertclassroom.component';
+import {InsertuserComponent} from './components/insertuser/insertuser.component';
+import {InsertactivityComponent} from './components/insertactivity/insertactivity.component';
 
 const routes: Routes = [
   {
@@ -39,8 +44,33 @@ const routes: Routes = [
     path: 'user/professor/:id/profreporting',
     component: ProfreportingComponent,
     canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/insertstudycourse',
+    component: InsertstudycourseComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/insertsubject',
+    component: InsertsubjectComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/insertclassroom',
+    component: InsertclassroomComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/insertuser',
+    component: InsertuserComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/insertactivity',
+    component: InsertactivityComponent,
+    canActivate: [RouteGuardService]
   }
-]
+];
 
 @NgModule({
   imports: [

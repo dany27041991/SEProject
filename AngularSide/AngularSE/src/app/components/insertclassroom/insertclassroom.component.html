@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <div class="row" id="insertclassroom">
+    <div class="col-12 p-0 text-center">
+      <h1 style="font-size:2.7vw; font-weight: bold; color: black">Insert the new Classroom using the form below.</h1>
+      <div>
+        <form name="signupForm" #f="ngForm" (ngSubmit)="sending(f)">
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="name"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Name</h4></label>
+                <textarea required class="form-control" type="name" rows="1" ngModel #name="ngModel" name="name" id="name"></textarea>
+              </div>
+              <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                <div class="alert-warning small" *ngIf="name.errors['required']">
+                  You must set a name!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="latitude"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Latitude</h4></label>
+                <textarea required class="form-control" type="latitude" rows="1" ngModel #latitude="ngModel" name="latitude" id="latitude"></textarea>
+              </div>
+              <div *ngIf="latitude.invalid && (latitude.dirty || latitude.touched)">
+                <div class="alert-warning small" *ngIf="latitude.errors['required']">
+                  You must set a latitude!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="longitude"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Longitude</h4></label>
+                <textarea required class="form-control" type="longitude" rows="1" ngModel #longitude="ngModel" name="longitude" id="longitude"></textarea>
+              </div>
+              <div *ngIf="longitude.invalid && (longitude.dirty || longitude.touched)">
+                <div class="alert-warning small" *ngIf="longitude.errors['required']">
+                  You must set a longitude!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="form-group align-content-sm-center">
+                <button [disabled]="!f.valid" class="btn btn-success" type="submit">Insert</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProfessorServiceInterface {
 
-    SubjectModel getSubject(int id) throws SubjectException;
+    SubjectModel getSubject(long id) throws SubjectException;
 
     List<SupportMaterial> getMaterial() throws MaterialException;
 

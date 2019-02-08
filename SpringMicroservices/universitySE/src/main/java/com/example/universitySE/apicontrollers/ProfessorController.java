@@ -29,7 +29,7 @@ public class ProfessorController {
     ProfessorService professorService;
 
     @RequestMapping(value = "/subject/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getContacts(HttpServletRequest request, @PathVariable(name = "id") int id) {
+    public ResponseEntity<JSONResponseBody> getContacts(HttpServletRequest request, @PathVariable(name = "id") long id) {
         try {
             loginService.verifyJwtAndGetData(request);
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getSubject(id)));

@@ -1,9 +1,5 @@
 package com.example.universitySE.domain;
-<<<<<<< HEAD
-// Generated 28-gen-2019 15.27.51 by Hibernate Tools 5.2.0.Final
-=======
-// Generated 29-gen-2019 8.53.03 by Hibernate Tools 5.2.0.Final
->>>>>>> master
+// Generated 2-feb-2019 18.39.10 by Hibernate Tools 5.2.0.Final
 
 
 import org.apache.commons.logging.Log;
@@ -62,7 +58,7 @@ public class AttendLessonHome {
         }
     }
     
-    public AttendLesson findById( int id) {
+    public AttendLesson findById( Integer id) {
         log.debug("getting AttendLesson instance with id: " + id);
         try {
             AttendLesson instance = entityManager.find(AttendLesson.class, id);

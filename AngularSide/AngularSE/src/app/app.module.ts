@@ -19,6 +19,13 @@ import { ProfessorComponent } from './components/professor/professor.component';
 import { SecretaryComponent } from './components/secretary/secretary.component';
 import {CookieService} from 'ngx-cookie-service';
 import { ProfreportingComponent } from './components/profreporting/profreporting.component';
+import { InsertstudycourseComponent } from './components/insertstudycourse/insertstudycourse.component';
+import { InsertsubjectComponent } from './components/insertsubject/insertsubject.component';
+import { InsertclassroomComponent } from './components/insertclassroom/insertclassroom.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'node_modules/ng-pick-datetime';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { InsertuserComponent } from './components/insertuser/insertuser.component';
+import { InsertactivityComponent } from './components/insertactivity/insertactivity.component';
 
 @NgModule({
   declarations: [
@@ -34,14 +41,22 @@ import { ProfreportingComponent } from './components/profreporting/profreporting
     StudentComponent,
     ProfessorComponent,
     SecretaryComponent,
-    ProfreportingComponent
+    ProfreportingComponent,
+    InsertstudycourseComponent,
+    InsertsubjectComponent,
+    InsertclassroomComponent,
+    InsertuserComponent,
+    InsertactivityComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     HttpClientModule,
     RoutingModuleModule,
-    FormsModule
+    FormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    NoopAnimationsModule
   ],
   providers: [AuthService, CookieService],
   bootstrap: [AppComponent]

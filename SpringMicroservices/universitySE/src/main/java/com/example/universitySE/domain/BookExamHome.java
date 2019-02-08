@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 29-gen-2019 8.53.03 by Hibernate Tools 5.2.0.Final
+// Generated 2-feb-2019 18.39.10 by Hibernate Tools 5.2.0.Final
 
 
 import org.apache.commons.logging.Log;
@@ -58,7 +58,7 @@ public class BookExamHome {
         }
     }
     
-    public BookExam findById( int id) {
+    public BookExam findById( Integer id) {
         log.debug("getting BookExam instance with id: " + id);
         try {
             BookExam instance = entityManager.find(BookExam.class, id);

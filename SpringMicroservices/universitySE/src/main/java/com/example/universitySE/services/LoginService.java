@@ -64,7 +64,7 @@ public class LoginService implements LoginServiceInterface{
                 Professor professorLogged = userProfessor.get();
                 ProfessorModel professorModel = new ProfessorModel(personLogged.getId(), personLogged.getUsername(),
                         personLogged.getPersonType(), professorLogged.getFirstName(), professorLogged.getLastName(),
-                        professorLogged.getBiography(), professorLogged.getReceptionTime(), professorLogged.getSubject());
+                        professorLogged.getBiography(), professorLogged.getReceptionTime(), professorLogged.getSubject(), professorLogged.getDateOfBirth());
                 return professorModel;
             }
             else if(personLogged.getPersonType() == 3) {

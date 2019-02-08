@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor @NoArgsConstructor
 public class ProfessorModel {
 
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Getter @Setter
     private String username;
@@ -31,5 +33,8 @@ public class ProfessorModel {
 
     @Getter @Setter
     private int subject;
+
+    @Getter @Setter
+    private Date dateOfBirth;
 
 }

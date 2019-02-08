@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <div class="row" id="insertstudycourse" >
+    <div class="col-12 p-0 text-center">
+      <h1 style="font-size:2.7vw; font-weight: bold; color: black">Insert the new Course of Study using the form below.</h1>
+      <div>
+        <form name="signupForm" #f="ngForm" (ngSubmit)="sending(f)">
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label for="name"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Name</h4></label>
+                <textarea required class="form-control" type="name" rows="1" ngModel #name="ngModel" name="name" id="name"></textarea>
+              </div>
+              <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                <div class="alert-warning small" *ngIf="name.errors['required']">
+                  You must set a name!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row ml-5 mr-5">
+            <div class="col-3"></div>
+            <div class="col-6 col-offset-3">
+              <div class="form-group small">
+                <label name="faculty" id="faculty"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan"> add new course of study for the faculty: {{ secretary.faculty.name }}</h4></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-12">
+              <div class="form-group align-content-sm-center">
+                <button [disabled]="!f.valid" class="btn btn-success" type="submit">Insert</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

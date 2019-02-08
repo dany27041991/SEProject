@@ -1,7 +1,5 @@
 package com.example.universitySE.dtos;
 
-import com.example.universitySE.domain.Person;
-import com.example.universitySE.domain.StudyCourse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,13 @@ import java.util.Date;
 public class StudentDTO {
 
     @Getter @Setter
-    private int id;
+    private String username;
+
+    @Getter @Setter
+    private String password;
+
+    @Getter @Setter
+    private int personType;
 
     @Getter @Setter
     private String firstName;
@@ -25,7 +29,7 @@ public class StudentDTO {
     private Date dateOfBirth;
 
     @Getter @Setter
-    private int badgeNumber;
+    private long badgeNumber;
 
     @Getter @Setter
     private int studyCourse;

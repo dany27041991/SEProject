@@ -1,9 +1,5 @@
 package com.example.universitySE.domain;
-<<<<<<< HEAD
-// Generated 28-gen-2019 15.27.48 by Hibernate Tools 5.2.0.Final
-=======
-// Generated 29-gen-2019 8.53.01 by Hibernate Tools 5.2.0.Final
->>>>>>> master
+// Generated 2-feb-2019 18.39.07 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -16,12 +12,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name="Activity_type"
     ,catalog="se_database"
-    , uniqueConstraints = @UniqueConstraint(columnNames="name") 
 )
 public class ActivityType  implements java.io.Serializable {
 
 
-     private Integer id;
+     private long id;
      private String name;
 
     public ActivityType() {
@@ -35,16 +30,16 @@ public class ActivityType  implements java.io.Serializable {
 
     
     @Column(name="id", unique=true, nullable=false)
-    public Integer getId() {
+    public long getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     
-    @Column(name="name", unique=true, nullable=false, length=45)
+    @Column(name="name", nullable=false, length=45)
     public String getName() {
         return this.name;
     }

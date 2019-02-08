@@ -15,13 +15,11 @@
           Add
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Course</a>
-          <a class="dropdown-item" href="#">Material</a>
-          <a class="dropdown-item" href="#">Professor</a>
-          <a class="dropdown-item" href="#">Student</a>
-          <a class="dropdown-item" href="#">Lesson</a>
-          <a class="dropdown-item" href="#">Exam</a>
-          <a class="dropdown-item" href="#">Classroom</a>
+          <a class="dropdown-item" (click)="goToInsertStudyCourse()" style="color: black">Course of Study</a>
+          <a class="dropdown-item" (click)="goToInsertSubject()" style="color: black">Subject</a>
+          <a class="dropdown-item" (click)="goToInsertUser()" style="color: black">User</a>
+          <a class="dropdown-item" (click)="goToInsertActivity()" style="color: black">Activity</a>
+          <a class="dropdown-item" (click)="goToInsertClassroom()" style="color: black">Classroom</a>
         </div>
       </li>
       <li class="nav-item" *ngIf="checkPerson.type === secretary">
