@@ -26,6 +26,9 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'node_modules/ng-pick
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { InsertuserComponent } from './components/insertuser/insertuser.component';
 import { InsertactivityComponent } from './components/insertactivity/insertactivity.component';
+import { SuccessfulComponent } from './messages/successful/successful.component';
+import { UploadComponent } from './components/upload/upload.component';
+import { ViewreportingComponent } from './components/viewreporting/viewreporting.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,10 @@ import { InsertactivityComponent } from './components/insertactivity/insertactiv
     InsertclassroomComponent,
     InsertuserComponent,
     InsertactivityComponent
+    ProfreportingComponent,
+    SuccessfulComponent,
+    UploadComponent,
+    ViewreportingComponent
   ],
   imports: [
     BrowserModule,

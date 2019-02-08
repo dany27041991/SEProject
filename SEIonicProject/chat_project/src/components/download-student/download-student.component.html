@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<ion-item text-wrap="" text-center="">
+  <h1 style="font-weight: bold; color: orange">LIST OF DOWNLOAD MATERIAL FOR SUBJECT:</h1>
+</ion-item>
+<ion-list text-wrap *ngFor="let download of downloadMaterial | async">
+  <ion-item no-lines="" style="font-weight: bold" text-wrap>{{download.id}} {{download.subject.name}}:
+    <a [href]="download['media']" target="blank">{{download['media']}}</a>
+  </ion-item>
+
+  <ion-item text-center="" align-items-center="">
+    <button id="addrating" ion-button class="button-small-ios button-ios-primary" (click)="addRating(download.id)">Add Your Rate</button>
+  </ion-item>
+
+</ion-list>

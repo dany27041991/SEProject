@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 2-feb-2019 18.39.07 by Hibernate Tools 5.2.0.Final
+// Generated 3-feb-2019 20.09.13 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -19,7 +19,6 @@ public class TeachingMaterial  implements java.io.Serializable {
      private long id;
      private int subject;
      private String media;
-     private String note;
 
     public TeachingMaterial() {
     }
@@ -32,7 +31,6 @@ public class TeachingMaterial  implements java.io.Serializable {
     public TeachingMaterial(int subject, String media, String note) {
        this.subject = subject;
        this.media = media;
-       this.note = note;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -65,16 +63,6 @@ public class TeachingMaterial  implements java.io.Serializable {
     
     public void setMedia(String media) {
         this.media = media;
-    }
-
-    
-    @Column(name="note", length=65535)
-    public String getNote() {
-        return this.note;
-    }
-    
-    public void setNote(String note) {
-        this.note = note;
     }
 
 

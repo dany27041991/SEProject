@@ -16,4 +16,7 @@ public class SubjectDTO {
 
     @Getter @Setter
     private int yearCourse;
+
+    @Getter @Setter
+    private List<Integer> subjects;
 }

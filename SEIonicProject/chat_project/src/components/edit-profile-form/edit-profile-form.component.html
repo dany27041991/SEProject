@@ -1,18 +1,26 @@
-<ion-card>
+<!--<ion-card>
   <ion-card-content>
     <ion-item>
       <ion-label floating>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.firstName"></ion-input>
+      <ion-input disabled type="text" [(ngModel)]="profile.firstName"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="profile.lastName"></ion-input>
+      <ion-input disabled type="text" [(ngModel)]="profile.lastName"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Date of Birth</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="profile.dateOfBirth"></ion-datetime>
+      <ion-datetime disabled displayFormat="DD/MM/YYYY" [(ngModel)]="profile.dateOfBirth"></ion-datetime>
     </ion-item>
   </ion-card-content>
-</ion-card>
+</ion-card>-->
 
-<button ion-button (click)="saveProfile()">Save</button>
+<ion-item text-wrap no-lines text-center>
+  <img src="assets/imgs/welcome.png" alt="Logo">
+  <div id="welcome">
+    <p style="font-weight: bold; font-size: 35px; color: black">Welcome to the university chat. Go ahead to start!</p>
+  </div>
+  <button ion-button text-center style="height: 50px; width: 200px; background-color: midnightblue; font-size: 20px; font-weight: bold" (click)="saveProfile()">Continue</button>
+</ion-item>
+
+

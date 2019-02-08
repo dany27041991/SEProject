@@ -12,11 +12,11 @@
 
       <ion-item>
         <ion-label floating>Password</ion-label>
-        <ion-input [(ngModel)]="account.password" type="password" name="password" #password="ngModel" required pattern="(?=^.{6,}$)((?=.*\d)|(?=.*W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"></ion-input>
+        <ion-input [(ngModel)]="account.password" minlength="6" maxlength="20" type="password" name="password" #password="ngModel" required ></ion-input>
       </ion-item>
 
-      <div padding *ngIf="password.invalid && password.dirty">
-        <span class="global__input-error">Password must be at least 6 characters and have one uppercase letter.</span>
+      <div padding *ngIf="password.invalid && password.dirty && password.touched">
+        <span class="global__input-error">Password must be at least 6 characters and less than 20.</span>
       </div>
 
     </ion-card-content>

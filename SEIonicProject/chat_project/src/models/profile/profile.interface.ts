@@ -1,8 +1,9 @@
 export interface Profile {
-    firstName: string;
-    lastName: string;
-    avatar: string;
-    email: string;
-    dateOfBirth: Date;
-    mykey: string;
+  mykey: string;
+  firstName: string;
+  lastName: string;
+  person_type: number;
+  avatar?: string;
+  email: string;
+  dateOfBirth: Date;
 }

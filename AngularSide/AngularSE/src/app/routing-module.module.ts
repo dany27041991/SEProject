@@ -13,6 +13,10 @@ import {InsertsubjectComponent} from './components/insertsubject/insertsubject.c
 import {InsertclassroomComponent} from './components/insertclassroom/insertclassroom.component';
 import {InsertuserComponent} from './components/insertuser/insertuser.component';
 import {InsertactivityComponent} from './components/insertactivity/insertactivity.component';
+import {SuccessfulComponent} from './messages/successful/successful.component';
+import {AccessToLocalStorage} from './utils/AccessToLocalStorage';
+import {UploadComponent} from './components/upload/upload.component';
+import {ViewreportingComponent} from './components/viewreporting/viewreporting.component';
 
 const routes: Routes = [
   {
@@ -68,6 +72,21 @@ const routes: Routes = [
   {
     path: 'user/secretary/:id/insertactivity',
     component: InsertactivityComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/successful',
+    component: SuccessfulComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/professor/:id/upload',
+    component: UploadComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/professor/:id/viewreporting',
+    component: ViewreportingComponent,
     canActivate: [RouteGuardService]
   }
 ];

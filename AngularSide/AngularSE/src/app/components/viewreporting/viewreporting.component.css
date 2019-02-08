@@ -1,0 +1,22 @@
+#viewreporting {
+  background-image: url("../../../assets/images/viewreporting.jpeg");
+  width: auto;
+  height: auto;
+}
+
+p {
+  font-size:1.2vw;
+  font-weight: initial;
+  margin-top: -2%;
+}
+
+.card {
+  opacity: 0.9;
+  filter: alpha(opacity=50);
+  border-radius: 50px;
+}
+
+input {
+  border-radius: 5px;
+  width: 65%;
+}

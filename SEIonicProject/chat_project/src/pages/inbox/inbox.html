@@ -10,6 +10,10 @@
 </ion-header>
 <ion-content padding>
 
+  <app-last-upload-material [lastUpload]="lastUpload" *ngIf="type_person===3"></app-last-upload-material>
+
+  <app-last-channel-message></app-last-channel-message>
+
   <app-last-message-list></app-last-message-list>
 
   <app-online-users></app-online-users>
