@@ -38,6 +38,7 @@ export class InsertclassroomComponent implements OnInit {
       console.log(form.value.name, form.value.latitude, form.value.longitude);
       this.secService.setClassroom(form.value.name, form.value.latitude, form.value.longitude);
       console.log('success');
+      this.route.navigate(['user/successful']);
     }
   }
 }

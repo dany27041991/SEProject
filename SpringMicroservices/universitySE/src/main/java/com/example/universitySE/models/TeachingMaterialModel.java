@@ -10,7 +10,7 @@ import lombok.Setter;
 public class TeachingMaterialModel {
 
     @Getter @Setter
-    private int id;
+    private long id;
 
     @Getter @Setter
     private Subject subject;

@@ -15,7 +15,7 @@ import java.util.List;
 public class ReportingModel {
 
     @Getter @Setter
-    private Integer id;
+    private long id;
 
     @Getter @Setter
     private String noteProf;

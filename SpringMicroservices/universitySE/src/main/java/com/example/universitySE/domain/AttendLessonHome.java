@@ -1,9 +1,5 @@
 package com.example.universitySE.domain;
-<<<<<<< HEAD
-// Generated 2-feb-2019 18.39.10 by Hibernate Tools 5.2.0.Final
-=======
 // Generated 3-feb-2019 20.09.15 by Hibernate Tools 5.2.0.Final
->>>>>>> master
 
 
 import org.apache.commons.logging.Log;
