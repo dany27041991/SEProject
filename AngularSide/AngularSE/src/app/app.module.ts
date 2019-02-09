@@ -49,7 +49,7 @@ import { ViewreportingComponent } from './components/viewreporting/viewreporting
     InsertsubjectComponent,
     InsertclassroomComponent,
     InsertuserComponent,
-    InsertactivityComponent
+    InsertactivityComponent,
     ProfreportingComponent,
     SuccessfulComponent,
     UploadComponent,

@@ -112,39 +112,10 @@ export class InsertuserComponent implements OnInit {
     if (!form.valid) {
       console.log('failed');
     } else {
-      // this.secService.setPerson(form.value.username, form.value.password, form.value.type);
       this.secService.setPerson(form.value.username, form.value.password, Number(form.value.type), form.value.firstnameprof, form.value.lastnameprof, form.value.firstnamestud,
         form.value.lastnamestud, form.value.bio, form.value.rectime, Number(form.value.subject), this.birthProf, this.birthStud, Number(form.value.coursestud), this.enrollStud);
       console.log('success');
-      /* switch (Number(form.value.type)) {
-        case Type.Professor: {
-          // this.addProfessor(form.value.username, form.value.password, form.value.type, form.value.firstnameprof, form.value.lastnameprof,
-          //  form.value.bio, form.value.rectime, form.value.subject, this.birthProf);
-          console.log('success');
-          break;
-        }
-        case Type.Student: {
-          // this.addStudent(form.value.username, form.value.password, form.value.type, form.value.firstnamestud, form.value.lastnamestud,
-          //  this.birthStud, form.value.coursestud, this.enrollStud);
-          console.log('success');
-          break;
-        }
-        default: {
-          console.log('not a valid user type');
-          break;
-        }
-      } */
+      this.route.navigate(['user/successful']);
     }
   }
-
-  /* addProfessor(username: string, password: string, persontype: number, firstname: string, lastname: string, biography: string, reception: string, subject: number, birth: Date) {
-    console.log('adding professor ...');
-    this.secService.setProfessor(username, password, persontype, firstname, lastname, biography, reception, subject, birth);
-  }
-
-  addStudent(username: string, password: string, persontype: number, firstname: string, lastname: string, birth: Date, studycourse: number, enrollment: Date) {
-    console.log('adding student ...');
-    this.secService.setStudent(username, password, persontype, firstname, lastname, birth, studycourse, enrollment);
-  } */
-
 }

@@ -36,7 +36,7 @@ public class ProfessorController {
     List<String> files = new ArrayList<String>();
 
     @GetMapping(value = "/subject/{id}")
-    public ResponseEntity<JSONResponseBody> getContacts(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getSubject(HttpServletRequest request, @PathVariable(name = "id") long id) {
         try {
             loginService.verifyJwtAndGetData(request);
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getSubject(id)));

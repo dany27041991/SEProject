@@ -28,28 +28,20 @@ export class SecretaryService implements OnInit {
   private gotPerson: Person;
 
   @Output() public studyCourse = new EventEmitter();
+  @Output() public courses = new EventEmitter();
   @Output() public subject = new EventEmitter();
   @Output() public classroom = new EventEmitter();
-  @Output() public activity = new EventEmitter();
-  @Output() public exam = new EventEmitter();
-  @Output() public lesson = new EventEmitter();
-  @Output() public person = new EventEmitter();
-  @Output() public student = new EventEmitter();
-  @Output() public professor = new EventEmitter();
-
-  @Output() public courses = new EventEmitter();
+  @Output() public activity_types = new EventEmitter();
   @Output() public subjects = new EventEmitter();
   @Output() public professors = new EventEmitter();
-  @Output() public person_types = new EventEmitter();
-  @Output() public activity_types = new EventEmitter();
   @Output() public classrooms = new EventEmitter();
+  @Output() public activity = new EventEmitter();
+  @Output() public person_types = new EventEmitter();
+  @Output() public person = new EventEmitter();
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthService) { }
 
-  ngOnInit(): void {
-  }
-
-  // ritorna la faculty relativa alla secretary con cui ci si è autenticati
+  ngOnInit(): void { }
 
   getFaculty(): Secretary {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
@@ -67,8 +59,6 @@ export class SecretaryService implements OnInit {
     return this.secretary;
   }
 
-  // aggiunge il corso di studio
-
   setStudyCourse(name: string, faculty: number) {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
     this.http.post(this.APIAUTHURL + 'insertstudycourse', {
@@ -85,8 +75,6 @@ export class SecretaryService implements OnInit {
       }
     );
   }
-
-  // aggiunge la materia, scegliendo il corso di studio fra quelli disponibili
 
   getStudyCourses() {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
@@ -121,8 +109,6 @@ export class SecretaryService implements OnInit {
     );
   }
 
-  // aggiunge la classe
-
   setClassroom(name: string, latitude: number, longitude: number) {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
     this.http.post(this.APIAUTHURL + 'insertclassroom', {
@@ -132,7 +118,7 @@ export class SecretaryService implements OnInit {
     }, {headers}).subscribe(
       (payload: ResponseInterface) => {
         localStorage.setItem('Classroom', JSON.stringify(payload.response));
-        this.subject.emit(payload.response);
+        this.classroom.emit(payload.response);
       }, (httpResp: HttpErrorResponse) => {
         if (httpResp.error['server'] !== 404 || !httpResp.error) {
           this.auth.logout();
@@ -140,9 +126,6 @@ export class SecretaryService implements OnInit {
       }
     );
   }
-
-  // aggiunge esame/lezione (attività)
-  // scegliendo il corso di studio, la materia, il professore, la classe e il tipo di attività fra quelli disponibili
 
   getActivityTypes() {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
@@ -157,8 +140,6 @@ export class SecretaryService implements OnInit {
       }
     );
   }
-
-  // getStudyCourses è già implementato
 
   getSubjects(course: number) {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
@@ -224,66 +205,6 @@ export class SecretaryService implements OnInit {
     );
   }
 
-  getActivity(course: number, sub: number, prof: number, start: Date, end: Date, type: number): Activity {
-    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
-    this.http.get(this.APIAUTHURL + 'activity/' + course + '/' + sub + '/' + prof + '/' + start + '/' + end + '/' + type, {headers})
-      .subscribe((payload: ResponseInterface) => {
-        this.gotActivity = <Activity>payload.response;
-        localStorage.setItem('GotActivity', JSON.stringify(payload.response));
-      }, (httpResp: HttpErrorResponse) => {
-        if (httpResp.error['server'] !== 404 || !httpResp.error) {
-          this.auth.logout();
-        }
-      }
-    );
-    return this.gotActivity;
-  }
-
-  /* setExam(studyCourse: number, subject: number, idProf: number, start: Date, end: Date, activityType: number) {
-    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
-    this.http.post(this.APIAUTHURL + 'insertexam', {
-      studyCourse: studyCourse,
-      subject: subject,
-      idProf: idProf,
-      start: start,
-      end: end,
-      activityType: activityType
-    }, {headers}).subscribe(
-      (payload: ResponseInterface) => {
-        localStorage.setItem('Exam', JSON.stringify(payload.response));
-        this.exam.emit(payload.response);
-      }, (httpResp: HttpErrorResponse) => {
-        if (httpResp.error['server'] !== 404 || !httpResp.error) {
-          this.auth.logout();
-        }
-      }
-    );
-  }
-
-  setLesson(studyCourse: number, subject: number, idProf: number, start: Date, end: Date, activityType: number) {
-    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
-    this.http.post(this.APIAUTHURL + 'insertlesson', {
-      studyCourse: studyCourse,
-      subject: subject,
-      idProf: idProf,
-      start: start,
-      end: end,
-      activityType: activityType
-    }, {headers}).subscribe(
-      (payload: ResponseInterface) => {
-        localStorage.setItem('Lesson', JSON.stringify(payload.response));
-        this.lesson.emit(payload.response);
-      }, (httpResp: HttpErrorResponse) => {
-        if (httpResp.error['server'] !== 404 || !httpResp.error) {
-          this.auth.logout();
-        }
-      }
-    );
-  } */
-
-  // aggiunge studente (persona)
-  // scegliendo il tipo di persona e il corso di studio fra quelli disponibili
-
   getPersonTypes() {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
     this.http.get(this.APIAUTHURL + 'persontypes', {headers}).subscribe(
@@ -298,9 +219,6 @@ export class SecretaryService implements OnInit {
     );
   }
 
-  // getStudyCourses è già implementato
-
-  // setPerson(username: string, password: string, person_type: number) {
   setPerson(username: string, password: string, personType: number, firstNamep: string, lastNamep: string, firstNames: string, lastNames: string, biography: string, receptionTime: string,
             subject: number, dateOfBirthp: Date, dateOfBirths: Date, studyCourse: number, enrollmentYear: Date) {
     const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
@@ -327,79 +245,4 @@ export class SecretaryService implements OnInit {
       }
     );
   }
-
-  getPerson(username: string, password: string, person_type: number): Person {
-    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
-    this.http.get(this.APIAUTHURL + 'person/' + username + '/' + password + '/' + person_type, {headers})
-      .subscribe((payload: ResponseInterface) => {
-        this.gotPerson = <Person>payload.response;
-        console.log(this.gotPerson);
-        localStorage.setItem('GotPerson', JSON.stringify(payload.response));
-      }, (httpResp: HttpErrorResponse) => {
-        if (httpResp.error['server'] !== 404 || !httpResp.error) {
-          this.auth.logout();
-        }
-      });
-    return this.gotPerson;
-  }
-
-  /* setStudent(username: string, password: string, person_type: number, firstname: string, lastname: string, dateofbirth: Date, studycourse: number, enrollmentyear: Date) {
-    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
-    this.http.post(this.APIAUTHURL + 'insertstudent', {
-      username: username,
-      password: password,
-      personType: person_type,
-      firstName: firstname,
-      lastName: lastname,
-      dateOfBirth: dateofbirth,
-      studyCourse: studycourse,
-      enrollmentYear: enrollmentyear
-    }, {headers}).subscribe(
-      (payload: ResponseInterface) => {
-        localStorage.setItem('Student', JSON.stringify(payload.response));
-        console.log(payload.response);
-        this.student.emit(payload.response);
-      }, (httpResp: HttpErrorResponse) => {
-        if (httpResp.error['server'] !== 404 || !httpResp.error) {
-          this.auth.logout();
-        }
-      }
-    );
-  } */
-
-  // aggiunge professor
-  // scegliendo il tipo di persona e la materia fra quelli disponibili
-
-  // getPersonTypes è già implementato
-
-  // getStudyCourses è già implementato
-
-  // getSubjects è già implementato
-
-  // setPerson è già implementato
-
-  /* setProfessor(username: string, password: string, person_type: number, firstname: string, lastname: string, bio: string, reception: string, subject: number, dateofbirth: Date) {
-    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
-    this.http.post(this.APIAUTHURL + 'insertprofessor', {
-      username: username,
-      password: password,
-      personType: person_type,
-      firstName: firstname,
-      lastName: lastname,
-      biography: bio,
-      receptionTime: reception,
-      subject: subject,
-      dateOfBirth: dateofbirth
-    }, {headers}).subscribe(
-      (payload: ResponseInterface) => {
-        localStorage.setItem('Professor', JSON.stringify(payload.response));
-        console.log(payload.response);
-        this.professor.emit(payload.response);
-      }, (httpResp: HttpErrorResponse) => {
-        if (httpResp.error['server'] !== 404 || !httpResp.error) {
-          this.auth.logout();
-        }
-      }
-    );
-  } */
 }

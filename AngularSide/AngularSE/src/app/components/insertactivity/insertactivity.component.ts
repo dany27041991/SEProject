@@ -94,32 +94,7 @@ export class InsertactivityComponent implements OnInit {
     } else {
       this.secService.setActivity(Number(form.value.course), Number(form.value.subject), Number(form.value.prof), this.start, this.end, Number(form.value.type));
       console.log('success');
-      /* switch (Number(form.value.type)) {
-        case 1: {
-          this.addLesson(Number(form.value.course), Number(form.value.subject), Number(form.value.prof), this.start, this.end, Number(form.value.type));
-          console.log('success');
-          break;
-        }
-        case 2: {
-          this.addExam(Number(form.value.course), Number(form.value.subject), Number(form.value.prof), this.start, this.end, Number(form.value.type));
-          console.log('success');
-          break;
-        }
-        default: {
-          console.log('not a valid user type');
-          break;
-        }
-      } */
+      this.route.navigate(['user/successful']);
     }
   }
-
-  /* addLesson(studycourse: number, subject: number, idprof: number, start: Date, end: Date, persontype: number) {
-    console.log('adding lesson ...');
-    this.secService.setLesson(studycourse, subject, idprof, start, end, persontype);
-  }
-
-  addExam(studycourse: number, subject: number, idprof: number, start: Date, end: Date, persontype: number) {
-    console.log('adding exam ...');
-    this.secService.setExam(studycourse, subject, idprof, start, end, persontype);
-  } */
 }

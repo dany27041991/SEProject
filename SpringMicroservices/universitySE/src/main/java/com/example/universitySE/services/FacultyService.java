@@ -54,7 +54,7 @@ public class FacultyService implements FacultyServiceInterface{
                 Student student = stud.get();
                 List<Subject> subjects = subjectRepository.findSubjectByStudyCourse(student.getStudyCourse());
                 for (int i=0; i<subjects.size(); i++){
-                    idSubjects.add(subjects.get(i).getId());
+                    idSubjects.add((int) subjects.get(i).getId());
                 }
             } else {
                 throw new Exception();

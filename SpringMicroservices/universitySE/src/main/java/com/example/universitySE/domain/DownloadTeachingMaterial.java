@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 3-feb-2019 20.09.13 by Hibernate Tools 5.2.0.Final
+// Generated 8-feb-2019 18.41.41 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -20,14 +20,16 @@ public class DownloadTeachingMaterial  implements java.io.Serializable {
      private int feedbackStudent;
      private int badgeStudent;
      private int idTeachingMaterial;
+     private String note;
 
     public DownloadTeachingMaterial() {
     }
 
-    public DownloadTeachingMaterial(int feedbackStudent, int badgeStudent, int idTeachingMaterial) {
+    public DownloadTeachingMaterial(int feedbackStudent, int badgeStudent, int idTeachingMaterial, String note) {
        this.feedbackStudent = feedbackStudent;
        this.badgeStudent = badgeStudent;
        this.idTeachingMaterial = idTeachingMaterial;
+       this.note = note;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -70,6 +72,16 @@ public class DownloadTeachingMaterial  implements java.io.Serializable {
     
     public void setIdTeachingMaterial(int idTeachingMaterial) {
         this.idTeachingMaterial = idTeachingMaterial;
+    }
+
+    
+    @Column(name="note", nullable=false)
+    public String getNote() {
+        return this.note;
+    }
+    
+    public void setNote(String note) {
+        this.note = note;
     }
 
 

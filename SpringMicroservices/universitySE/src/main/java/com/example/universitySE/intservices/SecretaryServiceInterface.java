@@ -13,6 +13,7 @@ public interface SecretaryServiceInterface {
     // ---------------------- SAVE METHODS
 
     void savePerson(PersonDTO personDTO) throws PersonException;
+    long savePersonRet(PersonDTO personDTO) throws PersonException;
 
     void saveSecretary(SecretaryDTO secretaryDTO) throws SecretaryException;
 
@@ -48,7 +49,9 @@ public interface SecretaryServiceInterface {
     // ActivityModel getActivity(int study_course, int subject, int id_prof, Date start, Date end, int activity_type) throws ActivityException;
     ActivityModel getActivity(long id) throws ActivityException;
 
-    PersonModel getPerson(String username, String password, int person_type) throws PersonException;
+    // PersonModel getPerson(String username, String password, int person_type) throws PersonException;
+    PersonModel getPerson(long id) throws PersonException;
+
 
     // ------------------------- RETURN LIST METHODS
 

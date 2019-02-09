@@ -62,7 +62,7 @@
               <div class="form-group small">
                 <label for="prof"><h4 class="text-credential label-auth" style="font-size:1.7vw; font-weight: bold; color: lightcyan">Select the professor</h4></label>
                 <select class="form-control" id="prof" required ngModel #prof="ngModel" name="prof">
-                  <option [value]="p.id" *ngFor="let p of professors">{{p.lastname}} {{p.firstname}}</option>
+                  <option [value]="p.id" *ngFor="let p of professors">{{p.lastname}}</option>
                 </select>
               </div>
               <div *ngIf="prof.invalid && (prof.dirty || prof.touched)">

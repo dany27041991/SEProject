@@ -35,6 +35,7 @@ export class InsertstudycourseComponent implements OnInit {
     } else {
       this.secService.setStudyCourse(form.value.name, Number(this.secretary.faculty.id));
       console.log('success');
+      this.route.navigate(['user/successful']);
     }
   }
 }

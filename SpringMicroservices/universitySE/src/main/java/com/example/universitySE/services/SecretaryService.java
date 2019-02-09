@@ -75,6 +75,24 @@ public class SecretaryService implements SecretaryServiceInterface {
     }
 
     @Override
+    public long savePersonRet(PersonDTO personDTO) throws PersonException {
+
+        if (!personDTO.equals(null)) {
+
+            Person person = new Person(personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType());
+            secretaryRepository.save(person);
+            long id = person.getId();
+            log.info("added new person");
+            return id;
+        }
+        else {
+
+            log.info("could not add new person");
+            throw new PersonException("could not add new person");
+        }
+    }
+
+    @Override
     public void saveSecretary(SecretaryDTO secretaryDTO) throws SecretaryException {
 
         if (!secretaryDTO.equals(null)) {
@@ -94,7 +112,7 @@ public class SecretaryService implements SecretaryServiceInterface {
     public void saveProfessor(ProfessorDTO professorDTO) throws ProfessorException, PersonException {
 
         if (!professorDTO.equals(null)) {
-            PersonModel personModel = getPerson(professorDTO.getUsername(), professorDTO.getPassword(), professorDTO.getPersonType());
+            PersonModel personModel = getPerson(professorDTO.getId());
             Professor professor = new Professor(personModel.getId(), professorDTO.getFirstName(), professorDTO.getLastName(), professorDTO.getBiography(), professorDTO.getReceptionTime(), professorDTO.getSubject(), professorDTO.getDateOfBirth());
             secretaryRepository.save(professor);
             log.info("added new professor");
@@ -110,7 +128,7 @@ public class SecretaryService implements SecretaryServiceInterface {
     public void saveStudent(StudentDTO studentDTO) throws StudentException, PersonException {
 
         if (!studentDTO.equals(null)) {
-            PersonModel personModel = getPerson(studentDTO.getUsername(), studentDTO.getPassword(), studentDTO.getPersonType());
+            PersonModel personModel = getPerson(studentDTO.getId());
             Student student = new Student(personModel.getId(), studentDTO.getFirstName(), studentDTO.getLastName(), studentDTO.getDateOfBirth(), studentDTO.getBadgeNumber(), studentDTO.getStudyCourse(), studentDTO.getEnrollmentYear());
             secretaryRepository.save(student);
             log.info("added new student");
@@ -210,7 +228,6 @@ public class SecretaryService implements SecretaryServiceInterface {
 
         if (!examDTO.equals(null)) {
 
-            // ActivityModel activityModel = getActivity(examDTO.getStudyCourse(), examDTO.getSubject(), examDTO.getIdProf(), examDTO.getStart(), examDTO.getEnd(), examDTO.getActivityType());
             ActivityModel activityModel = getActivity(examDTO.getId());
             Exam exam = new Exam(activityModel.getId());
             secretaryRepository.save(exam);
@@ -228,7 +245,6 @@ public class SecretaryService implements SecretaryServiceInterface {
 
         if (!lessonDTO.equals(null)) {
 
-            // ActivityModel activityModel = getActivity(lessonDTO.getStudyCourse(), lessonDTO.getSubject(), lessonDTO.getIdProf(), lessonDTO.getStart(), lessonDTO.getEnd(), lessonDTO.getActivityType());
             ActivityModel activityModel = getActivity(lessonDTO.getId());
             Lesson lesson = new Lesson(activityModel.getId());
             secretaryRepository.save(lesson);
@@ -341,7 +357,8 @@ public class SecretaryService implements SecretaryServiceInterface {
 
             log.info("activity found");
             Activity activityReturned = activity.get();
-            ActivityModel activityModel = new ActivityModel(activityReturned.getId(), activityReturned.getStudyCourse(), activityReturned.getSubject(), activityReturned.getIdProf(), activityReturned.getStart(), activityReturned.getEnd(), activityReturned.getActivityType());
+            ActivityModel activityModel = new ActivityModel(activityReturned.getId(), activityReturned.getStudyCourse(), activityReturned.getSubject(), activityReturned.getIdProf(),
+                    activityReturned.getStart(), activityReturned.getEnd(), activityReturned.getActivityType());
             return activityModel;
         }
         else {
@@ -352,9 +369,9 @@ public class SecretaryService implements SecretaryServiceInterface {
     }
 
     @Override
-    public PersonModel getPerson(String username, String password, int person_type) throws PersonException {
+    public PersonModel getPerson(long id) throws PersonException {
 
-        Optional<Person> person = personRepository.findPersonByUsernameAndPasswordAndPersonType(username, password, person_type);
+        Optional<Person> person = personRepository.findPersonById(id);
         if (person.isPresent()) {
 
             log.info("person found");

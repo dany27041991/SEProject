@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 3-feb-2019 20.09.13 by Hibernate Tools 5.2.0.Final
+// Generated 8-feb-2019 18.41.41 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -29,8 +29,7 @@ public class Student  implements java.io.Serializable {
     public Student() {
     }
 
-    public Student(long id, String firstName, String lastName, Date dateOfBirth, long badgeNumber, int studyCourse, Date enrollmentYear) {
-       this.id = id;
+    public Student(String firstName, String lastName, Date dateOfBirth, int badgeNumber, int studyCourse, Date enrollmentYear) {
        this.firstName = firstName;
        this.lastName = lastName;
        this.dateOfBirth = dateOfBirth;
@@ -38,8 +37,18 @@ public class Student  implements java.io.Serializable {
        this.studyCourse = studyCourse;
        this.enrollmentYear = enrollmentYear;
     }
-   
-     @Id @GeneratedValue(strategy=IDENTITY)
+
+    public Student(long id, String firstName, String lastName, Date dateOfBirth, long badgeNumber, int studyCourse, Date enrollmentYear) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.badgeNumber = badgeNumber;
+        this.studyCourse = studyCourse;
+        this.enrollmentYear = enrollmentYear;
+    }
+
+     @Id
 
     
     @Column(name="id", unique=true, nullable=false)
@@ -82,7 +91,7 @@ public class Student  implements java.io.Serializable {
     }
 
     
-    @Column(name="badge_number", unique=true, nullable=false) @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="badge_number", unique=true, nullable=false)
     public long getBadgeNumber() {
         return this.badgeNumber;
     }

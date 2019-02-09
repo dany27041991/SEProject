@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 3-feb-2019 20.09.13 by Hibernate Tools 5.2.0.Final
+// Generated 8-feb-2019 18.41.41 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -23,12 +23,7 @@ public class TeachingMaterial  implements java.io.Serializable {
     public TeachingMaterial() {
     }
 
-	
     public TeachingMaterial(int subject, String media) {
-        this.subject = subject;
-        this.media = media;
-    }
-    public TeachingMaterial(int subject, String media, String note) {
        this.subject = subject;
        this.media = media;
     }

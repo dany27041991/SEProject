@@ -30,7 +30,6 @@ export class InsertsubjectComponent implements OnInit {
     }
 
     this.secService.courses.subscribe((data: StudyCourse[]) => {
-      console.log(data);
       this.studyCourses = data as Array<StudyCourse>;
     });
   }
@@ -47,6 +46,7 @@ export class InsertsubjectComponent implements OnInit {
     } else {
       this.secService.setSubject(form.value.name, Number(form.value.course), Number(form.value.year));
       console.log('success');
+      this.route.navigate(['user/successful']);
     }
   }
 

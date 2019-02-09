@@ -36,17 +36,17 @@ public class SecretaryController {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
-            secretaryServiceInterface.savePerson(personDTO);
+            long id = secretaryServiceInterface.savePersonRet(personDTO);
 
             if (personDTO.getPersonType() == 2) {
 
-                ProfessorDTO professorDTO = new ProfessorDTO(personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType(), personDTO.getFirstName(),
+                ProfessorDTO professorDTO = new ProfessorDTO(id, personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType(), personDTO.getFirstName(),
                         personDTO.getLastName(), personDTO.getBiography(), personDTO.getReceptionTime(), personDTO.getSubject(), personDTO.getDateOfBirth());
                 secretaryServiceInterface.saveProfessor(professorDTO);
                 return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorDTO));
             } else if (personDTO.getPersonType() == 3) {
 
-                StudentDTO studentDTO = new StudentDTO(personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType(), personDTO.getFirstName(),
+                StudentDTO studentDTO = new StudentDTO(id, personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType(), personDTO.getFirstName(),
                         personDTO.getLastName(), personDTO.getDateOfBirth(), personDTO.getBadgeNumber(), personDTO.getStudyCourse(), personDTO.getEnrollmentYear());
                 secretaryServiceInterface.saveStudent(studentDTO);
                 return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), studentDTO));
@@ -372,38 +372,6 @@ public class SecretaryController {
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getSupportMaterial(id)));
         }
         catch (SupportMaterialException e1) {
-
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
-        }
-        catch (UnsupportedEncodingException e2){
-
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
-        }
-        catch (UserNotLoggedException e3){
-
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
-        }
-        catch (ExpiredJwtException e4){
-
-            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
-        }
-        catch (Exception e) {
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
-        }
-    }
-
-    @RequestMapping(value = "/person/{username}/{password}/{personType}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getPerson(HttpServletRequest request,
-                                                      @PathVariable(name = "username") String username,
-                                                      @PathVariable(name = "password") String password,
-                                                      @PathVariable(name = "personType") int personType) {
-        try {
-
-            loginServiceInterface.verifyJwtAndGetData(request);
-            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getPerson(username, password, personType)));
-        }
-        catch (PersonException e1) {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
         }
