@@ -128,5 +128,10 @@
       }
     }
   },
-  "defaultProject": "AngularSE"
+  "defaultProject": "AngularSE",
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false
+    }
+  }
 }

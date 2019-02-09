@@ -11,7 +11,6 @@ import {Router} from '@angular/router';
 import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
 import {Type} from '../../utils/type';
 import {NgForm} from '@angular/forms';
-import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-insertactivity',
