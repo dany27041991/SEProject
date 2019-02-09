@@ -6,7 +6,9 @@ import com.example.universitySE.models.MobilePersonModel;
 import com.example.universitySE.models.StudentModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mockito;
+import org.mockito.exceptions.misusing.InvalidUseOfMatchersException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,9 +24,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(value = PersonController.class, secure = false)
 public class PersonControllerTest {
+
+    @InjectMocks
+    PersonController personController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,11 +45,11 @@ public class PersonControllerTest {
 
     StudentModel studentModel = new StudentModel(16, "hilary.pensive@student.com", 3 , "Hilary", "Pensive", new Date(1994,04,11), 10001, 1, new Date(1994,04,11));
 
-    /*@Test
+    @Test
     public void loginUser() throws Exception{
 
         PersonLoginDTO personLoginDTO = new PersonLoginDTO("hislary.pensive@student.com", "student1");
-        Mockito.when(loginServiceInterface.getPersonAndVerifyPassword(personLoginDTO.getUsername(), personLoginDTO.getPassword()))
+        when(loginServiceInterface.getPersonAndVerifyPassword(personLoginDTO.getUsername(), personLoginDTO.getPassword()))
                 .thenReturn(studentModel);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/login", personLoginDTO)
@@ -50,9 +59,8 @@ public class PersonControllerTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         System.out.println(result);
 
-        String jwt = loginServiceInterface.createJwt("TeamGM", new Date(), "Unisalento","PersonalUnisalento");
+        when(loginServiceInterface.createJwt("TeamGM", new Date(), "Unisalento","PersonalUnisalento")).thenThrow(InvalidUseOfMatchersException.class);
         MockHttpServletResponse response = result.getResponse();
-        response.setHeader("AUTHORIZATION", jwt);
         System.out.println(response);
     }
 
@@ -61,7 +69,7 @@ public class PersonControllerTest {
         MobilePersonModel personModel = new MobilePersonModel(16, "hilary.pensive@student.com", "student1", 3, "Hilary", "Pensive", new Date(1994,04,11));
         List<MobilePersonModel> mobilePersonModels = new ArrayList<>();
         mobilePersonModels.add(personModel);
-        Mockito.when(loginServiceInterface.getAllPersonMobile()).thenReturn(mobilePersonModels);
+        when(loginServiceInterface.getAllPersonMobile()).thenReturn(mobilePersonModels);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("user/getAll")
                 .accept(MediaType.APPLICATION_JSON);
@@ -71,5 +79,5 @@ public class PersonControllerTest {
 
         MockHttpServletResponse response = result.getResponse();
         System.out.println(response);
-    }*/
+    }
 }
