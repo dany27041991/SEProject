@@ -29,16 +29,17 @@ public class Student  implements java.io.Serializable {
     public Student() {
     }
 
-    public Student(String firstName, String lastName, Date dateOfBirth, int badgeNumber, int studyCourse, Date enrollmentYear) {
-       this.firstName = firstName;
-       this.lastName = lastName;
-       this.dateOfBirth = dateOfBirth;
-       this.badgeNumber = badgeNumber;
-       this.studyCourse = studyCourse;
-       this.enrollmentYear = enrollmentYear;
+    public Student(int id, String firstName, String lastName, Date dateOfBirth, int badgeNumber, int studyCourse, Date enrollmentYear) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.badgeNumber = badgeNumber;
+        this.studyCourse = studyCourse;
+        this.enrollmentYear = enrollmentYear;
     }
    
-     @Id @GeneratedValue(strategy=IDENTITY)
+     @Id
 
     
     @Column(name="id", unique=true, nullable=false)

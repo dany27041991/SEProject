@@ -42,7 +42,7 @@ public class StudentControllerTest {
         RatingDTO ratingDTO = mock(RatingDTO.class);
         serviceInterface.addRating(ratingDTO);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/student/addrating", ratingDTO)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/student/addrating", ratingDTO)
                 .accept(MediaType.APPLICATION_JSON).content(String.valueOf(ratingDTO))
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -61,7 +61,7 @@ public class StudentControllerTest {
         lastUploadModels.add(lastUploadModel);
         when(serviceInterface.getLastUpload(subjectDTO.getSubjects())).thenReturn(lastUploadModels);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/student/addrating", subjectDTO)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/student/addrating", subjectDTO)
                 .accept(MediaType.APPLICATION_JSON).content(String.valueOf(subjectDTO))
                 .contentType(MediaType.APPLICATION_JSON);
 
