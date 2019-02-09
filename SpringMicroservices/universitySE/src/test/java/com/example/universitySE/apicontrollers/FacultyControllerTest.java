@@ -63,7 +63,7 @@ public class FacultyControllerTest {
         Mockito.when(facultyService.getLoggedUserSubject(idTypeForSubjectDTO.getId(), idTypeForSubjectDTO.getType()))
                 .thenReturn(number);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/faculty/getSubjectUserLogged", idTypeForSubjectDTO)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/faculty/getSubjectUserLogged", exampleDTO)
                 .accept(MediaType.APPLICATION_JSON).content(exampleDTO)
                 .contentType(MediaType.APPLICATION_JSON);
 

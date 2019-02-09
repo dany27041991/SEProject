@@ -22,7 +22,7 @@ public class StudentController {
     StudentServiceInterface serviceInterface;
 
     @PostMapping("/addrating")
-    public ResponseEntity<JSONResponseBody> getAllReporting(@Valid @RequestBody RatingDTO ratingDTO) {
+    public ResponseEntity<JSONResponseBody> addRating(@Valid @RequestBody RatingDTO ratingDTO) {
         try {
             serviceInterface.addRating(ratingDTO);
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), "OK!"));
