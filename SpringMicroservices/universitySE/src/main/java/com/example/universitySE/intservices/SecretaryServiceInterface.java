@@ -5,7 +5,6 @@ import com.example.universitySE.dtos.*;
 import com.example.universitySE.exceptions.*;
 import com.example.universitySE.models.*;
 
-import java.util.Date;
 import java.util.List;
 
 public interface SecretaryServiceInterface {
@@ -34,6 +33,8 @@ public interface SecretaryServiceInterface {
 
     void saveLesson(LessonDTO lessonDTO) throws LessonException, ActivityException;
 
+    void updateReporting(ReportingRetDTO reportingRetDTO) throws ReportingException;
+
     // ------------------------- RETURN MODEL METHODS
 
     FacultyModel getFaculty(long id) throws FacultyException;
@@ -46,11 +47,17 @@ public interface SecretaryServiceInterface {
 
     SupportMaterialModel getSupportMaterial(long id) throws SupportMaterialException;
 
-    // ActivityModel getActivity(int study_course, int subject, int id_prof, Date start, Date end, int activity_type) throws ActivityException;
     ActivityModel getActivity(long id) throws ActivityException;
 
-    // PersonModel getPerson(String username, String password, int person_type) throws PersonException;
     PersonModel getPerson(long id) throws PersonException;
+
+    ProfessorModel getProfessor(long id) throws ProfessorException;
+
+    ClassroomModel getClassroom(long id) throws ClassroomException;
+
+    ReportModel getReporting(long id) throws ReportingException;
+
+    SecretaryRetModel getSecretary(long id) throws SecretaryException, FacultyException;
 
 
     // ------------------------- RETURN LIST METHODS
@@ -70,4 +77,9 @@ public interface SecretaryServiceInterface {
     List<State> getStates() throws StateException;
 
     List<SupportMaterial> getSupportMaterials() throws SupportMaterialException;
+
+    // List<Reporting> getReportings() throws ReportingException;
+    List<ReportingRetModel> getReportingsIterator() throws ReportingException, SupportMaterialException, StateException, ProfessorException,
+            ClassroomException, SecretaryException, FacultyException;
+
 }

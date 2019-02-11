@@ -14,9 +14,10 @@ import {InsertclassroomComponent} from './components/insertclassroom/insertclass
 import {InsertuserComponent} from './components/insertuser/insertuser.component';
 import {InsertactivityComponent} from './components/insertactivity/insertactivity.component';
 import {SuccessfulComponent} from './messages/successful/successful.component';
-import {AccessToLocalStorage} from './utils/AccessToLocalStorage';
 import {UploadComponent} from './components/upload/upload.component';
 import {ViewreportingComponent} from './components/viewreporting/viewreporting.component';
+import {SecretaryreportingComponent} from './components/secretaryreporting/secretaryreporting.component';
+import {DetailsecretaryreportingComponent} from './components/detailsecretaryreporting/detailsecretaryreporting.component';
 
 const routes: Routes = [
   {
@@ -87,6 +88,16 @@ const routes: Routes = [
   {
     path: 'user/professor/:id/viewreporting',
     component: ViewreportingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/reportings',
+    component: SecretaryreportingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/detailreportings',
+    component: DetailsecretaryreportingComponent,
     canActivate: [RouteGuardService]
   }
 ];

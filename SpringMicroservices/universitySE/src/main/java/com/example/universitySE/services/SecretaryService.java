@@ -3,6 +3,8 @@ package com.example.universitySE.services;
 import com.example.universitySE.domain.*;
 import com.example.universitySE.dtos.*;
 import com.example.universitySE.exceptions.*;
+import com.example.universitySE.intservices.Container;
+import com.example.universitySE.intservices.Iterator;
 import com.example.universitySE.intservices.SecretaryServiceInterface;
 import com.example.universitySE.models.*;
 import com.example.universitySE.repositories.*;
@@ -11,12 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SecretaryService implements SecretaryServiceInterface {
+public class SecretaryService implements SecretaryServiceInterface, Container {
 
     private static final Logger log = LoggerFactory.getLogger(SecretaryServiceInterface.class);
 
@@ -55,6 +57,9 @@ public class SecretaryService implements SecretaryServiceInterface {
 
     @Autowired
     ClassroomRepository classroomRepository;
+
+    @Autowired
+    ReportingRepository reportingRepository;
 
     // -------------------------------------------- SAVE METHODS
 
@@ -257,6 +262,26 @@ public class SecretaryService implements SecretaryServiceInterface {
         }
     }
 
+    // -------------------------------- UPDATE METHODS
+
+    @Override
+    public void updateReporting(ReportingRetDTO reportingRetDTO) throws ReportingException {
+
+        if (!reportingRetDTO.equals(null)) {
+
+            ReportModel reportModel = getReporting(reportingRetDTO.getId());
+            Reporting reporting = new Reporting(reportModel.getId(), reportingRetDTO.getNoteProf(), reportingRetDTO.getSupportMaterial(), reportingRetDTO.getNoteSec(),
+                    reportingRetDTO.getState(), reportingRetDTO.getProfessor(), reportingRetDTO.getSecretary(), reportingRetDTO.getClassroom());
+            secretaryRepository.save(reporting);
+            log.info("reporting updated");
+        }
+        else {
+
+            log.info("could not update reporting");
+            throw new ReportingException("could not update reporting");
+        }
+    }
+
     // ---------------------------------- RETURN MODEL METHODS
 
     @Override
@@ -383,6 +408,83 @@ public class SecretaryService implements SecretaryServiceInterface {
 
             log.info("person not found");
             throw new PersonException("person not found");
+        }
+    }
+
+    @Override
+    public ProfessorModel getProfessor(long id) throws ProfessorException {
+
+        Optional<Professor> professor = professorRepository.findProfessorById(id);
+        if (professor.isPresent()) {
+
+            log.info("professor found");
+            Professor professorReturned = professor.get();
+            ProfessorModel professorModel = new ProfessorModel(professorReturned.getId(), professorReturned.getFirstName(), professorReturned.getLastName(), professorReturned.getBiography(),
+                    professorReturned.getReceptionTime(), professorReturned.getSubject(), professorReturned.getDateOfBirth());
+            return professorModel;
+        }
+        else {
+
+            log.info("professor not found");
+            throw new ProfessorException("professor not found");
+        }
+    }
+
+    @Override
+    public ClassroomModel getClassroom(long id) throws ClassroomException {
+
+        Optional<Classroom> classroom = classroomRepository.findClassroomById(id);
+        if (classroom.isPresent()) {
+
+            log.info("classroom found");
+            Classroom classroomReturned = classroom.get();
+            ClassroomModel classroomModel = new ClassroomModel(classroomReturned.getId(), classroomReturned.getName(), classroomReturned.getLatitude(), classroomReturned.getLongitude());
+            return classroomModel;
+        }
+        else {
+
+            log.info("classroom not found");
+            throw new ClassroomException("classroom not found");
+        }
+    }
+
+    @Override
+    public ReportModel getReporting(long id) throws ReportingException {
+
+        // Optional<Reporting> reporting = reportingRepository.findReportingById(id);
+        Optional<Reporting> reporting = reportingRepository.getReportingById(id);
+
+        if (reporting.isPresent()) {
+
+            log.info("reporting found");
+            Reporting reportingReturned = reporting.get();
+            ReportModel reportModel = new ReportModel(reportingReturned.getId(), reportingReturned.getNoteProf(), reportingReturned.getSupportMaterialProf(), reportingReturned.getNoteSec(),
+                    reportingReturned.getState(), reportingReturned.getIdProf(), reportingReturned.getIdSecretary(), reportingReturned.getIdClassroom());
+            return reportModel;
+        }
+        else {
+
+            log.info("reporting not found");
+            throw new ReportingException("reporting not found");
+        }
+    }
+
+    @Override
+    public SecretaryRetModel getSecretary(long id) throws SecretaryException, FacultyException {
+
+        Optional<Secretary> secretary = secretaryRepository.findSecretaryById(id);
+        if (secretary.isPresent()) {
+
+            log.info("secretary found");
+            Secretary secretaryReturned = secretary.get();
+            FacultyModel facultyModel = getFaculty(secretaryReturned.getId());
+            SecretaryRetModel secretaryRetModel = new SecretaryRetModel(secretaryReturned.getId(), facultyModel, secretaryReturned.getVenue());
+            return secretaryRetModel;
+        }
+        else {
+
+            log.info("secretary not found");
+            throw new SecretaryException("secretary not found");
         }
     }
 
@@ -513,6 +615,91 @@ public class SecretaryService implements SecretaryServiceInterface {
 
             log.info("support materials not found");
             throw new SupportMaterialException("support materials not found");
+        }
+    }
+
+    /* @Override
+    public List<Reporting> getReportings() throws ReportingException {
+
+        List<Reporting> reportings = reportingRepository.findAll();
+        if (!reportings.isEmpty()) {
+
+            log.info("reportings found");
+            return reportings;
+        }
+        else {
+
+            log.info("reportings not found");
+            throw new ReportingException("reportings not found");
+        }
+    } */
+
+    @Override
+    public List<ReportingRetModel> getReportingsIterator() throws ReportingException, SupportMaterialException, StateException, ProfessorException,
+            ClassroomException, SecretaryException, FacultyException {
+
+        Iterator iterator;
+        List<Reporting> reportingList = new ArrayList<>();
+        List<ReportingRetModel> reportingRetModels = new ArrayList<>();
+
+        for (iterator = getIterator(); iterator.hasNext();) {
+            Reporting reporting = (Reporting) iterator.next();
+            reportingList.add(reporting);
+
+            SecretaryRetModel secretaryRetModel = getSecretary(reporting.getIdSecretary());
+
+            ReportingRetModel reportingRetModel = new ReportingRetModel(reporting.getId(), reporting.getNoteProf(), getSupportMaterial(reporting.getSupportMaterialProf()),
+                    reporting.getNoteSec(), getState(reporting.getState()), getProfessor(reporting.getIdProf()), secretaryRetModel, getClassroom(reporting.getIdClassroom()));
+            reportingRetModels.add(reportingRetModel);
+        }
+
+        if (!reportingList.isEmpty()) {
+
+            log.info("reportings found");
+            // return reportingList;
+        }
+        else {
+            log.info("reportings not found");
+            throw new ReportingException("reportings not found");
+        }
+
+        if (!reportingRetModels.isEmpty()) {
+
+            log.info("reportings added");
+            return reportingRetModels;
+        }
+        else {
+            log.info("could not add reportings");
+            throw new ReportingException("could not add reportings");
+        }
+    }
+
+    // DESIGN PATTERN
+
+    @Override
+    public Iterator getIterator() {
+        return new ReportingIterator();
+    }
+
+    private class ReportingIterator implements Iterator {
+
+        List<Reporting> reportings = reportingRepository.findAll();
+        int i;
+
+        @Override
+        public boolean hasNext() {
+            if (i < reportings.size()) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Object next() {
+            if (this.hasNext()) {
+                return reportings.get(i++);
+            }
+            return null;
         }
     }
 

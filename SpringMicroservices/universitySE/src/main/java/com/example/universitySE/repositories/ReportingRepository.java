@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReportingRepository extends JpaRepository<Reporting, Integer> {
 
@@ -16,5 +17,9 @@ public interface ReportingRepository extends JpaRepository<Reporting, Integer> {
     void addReporting(String note_prof, int support_material_prof, int state, int id_prof, int id_classroom);
 
     List<Reporting> findAll();
+
+    Optional<Reporting> findReportingById(long id);
+
+    Optional<Reporting> getReportingById(long id);
 
 }

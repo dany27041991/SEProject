@@ -28,4 +28,6 @@ public interface SecretaryRepository extends JpaRepository<Secretary, Integer> {
     void save(Exam exam);
 
     void save(Lesson lesson);
+
+    void save(Reporting reporting);
 }

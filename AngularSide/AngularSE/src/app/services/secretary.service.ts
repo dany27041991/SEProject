@@ -11,10 +11,9 @@ import {Subject} from '../models/Subject';
 import {Classroom} from '../models/Classroom';
 import {Professor} from '../models/Professor';
 import {Activity} from '../models/Activity';
-import {Exam} from '../models/Exam';
-import {Lesson} from '../models/Lesson';
-import {Person} from '../models/Person';
-import {Student} from '../models/Student';
+import {SupportMaterial} from '../models/SupportMaterial';
+import {State} from '../models/State';
+import {SecretaryRet} from '../models/SecretaryRet';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +23,7 @@ export class SecretaryService implements OnInit {
   private APIAUTHURL = 'http://localhost:8090/user/secretary/';
 
   private secretary: Secretary;
-  private gotActivity: Activity;
-  private gotPerson: Person;
+  private secRet: SecretaryRet;
 
   @Output() public studyCourse = new EventEmitter();
   @Output() public courses = new EventEmitter();
@@ -38,6 +36,9 @@ export class SecretaryService implements OnInit {
   @Output() public activity = new EventEmitter();
   @Output() public person_types = new EventEmitter();
   @Output() public person = new EventEmitter();
+  @Output() public reportings = new EventEmitter();
+  @Output() public states = new EventEmitter();
+  @Output() public reporting = new EventEmitter();
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthService) { }
 
@@ -244,5 +245,71 @@ export class SecretaryService implements OnInit {
         }
       }
     );
+  }
+
+  getReportings() {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.get(this.APIAUTHURL + 'reportings', {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        localStorage.setItem('Reportings', JSON.stringify(payload.response));
+        this.reportings.emit(payload.response);
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
+  }
+
+  getStates() {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.get(this.APIAUTHURL + 'states', {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        localStorage.setItem('States', JSON.stringify(payload.response));
+        this.states.emit(payload.response);
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
+  }
+
+  updateReporting(id: number, noteProf: string, supportMaterial: number, noteSec: string, state: number, professor: number, secretary: number, classroom: number) {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.post(this.APIAUTHURL + 'updatereporting', {
+      id: id,
+      noteProf: noteProf,
+      supportMaterial: supportMaterial,
+      noteSec: noteSec,
+      state: state,
+      professor: professor,
+      secretary: secretary,
+      classroom: classroom
+    }, {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        localStorage.setItem('Reporting', JSON.stringify(payload.response));
+        this.reporting.emit(payload.response);
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
+  }
+
+  getSecretary(id: number): SecretaryRet {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.get(this.APIAUTHURL + 'secretary/' + id, {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        this.secRet = <SecretaryRet>payload.response;
+        localStorage.setItem('SecretaryReturned', JSON.stringify(payload.response));
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
+    return this.secRet;
   }
 }

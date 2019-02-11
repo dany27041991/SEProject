@@ -45,8 +45,19 @@ public class Reporting  implements java.io.Serializable {
        this.idSecretary = idSecretary;
        this.idClassroom = idClassroom;
     }
-   
-     @Id @GeneratedValue(strategy=IDENTITY)
+
+    public Reporting(long id, String noteProf, int supportMaterial, String noteSec, int state, int professor, Integer secretary, int classroom) {
+        this.id = id;
+        this.noteProf = noteProf;
+        this.supportMaterialProf = supportMaterial;
+        this.noteSec = noteSec;
+        this.state = state;
+        this.idProf = professor;
+        this.idSecretary = secretary;
+        this.idClassroom = classroom;
+    }
+
+    @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)

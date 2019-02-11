@@ -1,6 +1,5 @@
 package com.example.universitySE.apicontrollers;
 
-import com.example.universitySE.domain.Lesson;
 import com.example.universitySE.dtos.*;
 import com.example.universitySE.exceptions.*;
 import com.example.universitySE.intservices.LoginServiceInterface;
@@ -8,7 +7,6 @@ import com.example.universitySE.intservices.SecretaryServiceInterface;
 import com.example.universitySE.shared.JSONResponseBody;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 
 @RestController
 @RequestMapping("user/secretary")
@@ -246,6 +243,39 @@ public class SecretaryController {
         }
     }
 
+    // ----------------------------- UPDATE METHODS
+
+    @PostMapping(value = "/updatereporting")
+    public ResponseEntity<JSONResponseBody> updateReporting(HttpServletRequest request, @Valid @RequestBody ReportingRetDTO reportingRetDTO) {
+
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            secretaryServiceInterface.updateReporting(reportingRetDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), reportingRetDTO));
+        }
+        catch (ReportingException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
     // ------------------------- RETURN MODEL METHODS
 
     @RequestMapping(value = "/faculty/{id}", method = RequestMethod.GET)
@@ -372,6 +402,93 @@ public class SecretaryController {
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getSupportMaterial(id)));
         }
         catch (SupportMaterialException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/professor/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getProfessor(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getProfessor(id)));
+        }
+        catch (ProfessorException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/classroom/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getClassroom(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getClassroom(id)));
+        }
+        catch (ClassroomException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/secretary/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getSecretary(HttpServletRequest request, @PathVariable(name = "id") long id) {
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getSecretary(id)));
+        }
+        catch (SecretaryException e1) {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
         }
@@ -606,6 +723,36 @@ public class SecretaryController {
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getSupportMaterials()));
         }
         catch (SupportMaterialException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/reportings", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getReportings(HttpServletRequest request) {
+
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getReportingsIterator()));
+        }
+        catch (ReportingException e1) {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
         }

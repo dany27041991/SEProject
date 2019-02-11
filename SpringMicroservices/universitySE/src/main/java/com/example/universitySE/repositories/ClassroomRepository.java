@@ -12,6 +12,6 @@ public interface ClassroomRepository extends JpaRepository<Classroom, Integer> {
 
     List<Classroom> findAll();
 
-    Optional<Classroom> findClassroomById(int id);
+    Optional<Classroom> findClassroomById(long id);
 
 }

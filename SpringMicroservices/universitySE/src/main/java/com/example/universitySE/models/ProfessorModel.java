@@ -37,4 +37,13 @@ public class ProfessorModel {
     @Getter @Setter
     private Date dateOfBirth;
 
+    public ProfessorModel(long id, String firstName, String lastName, String biography, String receptionTime, int subject, Date dateOfBirth) {
+        this.id = id;
+        this.firstname = firstName;
+        this.lastname = lastName;
+        this.biography = biography;
+        this.receptiontime = receptionTime;
+        this.subject = subject;
+        this.dateOfBirth = dateOfBirth;
+    }
 }

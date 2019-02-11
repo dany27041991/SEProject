@@ -62,6 +62,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  goToReportings(): void {
+    if (AccessToLocalStorage.getTypePerson() === Type.Secretary) {
+      this.router.navigate(['user/secretary/' + AccessToLocalStorage.getUser()['id'] + '/reportings']);
+    }
+  }
+
   goToUploadMaterial(): void {
     if (AccessToLocalStorage.getTypePerson() === Type.Professor) {
       this.router.navigate(['user/professor/' + AccessToLocalStorage.getUser()['id'] + '/upload']);
