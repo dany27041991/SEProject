@@ -63,7 +63,7 @@ public class ProfessorControllerTest {
         assertEquals(subjectModel1.getStudy_course(), subjectModel.getStudy_course());
         assertEquals(subjectModel1.getYear_course(), subjectModel.getYear_course());
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("user/professor/subject/1", Integer.class)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("http://localhost:8090/user/professor/subject/1", Integer.class)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -84,7 +84,7 @@ public class ProfessorControllerTest {
         supportMaterials1.add(supportMaterial1);
         assertNotEquals(supportMaterial, supportMaterial1);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/professor/materials")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/materials")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -105,7 +105,7 @@ public class ProfessorControllerTest {
         ReportingDTO reportingDTO1 = reportingDTO;
         assertEquals(reportingDTO, reportingDTO1);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/professor/addreporting")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/addreporting")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
     }
@@ -120,7 +120,7 @@ public class ProfessorControllerTest {
         classroomList.add(classroom);
         when(professorServiceInterface.getClassroom()).thenReturn(classroomList);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/professor/classrooms")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/classrooms")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
     }
@@ -135,7 +135,7 @@ public class ProfessorControllerTest {
         reportingModelList.add(reportingModel);
         when(professorServiceInterface.getAllReporting()).thenReturn(reportingModelList);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/professor/getAllReporting")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/getAllReporting")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
     }
@@ -148,7 +148,7 @@ public class ProfessorControllerTest {
         MultipartFile multipartFile = mock(MultipartFile.class);
         professorServiceInterface.store(multipartFile, "1", 1);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/professor/upload")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/upload")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
     }
@@ -160,7 +160,7 @@ public class ProfessorControllerTest {
         teachingMaterialModelList.add(materialModel);
         when(professorServiceInterface.getAllTeachingMaterialForStudent(1)).thenReturn(teachingMaterialModelList);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/professor//getAllTeachingMaterials/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/getAllTeachingMaterials/1")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
     }

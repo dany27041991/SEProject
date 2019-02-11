@@ -18,7 +18,7 @@
               <div class="card-body">
                 <h5 style="font-size:1.3vw; font-weight: bold; color: black" class="card-title">{{rep.professors.firstName}} {{rep.professors.lastName}}: {{rep.noteProf}}</h5>
                 <p class="card-text">Classroom: {{rep.classrooms.name}}</p>
-                <p *ngIf="rep.noteSec" class="card-text">Secretary's Note: {{rep.noteSec}}</p>
+                <p *ngIf="rep.noteSec" style="font-size:1.3vw; font-weight: bold; color: black" class="card-text">Secretary's Note: {{rep.noteSec}}</p>
                 <div [ngSwitch]="rep.state">
                   <p style="color: blue" class="card-text" *ngSwitchCase="1">Taken In</p>
                   <p style="color: orange" class="card-text" *ngSwitchCase="2">In Progress</p>
@@ -43,7 +43,7 @@
               <div class="card-body">
                 <h5 style="font-size:1.3vw; font-weight: bold; color: black" class="card-title">{{rep.professors.firstName}} {{rep.professors.lastName}}: {{rep.noteProf}}</h5>
                 <p class="card-text">Classroom: {{rep.classrooms.name}}</p>
-                <p *ngIf="rep.noteSec" class="card-text">Secretary's Note: {{rep.noteSec}}</p>
+                <p *ngIf="rep.noteSec" style="font-size:1.3vw; font-weight: bold; color: black" class="card-text">Secretary's Note: {{rep.noteSec}}</p>
                 <div [ngSwitch]="rep.state">
                   <p style="color: blue" class="card-text" *ngSwitchCase="1">Taken In</p>
                   <p style="color: orange" class="card-text" *ngSwitchCase="2">In Progress</p>

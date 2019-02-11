@@ -32,9 +32,6 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(value = PersonController.class, secure = false)
 public class PersonControllerTest {
 
-    @InjectMocks
-    PersonController personController;
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -52,16 +49,12 @@ public class PersonControllerTest {
         when(loginServiceInterface.getPersonAndVerifyPassword(personLoginDTO.getUsername(), personLoginDTO.getPassword()))
                 .thenReturn(studentModel);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("user/login", personLoginDTO)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/login", personLoginDTO)
                 .accept(MediaType.APPLICATION_JSON).content(exampleDTO)
                 .contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        System.out.println(result);
-
         when(loginServiceInterface.createJwt("TeamGM", new Date(), "Unisalento","PersonalUnisalento")).thenThrow(InvalidUseOfMatchersException.class);
-        MockHttpServletResponse response = result.getResponse();
-        System.out.println(response);
+
     }
 
     @Test
@@ -71,7 +64,7 @@ public class PersonControllerTest {
         mobilePersonModels.add(personModel);
         when(loginServiceInterface.getAllPersonMobile()).thenReturn(mobilePersonModels);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("user/getAll")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("http://localhost:8090/user/getAll")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface DownloadTeachingMaterialRepository extends JpaRepository<DownloadTeachingMaterial, Integer>{
 
@@ -14,5 +16,7 @@ public interface DownloadTeachingMaterialRepository extends JpaRepository<Downlo
     @Transactional
     @Query(value = "INSERT INTO Download_teaching_material (feedback_student, badge_student, id_teaching_material, note) VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
     void addReporting(int feedbak, int badge, int id_material, String note);
+
+    List<DownloadTeachingMaterial> findAll();
 
 }

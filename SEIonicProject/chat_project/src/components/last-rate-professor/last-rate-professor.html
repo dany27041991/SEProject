@@ -1,0 +1,14 @@
+<ion-list>
+  <ion-item-divider style="color: red" id="lastmessages">Last Rate Material</ion-item-divider>
+
+  <ion-item>
+    <ion-item *ngIf="lastRateRes" text-wrap no-lines>
+        <ion-avatar item-left>
+          <img src="assets/imgs/download.png" alt="Avatar">
+        </ion-avatar>
+        <h2 id="profile">{{ lastRateRes.subject.name }}</h2>
+        <a target="_blank" href="{{ lastRateRes.teachingMaterial.media }}">{{ lastRateRes.teachingMaterial.media }}</a>
+        <p>Rate download: {{ lastRateRes.feedback_student }}</p>
+    </ion-item>
+  </ion-item>
+</ion-list>
