@@ -143,4 +143,13 @@ public class ProfessorController {
         }
     }
 
+    @PostMapping(value = "/getRateDownload")
+    public ResponseEntity<JSONResponseBody> getRateDownload() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getAllRateTeachingMaterial()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
 }

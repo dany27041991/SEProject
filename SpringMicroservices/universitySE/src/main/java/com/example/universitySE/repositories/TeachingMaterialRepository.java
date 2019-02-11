@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeachingMaterialRepository extends JpaRepository<TeachingMaterial, Integer> {
 
@@ -16,5 +17,7 @@ public interface TeachingMaterialRepository extends JpaRepository<TeachingMateri
     void addTeachingMaterial(int subject, String media);
 
     List<TeachingMaterial> getTeachingMaterialBySubject(int subject);
+
+    Optional<TeachingMaterial> findTeachingMaterialById(int id);
 
 }

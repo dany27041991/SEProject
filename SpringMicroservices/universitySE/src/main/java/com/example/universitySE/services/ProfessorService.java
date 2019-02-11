@@ -8,6 +8,7 @@ import com.example.universitySE.exceptions.SubjectException;
 import com.example.universitySE.intservices.FileSystem;
 import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.intservices.ProfessorServiceInterface;
+import com.example.universitySE.models.RatingTeachingMaterialModel;
 import com.example.universitySE.models.ReportingModel;
 import com.example.universitySE.models.SubjectModel;
 import com.example.universitySE.models.TeachingMaterialModel;
@@ -59,6 +60,9 @@ public class ProfessorService implements ProfessorServiceInterface {
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    DownloadTeachingMaterialRepository downloadTeachingMaterialRepository;
 
     @Override
     public SubjectModel getSubject(int id) throws SubjectException {
@@ -144,31 +148,6 @@ public class ProfessorService implements ProfessorServiceInterface {
             directories.add(file, "/files/"+id, subject);
             FileSystem filesUp = new FileUp();
             filesUp.add(file, "/files/"+id, subject);
-
-            /*String uniqueID = UUID.randomUUID().toString();
-            Path rootLocation = Paths.get("src/main/resources/static/files/"+id);
-            Path filePath = Paths.get(rootLocation+"/"+file.getOriginalFilename());
-            File directory = new File(String.valueOf(rootLocation));
-            if (! directory.exists()){
-                directory.mkdir();
-                File f = new File(String.valueOf(filePath));
-                if(f.exists() && !f.isDirectory()) {
-                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+uniqueID+file.getOriginalFilename());
-                    Files.copy(file.getInputStream(), rootLocation.resolve(uniqueID+file.getOriginalFilename()));
-                } else {
-                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+file.getOriginalFilename());
-                    Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
-                }
-            } else {
-                File f = new File(String.valueOf(filePath));
-                if(f.exists() && !f.isDirectory()) {
-                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+uniqueID+file.getOriginalFilename());
-                    Files.copy(file.getInputStream(), rootLocation.resolve(uniqueID+file.getOriginalFilename()));
-                } else {
-                    teachingMaterialRepository.addTeachingMaterial(subject, Constant.pathStore+id+"/"+file.getOriginalFilename());
-                    Files.copy(file.getInputStream(), rootLocation.resolve(file.getOriginalFilename()));
-                }
-            }*/
         } catch (Exception e) {
             log.info("Problem loading!");
             throw new RuntimeException("FAIL!");
@@ -191,6 +170,39 @@ public class ProfessorService implements ProfessorServiceInterface {
             }
         }
         return teachingMaterialModels;
+    }
+
+    @Override
+    public List<RatingTeachingMaterialModel> getAllRateTeachingMaterial() {
+        List<RatingTeachingMaterialModel> ratingTeachingMaterialModels = new ArrayList<>();
+        List<DownloadTeachingMaterial> downloadTeachingMaterialList = downloadTeachingMaterialRepository.findAll();
+        for(int i=0; i<downloadTeachingMaterialList.size(); i++) {
+            Optional<TeachingMaterial> teachingMaterialOptional = teachingMaterialRepository.findTeachingMaterialById(downloadTeachingMaterialList.get(i).getIdTeachingMaterial());
+            if(teachingMaterialOptional.isPresent()){
+                TeachingMaterial teachingMaterial = teachingMaterialOptional.get();
+                Optional<Subject> subjectOptional = subjectRepository.findSubjectById(teachingMaterial.getSubject());
+                if(subjectOptional.isPresent()){
+                    Subject subject = subjectOptional.get();
+                    Optional<Professor> professorOptional = professorRepository.findProfessorBySubject(subject.getId());
+                    if(professorOptional.isPresent()) {
+                        Professor professor = professorOptional.get();
+                        int id = downloadTeachingMaterialList.get(i).getId();
+                        int feedback_student = downloadTeachingMaterialList.get(i).getFeedbackStudent();
+                        int badge_student = downloadTeachingMaterialList.get(i).getBadgeStudent();
+                        String note = downloadTeachingMaterialList.get(i).getNote();
+                        ratingTeachingMaterialModels.add(new RatingTeachingMaterialModel(id, feedback_student, badge_student, teachingMaterial, note,
+                                subject, professor));
+                    } else {
+                        ratingTeachingMaterialModels.clear();
+                    }
+                } else {
+                    ratingTeachingMaterialModels.clear();
+                }
+            } else {
+                ratingTeachingMaterialModels.clear();
+            }
+        }
+        return ratingTeachingMaterialModels;
     }
 
     public class FileUp implements FileSystem {

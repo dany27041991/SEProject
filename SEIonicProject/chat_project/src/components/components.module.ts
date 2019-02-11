@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { DownloadStudentComponent } from './download-student/download-student.component';
 import { LastChannelMessageComponent } from './last-channel-message/last-channel-message';
 import { LastUploadMaterialComponent } from './last-upload-material/last-upload-material';
+import { LastRateProfessorComponent } from './last-rate-professor/last-rate-professor';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { LastUploadMaterialComponent } from './last-upload-material/last-upload-
       LastMessageListComponent,
       DownloadStudentComponent,
       LastChannelMessageComponent,
-    LastUploadMaterialComponent
+    LastUploadMaterialComponent,
+    LastRateProfessorComponent
     ],
     imports: [
       IonicModule,
@@ -43,7 +45,8 @@ import { LastUploadMaterialComponent } from './last-upload-material/last-upload-
       LastMessageListComponent,
       DownloadStudentComponent,
       LastChannelMessageComponent,
-    LastUploadMaterialComponent
+    LastUploadMaterialComponent,
+    LastRateProfessorComponent
     ]
 })
 

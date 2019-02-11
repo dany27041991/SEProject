@@ -19,4 +19,7 @@ export class ProfessorProvider {
       .pipe(map(res => res['response']));
   }
 
+  rateDownloadMaterial() {
+    return this.http.post(this.APIAUTHURL + 'getRateDownload',{}, {observe: 'response'});
+  }
 }
