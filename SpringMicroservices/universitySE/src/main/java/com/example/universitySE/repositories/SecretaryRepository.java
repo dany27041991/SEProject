@@ -30,4 +30,6 @@ public interface SecretaryRepository extends JpaRepository<Secretary, Integer> {
     void save(Lesson lesson);
 
     void save(Reporting reporting);
+
+    void save(CarryoutActivity carryoutActivity);
 }

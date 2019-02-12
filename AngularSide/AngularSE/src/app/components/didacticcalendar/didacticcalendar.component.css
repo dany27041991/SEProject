@@ -1,0 +1,13 @@
+#didacticcalendar {
+  background-image: url("../../../assets/images/calendar.jpg");
+  width: auto;
+  height: auto;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table, th, td, tr {
+	border: 1px solid black;
+}

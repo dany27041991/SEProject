@@ -27,8 +27,14 @@ public class CarryoutActivity  implements java.io.Serializable {
        this.idActivity = idActivity;
        this.classroomName = classroomName;
     }
-   
-     @Id @GeneratedValue(strategy=IDENTITY)
+
+    public CarryoutActivity(long id, long id1, long id2) {
+        this.id = id;
+        this.idActivity = (int) id1;
+        this.classroomName = (int) id2;
+    }
+
+    @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)

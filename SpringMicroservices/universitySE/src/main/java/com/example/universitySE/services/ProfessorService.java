@@ -186,7 +186,7 @@ public class ProfessorService implements ProfessorServiceInterface {
                     Optional<Professor> professorOptional = professorRepository.findProfessorBySubject(subject.getId());
                     if(professorOptional.isPresent()) {
                         Professor professor = professorOptional.get();
-                        int id = downloadTeachingMaterialList.get(i).getId();
+                        long id = downloadTeachingMaterialList.get(i).getId();
                         int feedback_student = downloadTeachingMaterialList.get(i).getFeedbackStudent();
                         int badge_student = downloadTeachingMaterialList.get(i).getBadgeStudent();
                         String note = downloadTeachingMaterialList.get(i).getNote();

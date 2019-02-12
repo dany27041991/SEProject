@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +61,9 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
 
     @Autowired
     ReportingRepository reportingRepository;
+
+    @Autowired
+    CarryoutActivityRepository carryoutActivityRepository;
 
     // -------------------------------------------- SAVE METHODS
 
@@ -282,6 +286,23 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
     }
 
+    @Override
+    public void updateCarryoutActivity(CarryoutActivityDTO carryoutActivityDTO) throws CarryoutActivityException {
+
+        if (!carryoutActivityDTO.equals(null)) {
+
+            CarryoutActivityModel carryoutActivityModel = getCarryoutActivityModel(carryoutActivityDTO.getId());
+            CarryoutActivity carryoutActivity = new CarryoutActivity(carryoutActivityModel.getId(), carryoutActivityModel.getIdActivity(), carryoutActivityDTO.getClassroomName());
+            secretaryRepository.save(carryoutActivity);
+            log.info("carryout activity updated");
+        }
+        else {
+
+            log.info("could not update carryout activity");
+            throw new CarryoutActivityException("could not update carryout activity");
+        }
+    }
+
     // ---------------------------------- RETURN MODEL METHODS
 
     @Override
@@ -488,6 +509,147 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
     }
 
+    @Override
+    public StudyCourseModel getStudyCourse(long id) throws StudyCourseException, FacultyException {
+
+        Optional<StudyCourse> studyCourse = studyCourseRepository.findStudyCourseById(id);
+        if (studyCourse.isPresent()) {
+
+            log.info("study course found");
+            StudyCourse studyCourseReturned = studyCourse.get();
+            FacultyModel facultyModel = getFaculty(studyCourseReturned.getFaculty());
+            StudyCourseModel studyCourseModel = new StudyCourseModel(studyCourseReturned.getId(), studyCourseReturned.getName(), facultyModel);
+            return studyCourseModel;
+        }
+        else {
+
+            log.info("study course not found");
+            throw new StudyCourseException("study course not found");
+        }
+    }
+
+    @Override
+    public SubjectCalendarModel getSubject(long id) throws SubjectException {
+
+        Optional<Subject> subject = subjectRepository.findSubjectById(id);
+        if (subject.isPresent()) {
+
+            log.info("subject found");
+            Subject subjectReturned = subject.get();
+            SubjectCalendarModel subjectCalendarModel = new SubjectCalendarModel(subjectReturned.getId(), subjectReturned.getName());
+            return subjectCalendarModel;
+        }
+        else {
+
+            log.info("subject not found");
+            throw new SubjectException("subject not found");
+        }
+    }
+
+    @Override
+    public ProfessorCalendarModel getProfessorCalendar(long id) throws ProfessorException {
+
+        Optional<Professor> professor = professorRepository.findProfessorById(id);
+        if (professor.isPresent()) {
+
+            log.info("professor found");
+            Professor professorReturned = professor.get();
+            ProfessorCalendarModel professorCalendarModel = new ProfessorCalendarModel(professorReturned.getId(), professorReturned.getFirstName(), professorReturned.getLastName());
+            return professorCalendarModel;
+        }
+        else {
+
+            log.info("professor not found");
+            throw new ProfessorException("professor not found");
+        }
+    }
+
+    @Override
+    public ActivityTypeCalendarModel getActivityTypeCalendar(long id) throws ActivityTypeException {
+
+        Optional<ActivityType> activityType = activityTypeRepository.findActivityTypeById(id);
+        if (activityType.isPresent()) {
+
+            log.info("activity type found");
+            ActivityType activityTypeReturned = activityType.get();
+            ActivityTypeCalendarModel activityTypeCalendarModel = new ActivityTypeCalendarModel(activityTypeReturned.getId(), activityTypeReturned.getName());
+            return activityTypeCalendarModel;
+        }
+        else {
+
+            log.info("activity type not found");
+            throw new ActivityTypeException("activity type not found");
+        }
+
+    }
+
+    @Override
+    public ActivityCalendarModel getActivityCalendar(long id) throws ActivityException, ActivityTypeException {
+
+        Optional<Activity> activity = activityRepository.findActivityById(id);
+        if (activity.isPresent()) {
+
+            log.info("activity found");
+            Activity activityReturned = activity.get();
+            ActivityTypeCalendarModel activityTypeCalendarModel = getActivityTypeCalendar(activityReturned.getActivityType());
+            ActivityCalendarModel activityCalendarModel = new ActivityCalendarModel(activityReturned.getId(), activityTypeCalendarModel);
+            return activityCalendarModel;
+        }
+        else {
+
+            log.info("activity not found");
+            throw new ActivityException("activity not found");
+        }
+    }
+
+    @Override
+    public CarryoutActivityRetModel getCarryoutActivity(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+            StudyCourseException, FacultyException, SubjectException, ProfessorException {
+
+        Optional<CarryoutActivity> carryoutActivity = carryoutActivityRepository.findCarryoutActivityById(id);
+        if (carryoutActivity.isPresent()) {
+
+            log.info("carryout activity found");
+            CarryoutActivity carryoutActivityReturned = carryoutActivity.get();
+            ActivityModel activityModel = getActivity(carryoutActivityReturned.getIdActivity());
+            ActivityCalendarModel activityCalendarModel = getActivityCalendar(carryoutActivityReturned.getIdActivity());
+            ClassroomModel classroomModel = getClassroom(carryoutActivityReturned.getClassroomName());
+            StudyCourseModel studyCourseModel = getStudyCourse(activityModel.getStudyCourse());
+            SubjectCalendarModel subjectCalendarModel = getSubject(activityModel.getSubject());
+            ProfessorCalendarModel professorCalendarModel = getProfessorCalendar(activityModel.getIdProf());
+            SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd:HH:mm:SS");
+            String starting = form.format(activityModel.getStart());
+            String ending = form.format(activityModel.getEnd());
+            CarryoutActivityRetModel carryoutActivityRetModel = new CarryoutActivityRetModel(carryoutActivityReturned.getId(), studyCourseModel, subjectCalendarModel, professorCalendarModel,
+                    starting, ending, activityCalendarModel, classroomModel);
+            return carryoutActivityRetModel;
+        }
+        else {
+
+            log.info("carryout activity not found");
+            throw new CarryoutActivityException("carryout activity not found");
+        }
+    }
+
+    @Override
+    public CarryoutActivityModel getCarryoutActivityModel(long id) throws CarryoutActivityException {
+
+        Optional<CarryoutActivity> carryoutActivity = carryoutActivityRepository.findCarryoutActivityById(id);
+        if (carryoutActivity.isPresent()) {
+
+            log.info("carryout activity model found");
+            CarryoutActivity carryoutActivityReturned = carryoutActivity.get();
+            CarryoutActivityModel carryoutActivityModel = new CarryoutActivityModel(carryoutActivityReturned.getId(), carryoutActivityReturned.getIdActivity(),
+                    carryoutActivityReturned.getClassroomName());
+            return carryoutActivityModel;
+        }
+        else {
+
+            log.info("carryout activity model not found");
+            throw new CarryoutActivityException("carryout activity model not found");
+        }
+    }
+
     // ---------------------------------- RETURN LIST METHODS
 
     @Override
@@ -674,7 +836,31 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
     }
 
-    // DESIGN PATTERN
+    @Override
+    public List<CarryoutActivityRetModel> getCarryoutActivities() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException,
+            ClassroomException, SubjectException, StudyCourseException, ActivityException {
+
+        List<CarryoutActivity> carryoutActivities = carryoutActivityRepository.findAll();
+        List<CarryoutActivityRetModel> carryoutActivityRetModels = new ArrayList<>();
+        if (!carryoutActivities.isEmpty()) {
+
+            log.info("carryoutactivities found");
+            for (int i = 0; i < carryoutActivities.size(); i++) {
+                CarryoutActivity carryoutActivity = carryoutActivities.get(i);
+                CarryoutActivityRetModel carryoutActivityRetModel = getCarryoutActivity(carryoutActivity.getId());
+                carryoutActivityRetModels.add(carryoutActivityRetModel);
+                log.info("carryoutactivity added");
+            }
+            return carryoutActivityRetModels;
+        }
+        else {
+
+            log.info("carryoutactivities not found");
+            throw new CarryoutActivityException("carryoutactivities not found");
+        }
+    }
+
+    // DESIGN PATTERN ITERATOR PER REPORTINGS
 
     @Override
     public Iterator getIterator() {

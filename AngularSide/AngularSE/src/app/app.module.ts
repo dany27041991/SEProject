@@ -31,6 +31,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { ViewreportingComponent } from './components/viewreporting/viewreporting.component';
 import { SecretaryreportingComponent } from './components/secretaryreporting/secretaryreporting.component';
 import { DetailsecretaryreportingComponent } from './components/detailsecretaryreporting/detailsecretaryreporting.component';
+import { DidacticcalendarComponent } from './components/didacticcalendar/didacticcalendar.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { DetailsecretaryreportingComponent } from './components/detailsecretaryr
     UploadComponent,
     ViewreportingComponent,
     SecretaryreportingComponent,
-    DetailsecretaryreportingComponent
+    DetailsecretaryreportingComponent,
+    DidacticcalendarComponent
   ],
   imports: [
     BrowserModule,

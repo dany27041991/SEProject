@@ -18,6 +18,7 @@ import {UploadComponent} from './components/upload/upload.component';
 import {ViewreportingComponent} from './components/viewreporting/viewreporting.component';
 import {SecretaryreportingComponent} from './components/secretaryreporting/secretaryreporting.component';
 import {DetailsecretaryreportingComponent} from './components/detailsecretaryreporting/detailsecretaryreporting.component';
+import {DidacticcalendarComponent} from './components/didacticcalendar/didacticcalendar.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,11 @@ const routes: Routes = [
   {
     path: 'user/secretary/:id/detailreportings',
     component: DetailsecretaryreportingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: 'user/secretary/:id/didacticcalendar',
+    component: DidacticcalendarComponent,
     canActivate: [RouteGuardService]
   }
 ];

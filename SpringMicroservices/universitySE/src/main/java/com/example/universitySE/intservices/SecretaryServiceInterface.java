@@ -35,6 +35,8 @@ public interface SecretaryServiceInterface {
 
     void updateReporting(ReportingRetDTO reportingRetDTO) throws ReportingException;
 
+    void updateCarryoutActivity(CarryoutActivityDTO carryoutActivityDTO) throws CarryoutActivityException;
+
     // ------------------------- RETURN MODEL METHODS
 
     FacultyModel getFaculty(long id) throws FacultyException;
@@ -59,6 +61,20 @@ public interface SecretaryServiceInterface {
 
     SecretaryRetModel getSecretary(long id) throws SecretaryException, FacultyException;
 
+    StudyCourseModel getStudyCourse(long id) throws StudyCourseException, FacultyException;
+
+    SubjectCalendarModel getSubject(long id) throws SubjectException;
+
+    ProfessorCalendarModel getProfessorCalendar(long id) throws ProfessorException;
+
+    ActivityTypeCalendarModel getActivityTypeCalendar(long id) throws ActivityTypeException;
+
+    ActivityCalendarModel getActivityCalendar(long id) throws ActivityException, ActivityTypeException;
+
+    CarryoutActivityRetModel getCarryoutActivity(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+            StudyCourseException, FacultyException, SubjectException, ProfessorException;
+
+    CarryoutActivityModel getCarryoutActivityModel(long id) throws CarryoutActivityException;
 
     // ------------------------- RETURN LIST METHODS
 
@@ -81,5 +97,7 @@ public interface SecretaryServiceInterface {
     // List<Reporting> getReportings() throws ReportingException;
     List<ReportingRetModel> getReportingsIterator() throws ReportingException, SupportMaterialException, StateException, ProfessorException,
             ClassroomException, SecretaryException, FacultyException;
+
+    List<CarryoutActivityRetModel> getCarryoutActivities() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException, ClassroomException, SubjectException, StudyCourseException, ActivityException;
 
 }

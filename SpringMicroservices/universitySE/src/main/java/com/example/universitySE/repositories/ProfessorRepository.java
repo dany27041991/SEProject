@@ -14,5 +14,5 @@ public interface ProfessorRepository extends JpaRepository<Professor, Integer> {
 
     List<Professor> findAllBySubject(int subject);
 
-    Optional<Professor> findProfessorBySubject(int subject);
+    Optional<Professor> findProfessorBySubject(long subject);
 }

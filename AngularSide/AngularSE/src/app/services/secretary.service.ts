@@ -39,6 +39,8 @@ export class SecretaryService implements OnInit {
   @Output() public reportings = new EventEmitter();
   @Output() public states = new EventEmitter();
   @Output() public reporting = new EventEmitter();
+  @Output() public calendar = new EventEmitter();
+  @Output() public carryoutactivity = new EventEmitter();
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthService) { }
 
@@ -311,5 +313,37 @@ export class SecretaryService implements OnInit {
       }
     );
     return this.secRet;
+  }
+
+  getCalendar() {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.get(this.APIAUTHURL + 'carryoutactivities', {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        localStorage.setItem('CarryoutActivities', JSON.stringify(payload.response));
+        this.calendar.emit(payload.response);
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
+  }
+
+  updateCarryoutActivity(id: number, idActivity: number, classroomName: number) {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.post(this.APIAUTHURL + 'updatecarryoutactivity', {
+      id: id,
+      idActivity: idActivity,
+      classroomName: classroomName
+    }, {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        localStorage.setItem('CarryoutActivity', JSON.stringify(payload.response));
+        this.carryoutactivity.emit(payload.response);
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
   }
 }
