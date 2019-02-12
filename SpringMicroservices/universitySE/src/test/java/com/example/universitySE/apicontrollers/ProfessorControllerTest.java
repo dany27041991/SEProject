@@ -7,6 +7,7 @@ import com.example.universitySE.exceptions.ClassroomException;
 import com.example.universitySE.exceptions.UserNotLoggedException;
 import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.intservices.ProfessorServiceInterface;
+import com.example.universitySE.models.RatingTeachingMaterialModel;
 import com.example.universitySE.models.ReportingModel;
 import com.example.universitySE.models.SubjectModel;
 import com.example.universitySE.models.TeachingMaterialModel;
@@ -161,6 +162,18 @@ public class ProfessorControllerTest {
         when(professorServiceInterface.getAllTeachingMaterialForStudent(1)).thenReturn(teachingMaterialModelList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/getAllTeachingMaterials/1")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+    }
+
+    @Test
+    public void getRateDownload() {
+        RatingTeachingMaterialModel ratingTeachingMaterialModel = mock(RatingTeachingMaterialModel.class);
+        List<RatingTeachingMaterialModel> ratingTeachingMaterialModelArrayList = new ArrayList<>();
+        ratingTeachingMaterialModelArrayList.add(ratingTeachingMaterialModel);
+        when(professorServiceInterface.getAllRateTeachingMaterial()).thenReturn(ratingTeachingMaterialModelArrayList);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8090/user/professor/getRateDownload")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
     }
