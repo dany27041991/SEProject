@@ -860,6 +860,65 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
     }
 
+    @Override
+    public List<ActivityWithoutClassroomModel> getActivitiesWithoutClassroom() throws ActivityException, StudyCourseException,
+            FacultyException, SubjectException, ProfessorException, ActivityTypeException {
+
+        List<Activity> activities = activityRepository.findAll();
+        List<CarryoutActivity> carryoutActivities = carryoutActivityRepository.findAll();
+        List<ActivityWithoutClassroomModel> activityWithoutClassroomModels = new ArrayList<>();
+        if (carryoutActivities.isEmpty()) {
+            log.info("carryout activities not found");
+            for (int k = 0; k < activities.size(); k++) {
+                ActivityModel activityModel = getActivity(activities.get(k).getId());
+                SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd:HH:mm:SS");
+                String starting = form.format(activityModel.getStart());
+                String ending = form.format(activityModel.getEnd());
+                StudyCourseModel studyCourseModel = getStudyCourse(activityModel.getStudyCourse());
+                SubjectCalendarModel subjectCalendarModel = getSubject(activityModel.getSubject());
+                ProfessorCalendarModel professorCalendarModel = getProfessorCalendar(activityModel.getIdProf());
+                ActivityCalendarModel activityCalendarModel = getActivityCalendar(activityModel.getActivityType());
+                ActivityWithoutClassroomModel activityWithoutClassroomModel = new ActivityWithoutClassroomModel(activities.get(k).getId(),
+                        studyCourseModel, subjectCalendarModel, professorCalendarModel, starting,
+                        ending, activityCalendarModel);
+                activityWithoutClassroomModels.add(activityWithoutClassroomModel);
+            }
+        }
+        else if (activities.isEmpty()) {
+            log.info("activities not found");
+        }
+        for (int k = 0; k < activities.size(); k++) {
+            for (int i = 0; i < carryoutActivities.size(); i++) {
+                if (activities.get(k).getId() == carryoutActivities.get(i).getIdActivity()) {
+                    log.info("activity has already a classroom");
+                } else {
+                    log.info("found activity without classroom");
+                    ActivityModel activityModel = getActivity(activities.get(k).getId());
+                    SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd:HH:mm:SS");
+                    String starting = form.format(activityModel.getStart());
+                    String ending = form.format(activityModel.getEnd());
+                    StudyCourseModel studyCourseModel = getStudyCourse(activityModel.getStudyCourse());
+                    SubjectCalendarModel subjectCalendarModel = getSubject(activityModel.getSubject());
+                    ProfessorCalendarModel professorCalendarModel = getProfessorCalendar(activityModel.getIdProf());
+                    ActivityCalendarModel activityCalendarModel = getActivityCalendar(activityModel.getActivityType());
+                    ActivityWithoutClassroomModel activityWithoutClassroomModel = new ActivityWithoutClassroomModel(activities.get(k).getId(),
+                            studyCourseModel, subjectCalendarModel, professorCalendarModel, starting,
+                            ending, activityCalendarModel);
+                    activityWithoutClassroomModels.add(activityWithoutClassroomModel);
+                }
+            }
+        }
+        for (int i = 0; i < activityWithoutClassroomModels.size(); i++) {
+            for (int k = 0; k < activityWithoutClassroomModels.size(); k++) {
+                if (activityWithoutClassroomModels.get(i).getId() == activityWithoutClassroomModels.get(k).getId()) {
+                    activityWithoutClassroomModels.remove(i);
+
+                }
+            }
+        }
+        return activityWithoutClassroomModels;
+    }
+
     // DESIGN PATTERN ITERATOR PER REPORTINGS
 
     @Override

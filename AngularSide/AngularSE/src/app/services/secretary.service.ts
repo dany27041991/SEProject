@@ -9,10 +9,7 @@ import {Faculty} from '../models/Faculty';
 import {StudyCourse} from '../models/StudyCourse';
 import {Subject} from '../models/Subject';
 import {Classroom} from '../models/Classroom';
-import {Professor} from '../models/Professor';
 import {Activity} from '../models/Activity';
-import {SupportMaterial} from '../models/SupportMaterial';
-import {State} from '../models/State';
 import {SecretaryRet} from '../models/SecretaryRet';
 
 @Injectable({
@@ -41,6 +38,7 @@ export class SecretaryService implements OnInit {
   @Output() public reporting = new EventEmitter();
   @Output() public calendar = new EventEmitter();
   @Output() public carryoutactivity = new EventEmitter();
+  @Output() public activitiesWithoutClassroom = new EventEmitter();
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthService) { }
 
@@ -339,6 +337,20 @@ export class SecretaryService implements OnInit {
       (payload: ResponseInterface) => {
         localStorage.setItem('CarryoutActivity', JSON.stringify(payload.response));
         this.carryoutactivity.emit(payload.response);
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
+  }
+
+  getActivitiesWithoutClassroom() {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.get(this.APIAUTHURL + 'activitieswithoutclassroom', {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        localStorage.setItem('ActivitiesWithoutClassroom', JSON.stringify(payload.response));
+        this.activitiesWithoutClassroom.emit(payload.response);
       }, (httpResp: HttpErrorResponse) => {
         if (httpResp.error['server'] !== 404 || !httpResp.error) {
           this.auth.logout();

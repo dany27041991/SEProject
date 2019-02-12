@@ -1,4 +1,4 @@
-package com.example.universitySE.configurations;
+/* package com.example.universitySE.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,4 +36,4 @@ public class SwaggerConfig {
                 new Contact("Danilo Giovannico ed Ilaria Malinconico", "https://github.com/dany27041991/SEProject", "danilo.giovannico@studenti.unisalento.it ed ilaria.malinconico@studenti.unisalento.it"),
                 "License of API", "API license URL", Collections.emptyList());
     }
-}
+} */
