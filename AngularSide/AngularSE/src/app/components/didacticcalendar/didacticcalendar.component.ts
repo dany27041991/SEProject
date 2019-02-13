@@ -23,9 +23,13 @@ export class DidacticcalendarComponent implements OnInit {
   public classrooms: Classroom[];
   public activitiesWithoutClassroom: ActivityWithoutClassroom[];
   public show: boolean;
+  public class: boolean;
 
   public idNew: number;
   public idAct: number;
+
+  public idNewCarry: number;
+  public idActCarry: number;
 
   constructor(private secService: SecretaryService, private route: Router) {
 
@@ -38,9 +42,13 @@ export class DidacticcalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.secService.getClassrooms();
     this.secService.getCalendar();
     this.secService.getActivitiesWithoutClassroom();
 
+    this.secService.classrooms.subscribe((data: Classroom[]) => {
+      this.classrooms = data as Array<Classroom>;
+    });
     this.secService.calendar.subscribe((data: Calendar[]) => {
       this.calendar = data as Array<Calendar>;
     });
@@ -50,10 +58,6 @@ export class DidacticcalendarComponent implements OnInit {
   }
 
   onSelect(id: number, act: number) {
-    this.secService.getClassrooms();
-    this.secService.classrooms.subscribe((data: Classroom[]) => {
-      this.classrooms = data as Array<Classroom>;
-    });
     this.show = true;
     this.idNew = id;
     this.idAct = act;
@@ -64,6 +68,22 @@ export class DidacticcalendarComponent implements OnInit {
       console.log('failed');
     } else {
       this.secService.updateCarryoutActivity(this.idNew, this.idAct, Number(cla));
+      console.log('success');
+      this.route.navigate(['user/successful']);
+    }
+  }
+
+  onClick(id: number, act: number) {
+    this.class = true;
+    this.idNewCarry = id;
+    this.idActCarry = act;
+  }
+
+  setting(cla: number) {
+    if (Number(cla) === 0) {
+      console.log('failed');
+    } else {
+      this.secService.setCarryoutActivity(this.idNewCarry, this.idActCarry, Number(cla));
       console.log('success');
       this.route.navigate(['user/successful']);
     }

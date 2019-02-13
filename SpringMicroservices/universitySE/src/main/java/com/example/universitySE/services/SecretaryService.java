@@ -266,6 +266,23 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
     }
 
+    @Override
+    public void saveCarryoutActivity(CarryoutActivityDTO carryoutActivityDTO) throws CarryoutActivityException {
+
+        if(!carryoutActivityDTO.equals(null)) {
+
+            CarryoutActivity carryoutActivity = new CarryoutActivity(carryoutActivityDTO.getId(), carryoutActivityDTO.getIdActivity(), carryoutActivityDTO.getClassroomName());
+            secretaryRepository.save(carryoutActivity);
+            log.info("added new carryout activity");
+        }
+        else {
+
+            log.info("could not add new carryout activity");
+            throw new CarryoutActivityException("could not add new carryout activity");
+        }
+    }
+
+
     // -------------------------------- UPDATE METHODS
 
     @Override
@@ -870,53 +887,48 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (carryoutActivities.isEmpty()) {
             log.info("carryout activities not found");
             for (int k = 0; k < activities.size(); k++) {
-                ActivityModel activityModel = getActivity(activities.get(k).getId());
-                SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd:HH:mm:SS");
-                String starting = form.format(activityModel.getStart());
-                String ending = form.format(activityModel.getEnd());
-                StudyCourseModel studyCourseModel = getStudyCourse(activityModel.getStudyCourse());
-                SubjectCalendarModel subjectCalendarModel = getSubject(activityModel.getSubject());
-                ProfessorCalendarModel professorCalendarModel = getProfessorCalendar(activityModel.getIdProf());
-                ActivityCalendarModel activityCalendarModel = getActivityCalendar(activityModel.getActivityType());
-                ActivityWithoutClassroomModel activityWithoutClassroomModel = new ActivityWithoutClassroomModel(activities.get(k).getId(),
-                        studyCourseModel, subjectCalendarModel, professorCalendarModel, starting,
-                        ending, activityCalendarModel);
-                activityWithoutClassroomModels.add(activityWithoutClassroomModel);
+                modelActivityWithoutClassroom(activities, activityWithoutClassroomModels, k);
             }
         }
         else if (activities.isEmpty()) {
             log.info("activities not found");
         }
-        for (int k = 0; k < activities.size(); k++) {
-            for (int i = 0; i < carryoutActivities.size(); i++) {
-                if (activities.get(k).getId() == carryoutActivities.get(i).getIdActivity()) {
+        int j = 0;
+        int i = 0;
+        if (carryoutActivities.size() < activities.size()) {
+            while (i <= j && i < carryoutActivities.size() && j < activities.size()) {
+                if (activities.get(j).getId() == carryoutActivities.get(i).getIdActivity()) {
                     log.info("activity has already a classroom");
+                    j++;
+                    i++;
                 } else {
                     log.info("found activity without classroom");
-                    ActivityModel activityModel = getActivity(activities.get(k).getId());
-                    SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd:HH:mm:SS");
-                    String starting = form.format(activityModel.getStart());
-                    String ending = form.format(activityModel.getEnd());
-                    StudyCourseModel studyCourseModel = getStudyCourse(activityModel.getStudyCourse());
-                    SubjectCalendarModel subjectCalendarModel = getSubject(activityModel.getSubject());
-                    ProfessorCalendarModel professorCalendarModel = getProfessorCalendar(activityModel.getIdProf());
-                    ActivityCalendarModel activityCalendarModel = getActivityCalendar(activityModel.getActivityType());
-                    ActivityWithoutClassroomModel activityWithoutClassroomModel = new ActivityWithoutClassroomModel(activities.get(k).getId(),
-                            studyCourseModel, subjectCalendarModel, professorCalendarModel, starting,
-                            ending, activityCalendarModel);
-                    activityWithoutClassroomModels.add(activityWithoutClassroomModel);
+                    modelActivityWithoutClassroom(activities, activityWithoutClassroomModels, j);
+                    j++;
                 }
             }
-        }
-        for (int i = 0; i < activityWithoutClassroomModels.size(); i++) {
-            for (int k = 0; k < activityWithoutClassroomModels.size(); k++) {
-                if (activityWithoutClassroomModels.get(i).getId() == activityWithoutClassroomModels.get(k).getId()) {
-                    activityWithoutClassroomModels.remove(i);
-
-                }
+            log.info("remaining activities without classroom");
+            while (j < activities.size()) {
+                modelActivityWithoutClassroom(activities, activityWithoutClassroomModels, j);
+                j++;
             }
         }
         return activityWithoutClassroomModels;
+    }
+
+    private void modelActivityWithoutClassroom(List<Activity> activities, List<ActivityWithoutClassroomModel> activityWithoutClassroomModels, int k) throws ActivityException, StudyCourseException, FacultyException, SubjectException, ProfessorException, ActivityTypeException {
+        ActivityModel activityModel = getActivity(activities.get(k).getId());
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd:HH:mm:SS");
+        String starting = form.format(activityModel.getStart());
+        String ending = form.format(activityModel.getEnd());
+        StudyCourseModel studyCourseModel = getStudyCourse(activityModel.getStudyCourse());
+        SubjectCalendarModel subjectCalendarModel = getSubject(activityModel.getSubject());
+        ProfessorCalendarModel professorCalendarModel = getProfessorCalendar(activityModel.getIdProf());
+        ActivityCalendarModel activityCalendarModel = getActivityCalendar(activityModel.getId());
+        ActivityWithoutClassroomModel activityWithoutClassroomModel = new ActivityWithoutClassroomModel(activityModel.getId(),
+                studyCourseModel, subjectCalendarModel, professorCalendarModel, starting,
+                ending, activityCalendarModel);
+        activityWithoutClassroomModels.add(activityWithoutClassroomModel);
     }
 
     // DESIGN PATTERN ITERATOR PER REPORTINGS

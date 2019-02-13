@@ -1,26 +1,41 @@
 <div class="container-fluid">
   <div class="row" id="didacticcalendar">
     <div class="col-12 p-0 text-center">
-      <h1 style="font-size:2.7vw; font-weight: bold; color: black">Set a classroom for the following activities</h1>
+      <h1 style="font-size:1.5vw; font-weight: bold; color: black">Set a classroom for the following activities</h1>
       <div class="row ml-5 mr-5">
-        <div class="col-2"></div>
-        <div class="col-8 col-offset-2">
+        <div class="col-10 col-offset-1">
           <table>
-            <tr style="font-size:2vw; font-weight: bold; color: black">
+            <tr style="font-size:1.5vw; font-weight: bold; color: navy">
               <th>Study Course (Faculty)</th>
               <th>Subject</th>
               <th>Professor</th>
               <th>Start - End</th>
               <th>Type</th>
+              <th>Classroom</th>
             </tr>
             <tr *ngFor="let a of activitiesWithoutClassroom">
-              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.studyCourseModel.name}} ({{a.studyCourseModel.faculty.name}})</td>
-              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.subjectCalendarModel.name}}</td>
-              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.professorCalendarModel.lastname}}, {{a.professorCalendarModel.firstname}}</td>
-              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.start}} - {{a.end}}</td>
-              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan; text-decoration: underline">{{a.activityCalendarModel.name}}</td>
+              <td style="font-size:1vw; font-weight: bold; color: black">{{a.studyCourseModel.name}} ({{a.studyCourseModel.faculty.name}})</td>
+              <td style="font-size:1vw; font-weight: bold; color: black">{{a.subjectCalendarModel.name}}</td>
+              <td style="font-size:1vw; font-weight: bold; color: black">{{a.professorCalendarModel.lastname}}, {{a.professorCalendarModel.firstname}}</td>
+              <td style="font-size:1vw; font-weight: bold; color: black">{{a.start}} - {{a.end}}</td>
+              <td style="font-size:1vw; font-weight: bold; color: black">{{a.activityCalendarModel.name.name}}</td>
+              <td>
+                <button class="btn btn-success" (click)="onClick(a.id, a.activityCalendarModel.id)">Set</button>
+              </td>
             </tr>
           </table>
+        </div>
+
+        <div *ngIf="class" class="row mt-2">
+          <div class="col-12">
+            <div class="form-group align-content-sm-center">
+              <label for="clas"><h4 style="font-size:1vw; font-weight: bold; color: navy">Select the classroom</h4></label>
+              <select class="form-control" id="clas" required ngModel #clas="ngModel" name="clas">
+                <option [value]="cr.id" *ngFor="let cr of classrooms">{{cr.name}}</option>
+              </select>
+            </div>
+            <button class="btn btn-success" (click)="setting(clas.value)">Set</button>
+          </div>
         </div>
       </div>
 
@@ -42,7 +57,7 @@
               <td style="font-size:1vw; font-weight: bold; color: black">{{c.professorCalendarModel.lastname}}, {{c.professorCalendarModel.firstname}}</td>
               <td style="font-size:1vw; font-weight: bold; color: black">{{c.activityCalendarModel.name.name}}</td>
               <td style="font-size:1vw; font-weight: bold; color: black">{{c.start}} - {{c.end}}</td>
-              <td style="font-size:1vw; font-weight: bold; color: black; text-decoration: underline">{{c.classroomModel.name}}
+              <td style="font-size:1vw; font-weight: bold; color: black">{{c.classroomModel.name}}   
                 <button class="btn btn-success" (click)="onSelect(c.id, c.activityCalendarModel.id)">Change</button>
               </td>
             </tr>

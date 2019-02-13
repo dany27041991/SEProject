@@ -39,6 +39,7 @@ export class SecretaryService implements OnInit {
   @Output() public calendar = new EventEmitter();
   @Output() public carryoutactivity = new EventEmitter();
   @Output() public activitiesWithoutClassroom = new EventEmitter();
+  @Output() public newcarryoutactivity = new EventEmitter();
 
   constructor(private http: HttpClient, private router: Router, private auth: AuthService) { }
 
@@ -351,6 +352,24 @@ export class SecretaryService implements OnInit {
       (payload: ResponseInterface) => {
         localStorage.setItem('ActivitiesWithoutClassroom', JSON.stringify(payload.response));
         this.activitiesWithoutClassroom.emit(payload.response);
+      }, (httpResp: HttpErrorResponse) => {
+        if (httpResp.error['server'] !== 404 || !httpResp.error) {
+          this.auth.logout();
+        }
+      }
+    );
+  }
+
+  setCarryoutActivity(id: number, idActivity: number, classroomName: number) {
+    const headers = new HttpHeaders({'Authorization': this.auth.getToken()});
+    this.http.post(this.APIAUTHURL + 'insertcarryoutactivity', {
+      id: id,
+      idActivity: idActivity,
+      classroomName: classroomName
+    }, {headers}).subscribe(
+      (payload: ResponseInterface) => {
+        localStorage.setItem('CarryoutActivity', JSON.stringify(payload.response));
+        this.newcarryoutactivity.emit(payload.response);
       }, (httpResp: HttpErrorResponse) => {
         if (httpResp.error['server'] !== 404 || !httpResp.error) {
           this.auth.logout();

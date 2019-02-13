@@ -33,6 +33,8 @@ public interface SecretaryServiceInterface {
 
     void saveLesson(LessonDTO lessonDTO) throws LessonException, ActivityException;
 
+    void saveCarryoutActivity(CarryoutActivityDTO carryoutActivityDTO) throws CarryoutActivityException;
+
     // -------------------------- UPDATE METHODS
 
     void updateReporting(ReportingRetDTO reportingRetDTO) throws ReportingException;
