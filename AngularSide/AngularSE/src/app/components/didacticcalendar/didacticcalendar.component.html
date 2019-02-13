@@ -1,8 +1,30 @@
 <div class="container-fluid">
   <div class="row" id="didacticcalendar">
     <div class="col-12 p-0 text-center">
+      <h1 style="font-size:2.7vw; font-weight: bold; color: black">Set a classroom for the following activities</h1>
+      <div class="row ml-5 mr-5">
+        <div class="col-2"></div>
+        <div class="col-8 col-offset-2">
+          <table>
+            <tr style="font-size:2vw; font-weight: bold; color: black">
+              <th>Study Course (Faculty)</th>
+              <th>Subject</th>
+              <th>Professor</th>
+              <th>Start - End</th>
+              <th>Type</th>
+            </tr>
+            <tr *ngFor="let a of activitiesWithoutClassroom">
+              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.studyCourseModel.name}} ({{a.studyCourseModel.faculty.name}})</td>
+              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.subjectCalendarModel.name}}</td>
+              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.professorCalendarModel.lastname}}, {{a.professorCalendarModel.firstname}}</td>
+              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan">{{a.start}} - {{a.end}}</td>
+              <td style="font-size:1.7vw; font-weight: bold; color: lightcyan; text-decoration: underline">{{a.activityCalendarModel.name}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
       <h1 style="font-size:2.7vw; font-weight: bold; color: black">Didactic Calendar</h1>
-      <h2 style="font-size:1.7vw; color: black">Click the classroom to change it.</h2>
       <div class="row ml-5 mr-5">
         <div class="col-10 col-offset-1">
           <table>
@@ -17,9 +39,9 @@
             <tr *ngFor="let c of calendar">
               <td style="font-size:1vw; font-weight: bold; color: black">{{c.subjectCalendarModel.name}}</td>
               <td style="font-size:1vw; font-weight: bold; color: black">{{c.studyCourseModel.name}} ({{c.studyCourseModel.faculty.name}})</td>
-              <td style="font-size:1vw; font-weight: bold; color: black">{{c.professorCalendarModel.lastname}} {{c.professorCalendarModel.firstname}}</td>
+              <td style="font-size:1vw; font-weight: bold; color: black">{{c.professorCalendarModel.lastname}}, {{c.professorCalendarModel.firstname}}</td>
               <td style="font-size:1vw; font-weight: bold; color: black">{{c.activityCalendarModel.name.name}}</td>
-              <td style="font-size:1vw; font-weight: bold; color: black">{{c.start}} {{c.end}}</td>
+              <td style="font-size:1vw; font-weight: bold; color: black">{{c.start}} - {{c.end}}</td>
               <td style="font-size:1vw; font-weight: bold; color: black; text-decoration: underline">{{c.classroomModel.name}}
                 <button class="btn btn-success" (click)="onSelect(c.id, c.activityCalendarModel.id)">Change</button>
               </td>

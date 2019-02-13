@@ -7,6 +7,7 @@ import {AccessToLocalStorage} from '../../utils/AccessToLocalStorage';
 import {Type} from '../../utils/type';
 import {Calendar} from '../../models/Calendar';
 import {Classroom} from '../../models/Classroom';
+import {ActivityWithoutClassroom} from '../../models/ActivityWithoutClassroom';
 
 @Component({
   selector: 'app-didacticcalendar',
@@ -20,6 +21,7 @@ export class DidacticcalendarComponent implements OnInit {
 
   public calendar: Calendar[];
   public classrooms: Classroom[];
+  public activitiesWithoutClassroom: ActivityWithoutClassroom[];
   public show: boolean;
 
   public idNew: number;
@@ -37,8 +39,13 @@ export class DidacticcalendarComponent implements OnInit {
 
   ngOnInit() {
     this.secService.getCalendar();
+    this.secService.getActivitiesWithoutClassroom();
+
     this.secService.calendar.subscribe((data: Calendar[]) => {
       this.calendar = data as Array<Calendar>;
+    });
+    this.secService.activitiesWithoutClassroom.subscribe((data: ActivityWithoutClassroom[]) => {
+      this.activitiesWithoutClassroom = data as Array<ActivityWithoutClassroom>;
     });
   }
 
@@ -53,14 +60,12 @@ export class DidacticcalendarComponent implements OnInit {
   }
 
   sending(cla: number) {
-  	if (Number(cla) == 0) {
-  		console.log('failed');
-  	}
-  	else {
-    		this.secService.updateCarryoutActivity(this.idNew, this.idAct, Number(cla));
-    		console.log('success');
-   	 	this.route.navigate(['user/successful']);
-   	}
+    if (Number(cla) === 0) {
+      console.log('failed');
+    } else {
+      this.secService.updateCarryoutActivity(this.idNew, this.idAct, Number(cla));
+      console.log('success');
+      this.route.navigate(['user/successful']);
+    }
   }
-
 }

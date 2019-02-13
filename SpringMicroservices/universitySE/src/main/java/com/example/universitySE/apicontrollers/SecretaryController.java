@@ -835,4 +835,34 @@ public class SecretaryController {
         }
     }
 
+    @RequestMapping(value = "/activitieswithoutclassroom", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getActivitiesWithoutClassroom(HttpServletRequest request) {
+
+        try {
+
+            loginServiceInterface.verifyJwtAndGetData(request);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getActivitiesWithoutClassroom()));
+        }
+        catch (ActivityException e1) {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (UnsupportedEncodingException e2){
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new JSONResponseBody(HttpStatus.EXPECTATION_FAILED.value(), e2.getMessage()));
+        }
+        catch (UserNotLoggedException e3){
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), e3.getMessage()));
+        }
+        catch (ExpiredJwtException e4){
+
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JSONResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), e4.getMessage()));
+        }
+        catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
 }

@@ -33,6 +33,8 @@ public interface SecretaryServiceInterface {
 
     void saveLesson(LessonDTO lessonDTO) throws LessonException, ActivityException;
 
+    // -------------------------- UPDATE METHODS
+
     void updateReporting(ReportingRetDTO reportingRetDTO) throws ReportingException;
 
     void updateCarryoutActivity(CarryoutActivityDTO carryoutActivityDTO) throws CarryoutActivityException;
@@ -99,5 +101,7 @@ public interface SecretaryServiceInterface {
             ClassroomException, SecretaryException, FacultyException;
 
     List<CarryoutActivityRetModel> getCarryoutActivities() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException, ClassroomException, SubjectException, StudyCourseException, ActivityException;
+
+    List<ActivityWithoutClassroomModel> getActivitiesWithoutClassroom() throws ActivityException, StudyCourseException, FacultyException, SubjectException, ProfessorException, ActivityTypeException;
 
 }
