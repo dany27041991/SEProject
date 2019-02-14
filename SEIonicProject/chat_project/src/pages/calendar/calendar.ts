@@ -30,11 +30,9 @@ export class CalendarPage {
 
   ionViewDidLoad() {
     this.activities = JSON.parse(localStorage.getItem('CalendarActivities'));
-    console.log(this.activities);
   }
-
-  openMap(latitude: number, longitude: number) {
-    console.log(latitude, longitude);
-    this.navCtrl.push('MapClassroomPage', {latitude, longitude});
+  
+  openMap(latitude: number, longitude: number, name: string) {
+    this.navCtrl.push('MapClassroomPage', {latitude, longitude, name});
   }
 }

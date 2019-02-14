@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation/ngx'
+import { GoogleMaps, GoogleMap, CameraPosition, LatLng, GoogleMapsEvent, Marker, MarkerOptions } from '@ionic-native/google-maps'
 
 /**
  * Generated class for the MapClassroomPage page.
@@ -15,43 +15,60 @@ import { Geolocation } from '@ionic-native/geolocation/ngx'
   templateUrl: 'map-classroom.html',
 })
 export class MapClassroomPage {
+  @ViewChild('map') mapElement: ElementRef;
+  map: GoogleMap;
 
   public latitude: number;
   public longitude: number;
+  public name: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private maps: GoogleMaps) {
   }
 
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() {}
 
   ionViewWillLoad() {
     this.latitude = this.navParams.get('latitude');
     this.longitude = this.navParams.get('longitude');
-    console.log(this.latitude, this.longitude);
-    this.getMap();
+    this.name = this.navParams.get('name');
+  }
+  
+  ngAfterViewInit() {
+    let loc: LatLng = new LatLng(this.latitude, this.longitude);
+    this.initMap();
+    this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+      this.moveCamera(loc);
+      this.createMarker(loc, this.name).then((marker: Marker) => {
+        marker.showInfoWindow();
+      }).catch(err => {
+        console.log(err);
+      });
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
-  getMap() {
+  initMap() {
+    let element = this.mapElement.nativeElement;
+    this.map = this.maps.create(element);
+  }
 
-    let mapOptions = {
-      center: new google.maps.LatLng(0, 0),
-      zoom: 1,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+  moveCamera(loc: LatLng) {
+    //let options: CameraPosition = {
+    let options = {
+      target: loc,
+      zoom: 15,
+      tilt: 10
     };
+    this.map.moveCamera(options);
+  }
 
-    let map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-
-    let latLong = new google.maps.LatLng(this.latitude, this.longitude);
-
-    let marker = new google.maps.Marker({
-      position: latLong
-    });
-
-    marker.setMap(map);
-    map.setZoom(15);
-    map.setCenter(marker.getPosition());
+  createMarker(loc: LatLng, title: string) {
+    let markerOptions: MarkerOptions = {
+      position: loc,
+      title: title
+    };
+    return this.map.addMarker(markerOptions);
   }
 
 }
