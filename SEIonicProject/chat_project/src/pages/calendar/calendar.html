@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Calendar</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <div *ngFor="let a of activities">
+      <ion-item>
+      	<ion-icon name="book" item-left></ion-icon>
+        {{a.activityCalendarModel.name.name}} of {{a.subjectCalendarModel.name}}
+        <br>({{a.studyCourseModel.name}}, {{a.studyCourseModel.faculty.name}})
+        <br>Professor {{a.professorCalendarModel.lastname}} {{a.professorCalendarModel.firstname}}
+        <br> {{a.start | date}} {{a.start | date:'shortTime'}} - {{a.end | date:'shortTime'}}
+        <br><span style="text-decoration: underline;" (click)="openMap(a.classroomModel.latitude, a.classroomModel.longitude)">
+          Classroom {{a.classroomModel.name}}
+            </span>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>

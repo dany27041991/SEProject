@@ -12,6 +12,7 @@ export class TabsPage {
   tab2Root: string;
   tab3Root: string;
   tab4Root: string;
+  tab5Root: string;
   public type: number = 0;
 
   constructor() {
@@ -19,6 +20,7 @@ export class TabsPage {
     this.tab2Root = 'ChannelsPage';
     this.tab3Root = 'ProfilePage';
     this.tab4Root = 'DownloadPage';
+    this.tab5Root = 'CalendarPage';
     setTimeout(()=>{
       this.type = JSON.parse(localStorage.getItem('selectedUser'))['person_type'];
     }, 2000);

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -667,6 +668,32 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
     }
 
+    @Override
+    public CarryoutActivityCalendarModel getCarryoutActivityCalendar(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+            StudyCourseException, FacultyException, SubjectException, ProfessorException {
+
+        Optional<CarryoutActivity> carryoutActivity = carryoutActivityRepository.findCarryoutActivityById(id);
+        if (carryoutActivity.isPresent()) {
+
+            log.info("carryout activity found");
+            CarryoutActivity carryoutActivityReturned = carryoutActivity.get();
+            ActivityModel activityModel = getActivity(carryoutActivityReturned.getIdActivity());
+            ActivityCalendarModel activityCalendarModel = getActivityCalendar(carryoutActivityReturned.getIdActivity());
+            ClassroomModel classroomModel = getClassroom(carryoutActivityReturned.getClassroomName());
+            StudyCourseModel studyCourseModel = getStudyCourse(activityModel.getStudyCourse());
+            SubjectCalendarModel subjectCalendarModel = getSubject(activityModel.getSubject());
+            ProfessorCalendarModel professorCalendarModel = getProfessorCalendar(activityModel.getIdProf());
+            CarryoutActivityCalendarModel carryoutActivityCalendarModel = new CarryoutActivityCalendarModel(carryoutActivityReturned.getId(), studyCourseModel, subjectCalendarModel,
+                    professorCalendarModel, activityModel.getStart(), activityModel.getEnd(), activityCalendarModel, classroomModel);
+            return carryoutActivityCalendarModel;
+        }
+        else {
+
+            log.info("carryout activity not found");
+            throw new CarryoutActivityException("carryout activity not found");
+        }
+    }
+
     // ---------------------------------- RETURN LIST METHODS
 
     @Override
@@ -929,6 +956,60 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
                 studyCourseModel, subjectCalendarModel, professorCalendarModel, starting,
                 ending, activityCalendarModel);
         activityWithoutClassroomModels.add(activityWithoutClassroomModel);
+    }
+
+    @Override
+    public List<CarryoutActivityCalendarModel> getCarryoutActivitiesCalendar() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException,
+            ClassroomException, SubjectException, StudyCourseException, ActivityException {
+
+        List<CarryoutActivity> carryoutActivities = carryoutActivityRepository.findAll();
+        List<CarryoutActivityCalendarModel> carryoutActivityCalendarModels = new ArrayList<>();
+        if (!carryoutActivities.isEmpty()) {
+            log.info("carryout activities for calendar found");
+            for (int i = 0; i < carryoutActivities.size(); i++) {
+                CarryoutActivity carryoutActivity = carryoutActivities.get(i);
+                CarryoutActivityCalendarModel carryoutActivityCalendarModel = getCarryoutActivityCalendar(carryoutActivity.getId());
+                carryoutActivityCalendarModels.add(carryoutActivityCalendarModel);
+                log.info("carryout activity for calendar added");
+            }
+            return carryoutActivityCalendarModels;
+        }
+        else {
+
+            log.info("carryout activities for calendar not found");
+            throw new CarryoutActivityException("carryout activities for calendar not found");
+        }
+    }
+
+    @Override
+    public List<CarryoutActivityCalendarModel> getTodayCarryoutActivitiesCalendar() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException,
+            ClassroomException, SubjectException, StudyCourseException, ActivityException {
+
+        List<CarryoutActivity> carryoutActivities = carryoutActivityRepository.findAll();
+        List<CarryoutActivityCalendarModel> carryoutActivityCalendarModels = new ArrayList<>();
+        if (!carryoutActivities.isEmpty()) {
+            log.info("carryout activities for calendar found");
+            for (int i = 0; i < carryoutActivities.size(); i++) {
+                CarryoutActivity carryoutActivity = carryoutActivities.get(i);
+                Date today = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                String todayFormatted = format.format(today);
+                CarryoutActivityCalendarModel carryoutActivityCalendarModel = getCarryoutActivityCalendar(carryoutActivity.getId());
+                String activityDateFormatted = format.format(carryoutActivityCalendarModel.getStart());
+                if (todayFormatted.matches(activityDateFormatted)) {
+                    carryoutActivityCalendarModels.add(carryoutActivityCalendarModel);
+                    log.info("today carryout activity for calendar added");
+                }
+                else {
+                    log.info("not a today activity");
+                }
+            }
+            return carryoutActivityCalendarModels;
+        }
+        else {
+            log.info("carryout activities for calendar not found");
+            throw new CarryoutActivityException("carryout activities for calendar not found");
+        }
     }
 
     // DESIGN PATTERN ITERATOR PER REPORTINGS

@@ -896,4 +896,32 @@ public class SecretaryController {
         }
     }
 
+    @RequestMapping(value = "/carryoutactivitiescalendar", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getCarryoutActivitiesCalendar() {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getCarryoutActivitiesCalendar()));
+        }
+        catch (CarryoutActivityException e1) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/todaycarryoutactivitiescalendar", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getTodayCarryoutActivitiesCalendar() {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getTodayCarryoutActivitiesCalendar()));
+        }
+        catch (CarryoutActivityException e1) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new JSONResponseBody(HttpStatus.NOT_FOUND.value(), e1.getMessage()));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
 }

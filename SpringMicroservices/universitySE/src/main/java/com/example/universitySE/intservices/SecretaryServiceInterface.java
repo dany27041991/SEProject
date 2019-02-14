@@ -80,6 +80,9 @@ public interface SecretaryServiceInterface {
 
     CarryoutActivityModel getCarryoutActivityModel(long id) throws CarryoutActivityException;
 
+    CarryoutActivityCalendarModel getCarryoutActivityCalendar(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+            StudyCourseException, FacultyException, SubjectException, ProfessorException;
+
     // ------------------------- RETURN LIST METHODS
 
     List<StudyCourse> getStudyCourses(long faculty) throws StudyCourseException;
@@ -102,8 +105,15 @@ public interface SecretaryServiceInterface {
     List<ReportingRetModel> getReportingsIterator() throws ReportingException, SupportMaterialException, StateException, ProfessorException,
             ClassroomException, SecretaryException, FacultyException;
 
-    List<CarryoutActivityRetModel> getCarryoutActivities() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException, ClassroomException, SubjectException, StudyCourseException, ActivityException;
+    List<CarryoutActivityRetModel> getCarryoutActivities() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException,
+            ClassroomException, SubjectException, StudyCourseException, ActivityException;
 
-    List<ActivityWithoutClassroomModel> getActivitiesWithoutClassroom() throws ActivityException, StudyCourseException, FacultyException, SubjectException, ProfessorException, ActivityTypeException;
+    List<ActivityWithoutClassroomModel> getActivitiesWithoutClassroom() throws ActivityException, StudyCourseException, FacultyException, SubjectException,
+            ProfessorException, ActivityTypeException;
 
+    List<CarryoutActivityCalendarModel> getCarryoutActivitiesCalendar() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException,
+            ClassroomException, SubjectException, StudyCourseException, ActivityException;
+
+    List<CarryoutActivityCalendarModel> getTodayCarryoutActivitiesCalendar() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException,
+            ClassroomException, SubjectException, StudyCourseException, ActivityException;
 }
