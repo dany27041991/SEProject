@@ -5,7 +5,7 @@
 </ion-header>
 <ion-content padding>
   <ion-list>
-    <div *ngFor="let a of activities">
+    <div *ngFor="let a of calendarActivities | async">
       <ion-item>
       	<ion-icon name="book" item-left></ion-icon>
         {{a.activityCalendarModel.name.name}} of {{a.subjectCalendarModel.name}}
@@ -15,6 +15,9 @@
         <br><span style="text-decoration: underline;" (click)="openMap(a.classroomModel.latitude, a.classroomModel.longitude, a.classroomModel.name)">
           Classroom {{a.classroomModel.name}}
             </span>
+        <ion-item no-lines="" *ngIf="type===3 && a.activityCalendarModel.name.id === 1">
+          <button class="addrating" ion-button class="button-small-ios button-ios-primary" (click)="addRating(a.activityCalendarModel.id)">Add Your Rate</button>
+        </ion-item>
       </ion-item>
     </div>
   </ion-list>

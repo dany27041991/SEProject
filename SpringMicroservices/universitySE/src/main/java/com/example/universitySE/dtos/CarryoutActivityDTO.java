@@ -9,7 +9,7 @@ import lombok.Setter;
 public class CarryoutActivityDTO {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private int idActivity;

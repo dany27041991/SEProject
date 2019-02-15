@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SupportMaterialModel {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private String name;

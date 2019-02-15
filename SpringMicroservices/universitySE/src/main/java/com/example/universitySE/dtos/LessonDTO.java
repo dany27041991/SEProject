@@ -29,5 +29,5 @@ public class LessonDTO {
     private int activityType;
 
     @Getter @Setter
-    private long id;
+    private int id;
 }

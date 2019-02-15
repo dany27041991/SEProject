@@ -11,7 +11,7 @@ import java.util.Date;
 public class ProfessorModel {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private String username;
@@ -37,7 +37,7 @@ public class ProfessorModel {
     @Getter @Setter
     private Date dateOfBirth;
 
-    public ProfessorModel(long id, String firstName, String lastName, String biography, String receptionTime, int subject, Date dateOfBirth) {
+    public ProfessorModel(int id, String firstName, String lastName, String biography, String receptionTime, int subject, Date dateOfBirth) {
         this.id = id;
         this.firstname = firstName;
         this.lastname = lastName;

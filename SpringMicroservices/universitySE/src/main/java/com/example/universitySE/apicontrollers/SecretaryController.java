@@ -33,7 +33,7 @@ public class SecretaryController {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
-            long id = secretaryServiceInterface.savePersonRet(personDTO);
+            int id = secretaryServiceInterface.savePersonRet(personDTO);
 
             if (personDTO.getPersonType() == 2) {
 
@@ -203,7 +203,7 @@ public class SecretaryController {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
-            long id = secretaryServiceInterface.saveActivityRet(activityDTO);
+            int id = secretaryServiceInterface.saveActivityRet(activityDTO);
 
             if (activityDTO.getActivityType() == 1) {
 
@@ -341,7 +341,7 @@ public class SecretaryController {
     // ------------------------- RETURN MODEL METHODS
 
     @RequestMapping(value = "/faculty/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getFaculty(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getFaculty(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -370,7 +370,7 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "/persontype/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getPersonType(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getPersonType(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -399,7 +399,7 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "/activitytype/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getActivityType(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getActivityType(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -428,7 +428,7 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "/state/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getState(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getState(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -457,7 +457,7 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "/supportmaterial/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getSupportMaterial(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getSupportMaterial(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -486,7 +486,7 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "/professor/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getProfessor(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getProfessor(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -515,7 +515,7 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "/classroom/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getClassroom(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getClassroom(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -544,7 +544,7 @@ public class SecretaryController {
     }
 
     @RequestMapping(value = "/secretary/{id}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getSecretary(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getSecretary(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -575,7 +575,7 @@ public class SecretaryController {
     // ------------------------- RETURN LIST METHODS
 
     @RequestMapping(value = "/courses/{faculty}", method = RequestMethod.GET)
-    public ResponseEntity<JSONResponseBody> getStudyCourses(HttpServletRequest request, @PathVariable(name = "faculty") long faculty) {
+    public ResponseEntity<JSONResponseBody> getStudyCourses(HttpServletRequest request, @PathVariable(name = "faculty") int faculty) {
         try {
 
             loginServiceInterface.verifyJwtAndGetData(request);
@@ -808,9 +808,7 @@ public class SecretaryController {
 
     @RequestMapping(value = "/reportings", method = RequestMethod.GET)
     public ResponseEntity<JSONResponseBody> getReportings(HttpServletRequest request) {
-
         try {
-
             loginServiceInterface.verifyJwtAndGetData(request);
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getReportingsIterator()));
         }

@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 8-feb-2019 18.41.41 by Hibernate Tools 5.2.0.Final
+// Generated 14-feb-2019 21.58.38 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Reporting  implements java.io.Serializable {
 
 
-     private long id;
+     private Integer id;
      private String noteProf;
      private int supportMaterialProf;
      private String noteSec;
@@ -46,26 +46,26 @@ public class Reporting  implements java.io.Serializable {
        this.idClassroom = idClassroom;
     }
 
-    public Reporting(long id, String noteProf, int supportMaterial, String noteSec, int state, int professor, Integer secretary, int classroom) {
+    public Reporting(int id, String noteProf, int supportMaterialProf, String noteSec, int state, int idProf, Integer idSecretary, int idClassroom) {
         this.id = id;
         this.noteProf = noteProf;
-        this.supportMaterialProf = supportMaterial;
+        this.supportMaterialProf = supportMaterialProf;
         this.noteSec = noteSec;
         this.state = state;
-        this.idProf = professor;
-        this.idSecretary = secretary;
-        this.idClassroom = classroom;
+        this.idProf = idProf;
+        this.idSecretary = idSecretary;
+        this.idClassroom = idClassroom;
     }
-
-    @Id @GeneratedValue(strategy=IDENTITY)
+   
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
-    public long getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

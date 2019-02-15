@@ -1,6 +1,8 @@
 package com.example.universitySE.apicontrollers;
 
 import com.example.universitySE.dtos.IdTypeForSubjectDTO;
+import com.example.universitySE.dtos.RatingLessonDTO;
+import com.example.universitySE.exceptions.PersonException;
 import com.example.universitySE.intservices.FacultyServiceInterface;
 import com.example.universitySE.shared.JSONResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,16 @@ public class FacultyController {
     public ResponseEntity<JSONResponseBody> loginUser(@Valid @RequestBody IdTypeForSubjectDTO idTypeForSubjectDTO) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), facultyService.getLoggedUserSubject(idTypeForSubjectDTO.getId(), idTypeForSubjectDTO.getType())));
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), exception.getMessage()));
+        }
+    }
+
+    @PostMapping(value = "/addratinglesson")
+    public ResponseEntity<JSONResponseBody> addRatingLesson(@Valid @RequestBody RatingLessonDTO ratingLessonDTO) {
+        try {
+            facultyService.addRatingLesson(ratingLessonDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), true));
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JSONResponseBody(HttpStatus.FORBIDDEN.value(), exception.getMessage()));
         }

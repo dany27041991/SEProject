@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject, AngularFireList } from '@angular/fire/database';
 import { User, database } from 'firebase/app';
 import { Profile } from '../../models/profile/profile.interface';
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class DataProvider {
 
+  private APIAUTHURL = 'http://localhost:8090/user/faculty/';
   profileObject: AngularFireObject<Profile>;
   profileList: AngularFireList<Profile>;
 
-  constructor(private database: AngularFireDatabase) {
+  constructor(private database: AngularFireDatabase, private http: HttpClient) {
   }
 
   async saveProfile(user: User, profile: Profile) {
@@ -71,6 +73,16 @@ export class DataProvider {
   getAllUsers() {
     return <any>this.database.list(`profiles`).valueChanges();
   }
+
+  addRateLesson(id: number, rate: number, idStudent: number) {
+    return this.http.post(this.APIAUTHURL + 'addratinglesson',
+      {
+        id: id,
+        rate: rate,
+        id_student: idStudent
+      }, {observe: 'response'});
+  }
+
   /*getAuthenticatedUserProfile() {
     return this.auth.getAuthenticatedUser().pipe(map(user => user.uid), mergeMap(authId => this.database.object(`profiles/${authId}`).snapshotChanges()))
   }*/

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface PersonTypeRepository extends JpaRepository<PersonType, Integer> {
 
-    Optional<PersonType> findPersonTypeById(long id);
+    Optional<PersonType> findPersonTypeById(int id);
 
     List<PersonType> findAll();
 }

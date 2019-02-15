@@ -10,9 +10,11 @@
 </ion-header>
 <ion-content padding>
 
-  <app-last-rate-professor [lastRateRes]="lastRateRes" *ngIf="type_person===2"></app-last-rate-professor>
+  <app-ratelesson [lastRateLesson]="lastRateLesson" *ngIf="type_person===2 && lastRateLesson"></app-ratelesson>
 
-  <app-last-upload-material [lastUpload]="lastUpload" *ngIf="type_person===3"></app-last-upload-material>
+  <app-last-rate-professor [lastRateRes]="lastRateRes" *ngIf="type_person===2 && lastRateRes"></app-last-rate-professor>
+
+  <app-last-upload-material [lastUpload]="lastUpload" *ngIf="type_person===3 && lastUpload"></app-last-upload-material>
 
   <app-last-channel-message></app-last-channel-message>
 

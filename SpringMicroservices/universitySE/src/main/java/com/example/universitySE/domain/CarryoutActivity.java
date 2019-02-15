@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 8-feb-2019 18.41.41 by Hibernate Tools 5.2.0.Final
+// Generated 14-feb-2019 21.58.38 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -16,7 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class CarryoutActivity  implements java.io.Serializable {
 
 
-     private long id;
+     private Integer id;
      private int idActivity;
      private int classroomName;
 
@@ -28,21 +28,21 @@ public class CarryoutActivity  implements java.io.Serializable {
        this.classroomName = classroomName;
     }
 
-    public CarryoutActivity(long id, long id1, long id2) {
+    public CarryoutActivity(int id, int idActivity, int classroomName) {
         this.id = id;
-        this.idActivity = (int) id1;
-        this.classroomName = (int) id2;
+        this.idActivity = idActivity;
+        this.classroomName = classroomName;
     }
-
-    @Id @GeneratedValue(strategy=IDENTITY)
+   
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="id", unique=true, nullable=false)
-    public long getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

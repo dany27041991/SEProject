@@ -6,6 +6,7 @@ import {StudentProvider} from "../../providers/student/student.service";
 import {UploadInterface} from "../../models/upload/upload.interface";
 import {ProfessorProvider} from "../../providers/professor/professor.service";
 import {RatingTeachingMaterial} from "../../models/rating/RatingTeachingMaterial";
+import {RatelessonInterface} from "../../models/ratelesson/ratelesson.interface";
 
 @IonicPage()
 @Component({
@@ -17,6 +18,7 @@ export class InboxPage implements OnInit{
   public type_person: number;
   lastUpload : Array<UploadInterface>;
   lastRateRes: RatingTeachingMaterial;
+  lastRateLesson: RatelessonInterface;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private chat: ChatService, private student: StudentProvider, private prof: ProfessorProvider) {
     this.type_person = JSON.parse(localStorage.getItem('selectedUser'))['person_type'];
@@ -38,6 +40,11 @@ export class InboxPage implements OnInit{
           lastRate.reverse();
           this.lastRateRes = lastRate[0];
         }
+      });
+
+      prof.rateLesson().subscribe((res)=> {
+        res.reverse();
+        this.lastRateLesson = res[0];
       });
     }
   }

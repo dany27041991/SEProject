@@ -25,6 +25,15 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     private static final Logger log = LoggerFactory.getLogger(SecretaryServiceInterface.class);
 
     @Autowired
+    LessonRepository lessonRepository;
+
+    @Autowired
+    ExamRepository examRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
+
+    @Autowired
     SecretaryRepository secretaryRepository;
 
     @Autowired
@@ -74,7 +83,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (!personDTO.equals(null)) {
 
             Person person = new Person(personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType());
-            secretaryRepository.save(person);
+            personRepository.addPerson(person.getUsername(), person.getPassword(), person.getPersonType());
             log.info("added new person");
         }
         else {
@@ -85,13 +94,19 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public long savePersonRet(PersonDTO personDTO) throws PersonException {
+    public int savePersonRet(PersonDTO personDTO) throws PersonException {
 
         if (!personDTO.equals(null)) {
-
+            int id;
             Person person = new Person(personDTO.getUsername(), personDTO.getPassword(), personDTO.getPersonType());
-            secretaryRepository.save(person);
-            long id = person.getId();
+            personRepository.addPerson(person.getUsername(), person.getPassword(), person.getPersonType());
+            Optional<Person> optionalPerson = personRepository.findPersonByUsernameAndPassword(person.getUsername(), person.getPassword());
+            if(optionalPerson.isPresent()){
+                Person gettedPerson = optionalPerson.get();
+                id = gettedPerson.getId();
+            } else {
+                throw new PersonException("could not add new person");
+            }
             log.info("added new person");
             return id;
         }
@@ -124,7 +139,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (!professorDTO.equals(null)) {
             PersonModel personModel = getPerson(professorDTO.getId());
             Professor professor = new Professor(personModel.getId(), professorDTO.getFirstName(), professorDTO.getLastName(), professorDTO.getBiography(), professorDTO.getReceptionTime(), professorDTO.getSubject(), professorDTO.getDateOfBirth());
-            secretaryRepository.save(professor);
+            professorRepository.addProfessor(professor.getId(), professor.getFirstName(), professor.getLastName(), professor.getBiography(), professor.getReceptionTime(), professor.getSubject(), professor.getDateOfBirth());
             log.info("added new professor");
         }
         else {
@@ -140,7 +155,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (!studentDTO.equals(null)) {
             PersonModel personModel = getPerson(studentDTO.getId());
             Student student = new Student(personModel.getId(), studentDTO.getFirstName(), studentDTO.getLastName(), studentDTO.getDateOfBirth(), studentDTO.getBadgeNumber(), studentDTO.getStudyCourse(), studentDTO.getEnrollmentYear());
-            secretaryRepository.save(student);
+            studentRepository.addStudent(student.getId(), student.getFirstName(), student.getLastName(), student.getDateOfBirth(), student.getBadgeNumber(), student.getStudyCourse(), student.getEnrollmentYear());
             log.info("added new student");
         }
         else {
@@ -156,7 +171,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (!studyCourseDTO.equals(null)) {
 
             StudyCourse studyCourse = new StudyCourse(studyCourseDTO.getName(), studyCourseDTO.getFaculty());
-            secretaryRepository.save(studyCourse);
+            studyCourseRepository.addStudyCourse(studyCourse.getName(), studyCourse.getFaculty());
             log.info("added new course of study");
         }
         else {
@@ -172,7 +187,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (!subjectDTO.equals(null)) {
 
             Subject subject = new Subject(subjectDTO.getName(), subjectDTO.getStudyCourse(), subjectDTO.getYearCourse());
-            secretaryRepository.save(subject);
+            subjectRepository.addSubject(subject.getName(), subject.getStudyCourse(), subject.getYearCourse());
             log.info("added new subject");
         }
         else {
@@ -188,7 +203,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (!classroomDTO.equals(null)) {
 
             Classroom classroom = new Classroom(classroomDTO.getName(), classroomDTO.getLatitude(), classroomDTO.getLongitude());
-            secretaryRepository.save(classroom);
+            classroomRepository.addClassroom(classroom.getName(), classroom.getLatitude(), classroom.getLongitude());
             log.info("added new classroom");
         }
         else {
@@ -204,7 +219,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if (!activityDTO.equals(null)) {
 
             Activity activity = new Activity(activityDTO.getStudyCourse(), activityDTO.getSubject(), activityDTO.getIdProf(), activityDTO.getStart(), activityDTO.getEnd(), activityDTO.getActivityType());
-            secretaryRepository.save(activity);
+            activityRepository.addActivity(activity.getStudyCourse(), activity.getSubject(), activity.getIdProf(), activity.getStart(), activity.getEnd(), activity.getActivityType());
             log.info("added new activity");
         }
         else {
@@ -216,13 +231,14 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public long saveActivityRet(ActivityDTO activityDTO) throws ActivityException {
+    public int saveActivityRet(ActivityDTO activityDTO) throws ActivityException {
 
         if (!activityDTO.equals(null)) {
 
             Activity activity = new Activity(activityDTO.getStudyCourse(), activityDTO.getSubject(), activityDTO.getIdProf(), activityDTO.getStart(), activityDTO.getEnd(), activityDTO.getActivityType());
-            secretaryRepository.save(activity);
-            long id = activity.getId();
+            activityRepository.addActivity(activity.getStudyCourse(), activity.getSubject(), activity.getIdProf(), activity.getStart(), activity.getEnd(), activity.getActivityType());
+            List<Activity> activityList = activityRepository.findAll();
+            int id = activityList.get(activityList.size()-1).getId();
             log.info("added new activity");
             return id;
         }
@@ -238,9 +254,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
 
         if (!examDTO.equals(null)) {
 
-            ActivityModel activityModel = getActivity(examDTO.getId());
-            Exam exam = new Exam(activityModel.getId());
-            secretaryRepository.save(exam);
+            examRepository.addExam(examDTO.getId());
             log.info("added new exam");
         }
         else {
@@ -255,9 +269,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
 
         if (!lessonDTO.equals(null)) {
 
-            ActivityModel activityModel = getActivity(lessonDTO.getId());
-            Lesson lesson = new Lesson(activityModel.getId());
-            secretaryRepository.save(lesson);
+            lessonRepository.addLesson(lessonDTO.getId());
             log.info("added new lesson");
         }
         else {
@@ -273,7 +285,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         if(!carryoutActivityDTO.equals(null)) {
 
             CarryoutActivity carryoutActivity = new CarryoutActivity(carryoutActivityDTO.getId(), carryoutActivityDTO.getIdActivity(), carryoutActivityDTO.getClassroomName());
-            secretaryRepository.save(carryoutActivity);
+            carryoutActivityRepository.addCarryoutActivity(carryoutActivity.getIdActivity(), carryoutActivity.getClassroomName());
             log.info("added new carryout activity");
         }
         else {
@@ -294,7 +306,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
             ReportModel reportModel = getReporting(reportingRetDTO.getId());
             Reporting reporting = new Reporting(reportModel.getId(), reportingRetDTO.getNoteProf(), reportingRetDTO.getSupportMaterial(), reportingRetDTO.getNoteSec(),
                     reportingRetDTO.getState(), reportingRetDTO.getProfessor(), reportingRetDTO.getSecretary(), reportingRetDTO.getClassroom());
-            secretaryRepository.save(reporting);
+            reportingRepository.updateReporting(reporting.getId(), reporting.getNoteSec(), reporting.getState(), reporting.getIdSecretary());
             log.info("reporting updated");
         }
         else {
@@ -311,7 +323,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
 
             CarryoutActivityModel carryoutActivityModel = getCarryoutActivityModel(carryoutActivityDTO.getId());
             CarryoutActivity carryoutActivity = new CarryoutActivity(carryoutActivityModel.getId(), carryoutActivityModel.getIdActivity(), carryoutActivityDTO.getClassroomName());
-            secretaryRepository.save(carryoutActivity);
+            carryoutActivityRepository.updateCarryoutActivity(carryoutActivity.getId(), carryoutActivity.getClassroomName());
             log.info("carryout activity updated");
         }
         else {
@@ -324,7 +336,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     // ---------------------------------- RETURN MODEL METHODS
 
     @Override
-    public FacultyModel getFaculty(long id) throws FacultyException {
+    public FacultyModel getFaculty(int id) throws FacultyException {
 
         Optional<Faculty> faculty = facultyRepository.findFacultyById(id);
         if (faculty.isPresent()) {
@@ -342,7 +354,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public PersonTypeModel getPersonType(long id) throws PersonTypeException {
+    public PersonTypeModel getPersonType(int id) throws PersonTypeException {
 
         Optional<PersonType> personType = personTypeRepository.findPersonTypeById(id);
         if (personType.isPresent()) {
@@ -360,7 +372,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ActivityTypeModel getActivityType(long id) throws ActivityTypeException {
+    public ActivityTypeModel getActivityType(int id) throws ActivityTypeException {
 
         Optional<ActivityType> activityType = activityTypeRepository.findActivityTypeById(id);
         if (activityType.isPresent()) {
@@ -378,7 +390,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public StateModel getState(long id) throws StateException {
+    public StateModel getState(int id) throws StateException {
 
         Optional<State> state = stateRepository.findStateById(id);
         if (state.isPresent()) {
@@ -396,7 +408,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public SupportMaterialModel getSupportMaterial(long id) throws SupportMaterialException {
+    public SupportMaterialModel getSupportMaterial(int id) throws SupportMaterialException {
 
         Optional<SupportMaterial> supportMaterial = supportMaterialRepository.findSupportMaterialById(id);
         if (supportMaterial.isPresent()) {
@@ -414,7 +426,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ActivityModel getActivity(long id) throws ActivityException {
+    public ActivityModel getActivity(int id) throws ActivityException {
 
         Optional<Activity> activity = activityRepository.findActivityById(id);
         if (activity.isPresent()) {
@@ -433,7 +445,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public PersonModel getPerson(long id) throws PersonException {
+    public PersonModel getPerson(int id) throws PersonException {
 
         Optional<Person> person = personRepository.findPersonById(id);
         if (person.isPresent()) {
@@ -451,7 +463,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ProfessorModel getProfessor(long id) throws ProfessorException {
+    public ProfessorModel getProfessor(int id) throws ProfessorException {
 
         Optional<Professor> professor = professorRepository.findProfessorById(id);
         if (professor.isPresent()) {
@@ -470,7 +482,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ClassroomModel getClassroom(long id) throws ClassroomException {
+    public ClassroomModel getClassroom(int id) throws ClassroomException {
 
         Optional<Classroom> classroom = classroomRepository.findClassroomById(id);
         if (classroom.isPresent()) {
@@ -488,7 +500,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ReportModel getReporting(long id) throws ReportingException {
+    public ReportModel getReporting(int id) throws ReportingException {
 
         // Optional<Reporting> reporting = reportingRepository.findReportingById(id);
         Optional<Reporting> reporting = reportingRepository.getReportingById(id);
@@ -509,7 +521,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public SecretaryRetModel getSecretary(long id) throws SecretaryException, FacultyException {
+    public SecretaryRetModel getSecretary(int id) throws SecretaryException, FacultyException {
 
         Optional<Secretary> secretary = secretaryRepository.findSecretaryById(id);
         if (secretary.isPresent()) {
@@ -528,7 +540,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public StudyCourseModel getStudyCourse(long id) throws StudyCourseException, FacultyException {
+    public StudyCourseModel getStudyCourse(int id) throws StudyCourseException, FacultyException {
 
         Optional<StudyCourse> studyCourse = studyCourseRepository.findStudyCourseById(id);
         if (studyCourse.isPresent()) {
@@ -547,7 +559,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public SubjectCalendarModel getSubject(long id) throws SubjectException {
+    public SubjectCalendarModel getSubject(int id) throws SubjectException {
 
         Optional<Subject> subject = subjectRepository.findSubjectById(id);
         if (subject.isPresent()) {
@@ -565,7 +577,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ProfessorCalendarModel getProfessorCalendar(long id) throws ProfessorException {
+    public ProfessorCalendarModel getProfessorCalendar(int id) throws ProfessorException {
 
         Optional<Professor> professor = professorRepository.findProfessorById(id);
         if (professor.isPresent()) {
@@ -583,7 +595,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ActivityTypeCalendarModel getActivityTypeCalendar(long id) throws ActivityTypeException {
+    public ActivityTypeCalendarModel getActivityTypeCalendar(int id) throws ActivityTypeException {
 
         Optional<ActivityType> activityType = activityTypeRepository.findActivityTypeById(id);
         if (activityType.isPresent()) {
@@ -602,7 +614,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public ActivityCalendarModel getActivityCalendar(long id) throws ActivityException, ActivityTypeException {
+    public ActivityCalendarModel getActivityCalendar(int id) throws ActivityException, ActivityTypeException {
 
         Optional<Activity> activity = activityRepository.findActivityById(id);
         if (activity.isPresent()) {
@@ -621,7 +633,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public CarryoutActivityRetModel getCarryoutActivity(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+    public CarryoutActivityRetModel getCarryoutActivity(int id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
             StudyCourseException, FacultyException, SubjectException, ProfessorException {
 
         Optional<CarryoutActivity> carryoutActivity = carryoutActivityRepository.findCarryoutActivityById(id);
@@ -650,7 +662,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public CarryoutActivityModel getCarryoutActivityModel(long id) throws CarryoutActivityException {
+    public CarryoutActivityModel getCarryoutActivityModel(int id) throws CarryoutActivityException {
 
         Optional<CarryoutActivity> carryoutActivity = carryoutActivityRepository.findCarryoutActivityById(id);
         if (carryoutActivity.isPresent()) {
@@ -669,7 +681,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     }
 
     @Override
-    public CarryoutActivityCalendarModel getCarryoutActivityCalendar(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+    public CarryoutActivityCalendarModel getCarryoutActivityCalendar(int id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
             StudyCourseException, FacultyException, SubjectException, ProfessorException {
 
         Optional<CarryoutActivity> carryoutActivity = carryoutActivityRepository.findCarryoutActivityById(id);
@@ -697,7 +709,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
     // ---------------------------------- RETURN LIST METHODS
 
     @Override
-    public List<StudyCourse> getStudyCourses(long faculty) throws StudyCourseException {
+    public List<StudyCourse> getStudyCourses(int faculty) throws StudyCourseException {
 
         List<StudyCourse> studyCourses = studyCourseRepository.findAllByFaculty(faculty);
         if (!studyCourses.isEmpty()) {
@@ -851,12 +863,18 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         for (iterator = getIterator(); iterator.hasNext();) {
             Reporting reporting = (Reporting) iterator.next();
             reportingList.add(reporting);
+            if(reporting.getIdSecretary() != null) {
+                SecretaryRetModel secretaryRetModel = getSecretary(reporting.getIdSecretary());
 
-            SecretaryRetModel secretaryRetModel = getSecretary(reporting.getIdSecretary());
+                ReportingRetModel reportingRetModel = new ReportingRetModel(reporting.getId(), reporting.getNoteProf(), getSupportMaterial(reporting.getSupportMaterialProf()),
+                        reporting.getNoteSec(), getState(reporting.getState()), getProfessor(reporting.getIdProf()), secretaryRetModel, getClassroom(reporting.getIdClassroom()));
+                reportingRetModels.add(reportingRetModel);
+            } else {
+                ReportingRetModel reportingRetModel = new ReportingRetModel(reporting.getId(), reporting.getNoteProf(), getSupportMaterial(reporting.getSupportMaterialProf()),
+                        reporting.getNoteSec(), getState(reporting.getState()), getProfessor(reporting.getIdProf()), null, getClassroom(reporting.getIdClassroom()));
+                reportingRetModels.add(reportingRetModel);
+            }
 
-            ReportingRetModel reportingRetModel = new ReportingRetModel(reporting.getId(), reporting.getNoteProf(), getSupportMaterial(reporting.getSupportMaterialProf()),
-                    reporting.getNoteSec(), getState(reporting.getState()), getProfessor(reporting.getIdProf()), secretaryRetModel, getClassroom(reporting.getIdClassroom()));
-            reportingRetModels.add(reportingRetModel);
         }
 
         if (!reportingList.isEmpty()) {
@@ -922,7 +940,7 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
         int j = 0;
         int i = 0;
-        if (carryoutActivities.size() < activities.size()) {
+        if (carryoutActivities.size() < activities.size() && carryoutActivities.size() > 0) {
             while (i <= j && i < carryoutActivities.size() && j < activities.size()) {
                 if (activities.get(j).getId() == carryoutActivities.get(i).getIdActivity()) {
                     log.info("activity has already a classroom");

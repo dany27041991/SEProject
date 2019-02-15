@@ -10,7 +10,6 @@ export class SecretaryProvider {
   constructor(private http: HttpClient) {}
 
   getTodayCalendar() {
-    const idUser = JSON.parse(localStorage.getItem('selectedUser'))['mykey'];
     let headers = new HttpHeaders(
       {
         'Content-Type' : 'application/json'

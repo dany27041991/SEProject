@@ -1,5 +1,5 @@
 package com.example.universitySE.domain;
-// Generated 8-feb-2019 18.41.41 by Hibernate Tools 5.2.0.Final
+// Generated 14-feb-2019 21.58.38 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -18,11 +18,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Student  implements java.io.Serializable {
 
 
-     private long id;
+     private Integer id;
      private String firstName;
      private String lastName;
      private Date dateOfBirth;
-     private long badgeNumber;
+     private int badgeNumber;
      private int studyCourse;
      private Date enrollmentYear;
 
@@ -30,34 +30,24 @@ public class Student  implements java.io.Serializable {
     }
 
     public Student(int id, String firstName, String lastName, Date dateOfBirth, int badgeNumber, int studyCourse, Date enrollmentYear) {
-        this.id = id;
+       this.id = id;
         this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.badgeNumber = badgeNumber;
-        this.studyCourse = studyCourse;
-        this.enrollmentYear = enrollmentYear;
+       this.lastName = lastName;
+       this.dateOfBirth = dateOfBirth;
+       this.badgeNumber = badgeNumber;
+       this.studyCourse = studyCourse;
+       this.enrollmentYear = enrollmentYear;
     }
-
-    public Student(long id, String firstName, String lastName, Date dateOfBirth, long badgeNumber, int studyCourse, Date enrollmentYear) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
-        this.badgeNumber = badgeNumber;
-        this.studyCourse = studyCourse;
-        this.enrollmentYear = enrollmentYear;
-    }
-
+   
      @Id
 
     
     @Column(name="id", unique=true, nullable=false)
-    public long getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -93,11 +83,11 @@ public class Student  implements java.io.Serializable {
 
     
     @Column(name="badge_number", unique=true, nullable=false)
-    public long getBadgeNumber() {
+    public int getBadgeNumber() {
         return this.badgeNumber;
     }
     
-    public void setBadgeNumber(long badgeNumber) {
+    public void setBadgeNumber(int badgeNumber) {
         this.badgeNumber = badgeNumber;
     }
 

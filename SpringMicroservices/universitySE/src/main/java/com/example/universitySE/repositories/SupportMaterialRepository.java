@@ -12,6 +12,6 @@ public interface SupportMaterialRepository extends JpaRepository<SupportMaterial
 
     List<SupportMaterial> findAll();
 
-    Optional<SupportMaterial> findSupportMaterialById(long id);
+    Optional<SupportMaterial> findSupportMaterialById(int id);
 
 }

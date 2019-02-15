@@ -9,7 +9,7 @@ import lombok.Setter;
 public class FacultyModel {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private String name;

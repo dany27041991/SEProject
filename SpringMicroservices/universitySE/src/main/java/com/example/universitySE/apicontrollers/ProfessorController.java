@@ -36,7 +36,7 @@ public class ProfessorController {
     List<String> files = new ArrayList<String>();
 
     @GetMapping(value = "/subject/{id}")
-    public ResponseEntity<JSONResponseBody> getSubject(HttpServletRequest request, @PathVariable(name = "id") long id) {
+    public ResponseEntity<JSONResponseBody> getSubject(HttpServletRequest request, @PathVariable(name = "id") int id) {
         try {
             loginService.verifyJwtAndGetData(request);
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getSubject(id)));
@@ -147,6 +147,15 @@ public class ProfessorController {
     public ResponseEntity<JSONResponseBody> getRateDownload() {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getAllRateTeachingMaterial()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @GetMapping(value = "/getRateLesson/{id}")
+    public ResponseEntity<JSONResponseBody> getRateLesson(@Valid @PathVariable(name = "id") int id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), professorService.getAllRateLesson(id)));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
         }

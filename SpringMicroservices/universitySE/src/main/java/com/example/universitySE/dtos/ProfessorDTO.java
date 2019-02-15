@@ -11,7 +11,7 @@ import java.util.Date;
 public class ProfessorDTO {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private String username;

@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Rating</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding >
+  <ion-item no-lines="" text-center="">
+    <h1 style="font-weight: bold; color: orange">MAKE YOUR VOTE:</h1>
+  </ion-item>
+
+  <form #ratingForm="ngForm" novalidate>
+    <ion-item no-lines="">
+      <ion-label style="font-weight: bold; color: black">Rate:</ion-label>
+      <ion-select required="" id="rate" required ngModel #rate="ngModel" name="rate">
+        <ion-option value="1">1</ion-option>
+        <ion-option value="2">2</ion-option>
+        <ion-option value="3">3</ion-option>
+        <ion-option value="4">4</ion-option>
+        <ion-option value="5">5</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item no-lines="" text-center="" align-items-center="" class="login-form__buttons">
+      <button id="addrate" ion-button class="button-ios-primary" (click)="addRate(ratingForm)" [disabled]="ratingForm.invalid">Add Rating</button>
+    </ion-item>
+
+  </form>
+
+</ion-content>

@@ -10,7 +10,7 @@ import lombok.Setter;
 public class ReportingRetModel {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private String noteProf;
@@ -33,7 +33,7 @@ public class ReportingRetModel {
     @Getter @Setter
     private ClassroomModel classroom;
 
-    public ReportingRetModel(long id, String noteProf, SupportMaterialModel supportMaterial, StateModel state, ProfessorModel professor, ClassroomModel classroom) {
+    public ReportingRetModel(int id, String noteProf, SupportMaterialModel supportMaterial, StateModel state, ProfessorModel professor, ClassroomModel classroom) {
         this.id = id;
         this.noteProf = noteProf;
         this.supportMaterial = supportMaterial;

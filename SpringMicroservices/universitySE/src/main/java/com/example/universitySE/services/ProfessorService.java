@@ -8,10 +8,7 @@ import com.example.universitySE.exceptions.SubjectException;
 import com.example.universitySE.intservices.FileSystem;
 import com.example.universitySE.intservices.LoginServiceInterface;
 import com.example.universitySE.intservices.ProfessorServiceInterface;
-import com.example.universitySE.models.RatingTeachingMaterialModel;
-import com.example.universitySE.models.ReportingModel;
-import com.example.universitySE.models.SubjectModel;
-import com.example.universitySE.models.TeachingMaterialModel;
+import com.example.universitySE.models.*;
 import com.example.universitySE.repositories.*;
 import com.example.universitySE.shared.Folder;
 import com.example.universitySE.utils.Constant;
@@ -64,8 +61,17 @@ public class ProfessorService implements ProfessorServiceInterface {
     @Autowired
     DownloadTeachingMaterialRepository downloadTeachingMaterialRepository;
 
+    @Autowired
+    AttendLessonRepository attendLessonRepository;
+
+    @Autowired
+    ActivityRepository activityRepository;
+
+    @Autowired
+    StudyCourseRepository studyCourseRepository;
+
     @Override
-    public SubjectModel getSubject(long id) throws SubjectException {
+    public SubjectModel getSubject(int id) throws SubjectException {
         Optional<Subject> subject = subjectRepository.findSubjectById(id);
         if(subject.isPresent()) {
             log.info("Subject exists!");
@@ -186,7 +192,7 @@ public class ProfessorService implements ProfessorServiceInterface {
                     Optional<Professor> professorOptional = professorRepository.findProfessorBySubject(subject.getId());
                     if(professorOptional.isPresent()) {
                         Professor professor = professorOptional.get();
-                        long id = downloadTeachingMaterialList.get(i).getId();
+                        int id = downloadTeachingMaterialList.get(i).getId();
                         int feedback_student = downloadTeachingMaterialList.get(i).getFeedbackStudent();
                         int badge_student = downloadTeachingMaterialList.get(i).getBadgeStudent();
                         String note = downloadTeachingMaterialList.get(i).getNote();
@@ -237,5 +243,33 @@ public class ProfessorService implements ProfessorServiceInterface {
         }
     }
 
+    public List<ActivityRateModel> getAllRateLesson(int id) {
+        List<ActivityRateModel> activityRateModelList = new ArrayList<>();
+        Optional<Professor> optionalProfessor = professorRepository.findProfessorById(id);
+        if(optionalProfessor.isPresent()) {
+            Professor professor = optionalProfessor.get();
+            List<AttendLesson> attendLessonList = attendLessonRepository.findAll();
+            for (int i=0; i<attendLessonList.size(); i++) {
+                Optional<Activity> optionalActivity = activityRepository.findActivityById(attendLessonList.get(i).getIdLesson());
+                if(optionalActivity.isPresent()) {
+                    Activity activity = optionalActivity.get();
+                    if(activity.getSubject() == professor.getSubject()) {
+                        Optional<Subject> subjectOptional = subjectRepository.findSubjectById(activity.getSubject());
+                        if(subjectOptional.isPresent()) {
+                            Subject subject = subjectOptional.get();
+                            Optional<StudyCourse> optionalStudyCourse = studyCourseRepository.findStudyCourseById(activity.getStudyCourse());
+                            if(optionalStudyCourse.isPresent()) {
+                                StudyCourse studyCourse = optionalStudyCourse.get();
+                                activityRateModelList.add(new ActivityRateModel(attendLessonList.get(i).getId(),
+                                        attendLessonList.get(i).getFeedback(), activity, attendLessonList.get(i).getBadgeStudent(),
+                                        subject, studyCourse));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return activityRateModelList;
+    }
 
 }

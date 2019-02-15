@@ -3,11 +3,10 @@ package com.example.universitySE.services;
 import com.example.universitySE.domain.Professor;
 import com.example.universitySE.domain.Student;
 import com.example.universitySE.domain.Subject;
+import com.example.universitySE.dtos.RatingLessonDTO;
+import com.example.universitySE.exceptions.PersonException;
 import com.example.universitySE.intservices.FacultyServiceInterface;
-import com.example.universitySE.repositories.PersonRepository;
-import com.example.universitySE.repositories.ProfessorRepository;
-import com.example.universitySE.repositories.StudentRepository;
-import com.example.universitySE.repositories.SubjectRepository;
+import com.example.universitySE.repositories.*;
 import com.example.universitySE.shared.TypePerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +29,9 @@ public class FacultyService implements FacultyServiceInterface{
 
     @Autowired
     StudentRepository studentRepository;
+
+    @Autowired
+    AttendLessonRepository attendLessonRepository;
 
     @Override
     public List<Subject> getAllSubject() {
@@ -63,5 +65,10 @@ public class FacultyService implements FacultyServiceInterface{
             throw new Exception();
         }
         return idSubjects;
+    }
+
+    @Override
+    public void addRatingLesson(RatingLessonDTO ratingLessonDTO) {
+        attendLessonRepository.addExam(ratingLessonDTO.getRate(), ratingLessonDTO.getId(), ratingLessonDTO.getId_student());
     }
 }

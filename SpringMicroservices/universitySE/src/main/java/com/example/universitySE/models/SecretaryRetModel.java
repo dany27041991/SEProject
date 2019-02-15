@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SecretaryRetModel {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private FacultyModel faculty;

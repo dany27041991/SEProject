@@ -16,7 +16,7 @@ public interface TeachingMaterialRepository extends JpaRepository<TeachingMateri
     @Query(value = "INSERT INTO Teaching_material (subject, media) VALUES (?1, ?2)", nativeQuery = true)
     void addTeachingMaterial(int subject, String media);
 
-    List<TeachingMaterial> getTeachingMaterialBySubject(long subject);
+    List<TeachingMaterial> getTeachingMaterialBySubject(int subject);
 
     Optional<TeachingMaterial> findTeachingMaterialById(int id);
 

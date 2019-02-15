@@ -9,7 +9,7 @@ import lombok.Setter;
 public class CarryoutActivityModel {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private int idActivity;

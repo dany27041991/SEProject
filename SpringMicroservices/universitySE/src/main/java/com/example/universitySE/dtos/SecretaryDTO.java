@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SecretaryDTO {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private int faculty;

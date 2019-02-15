@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface StateRepository extends JpaRepository<State, Integer> {
 
-    Optional<State> findStateById(long id);
+    Optional<State> findStateById(int id);
 
     List<State> findAll();
 }

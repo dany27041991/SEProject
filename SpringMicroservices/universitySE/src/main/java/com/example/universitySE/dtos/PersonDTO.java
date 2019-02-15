@@ -38,7 +38,7 @@ public class PersonDTO {
     private Date dateOfBirth;
 
     @Getter @Setter
-    private long badgeNumber;
+    private int badgeNumber;
 
     @Getter @Setter
     private int studyCourse;

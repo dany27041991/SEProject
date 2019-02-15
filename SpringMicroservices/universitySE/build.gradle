@@ -18,6 +18,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'jacoco'
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -34,24 +35,24 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//compile 'org.hibernate:hibernate-core:5.2.13.Final'
-	compile 'mysql:mysql-connector-java'
 	compile group: 'javax.ejb', name: 'javax.ejb-api', version: '3.2'
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.7.5'
 	compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.5'
 	compile 'com.fasterxml.jackson.core:jackson-core:2.7.5'
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 }
 
 /*import org.hibernate.gradle.tools.*
 
-database {
+database{
 	catalog =  [ "se_database": new Schema()]
 	basePackage = "com.example.universitySE.domain"
 	port = 3306
-	url = "jdbc:mysql://localhost"
-	user = "segreteria"
-	password = "segreteria"
+	url = "jdbc:mysql://127.0.0.1"
+	user = "root"
+	password = "root"
 	dialect = "org.hibernate.dialect.MySQLDialect"
-	//driver = "org.gjt.mm.mysql.Driver"
-	driver = "com.mysql.jdbc.Driver"
+	driver = "org.gjt.mm.mysql.Driver"
 }*/

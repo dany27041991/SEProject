@@ -22,4 +22,14 @@ export class ProfessorProvider {
   rateDownloadMaterial() {
     return this.http.post(this.APIAUTHURL + 'getRateDownload',{}, {observe: 'response'});
   }
+
+  rateLesson() {
+    const idUser = JSON.parse(localStorage.getItem('selectedUser'))['mykey'];
+    let headers = new HttpHeaders(
+      {
+        'Content-Type' : 'application/json'
+      });
+    return this.http.get(this.APIAUTHURL + 'getRateLesson/'+idUser, {headers})
+      .pipe(map(res => res['response']));
+  }
 }

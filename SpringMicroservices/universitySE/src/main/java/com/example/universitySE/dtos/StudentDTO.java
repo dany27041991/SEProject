@@ -11,7 +11,7 @@ import java.util.Date;
 public class StudentDTO {
 
     @Getter @Setter
-    private long id;
+    private int id;
 
     @Getter @Setter
     private String username;
@@ -32,7 +32,7 @@ public class StudentDTO {
     private Date dateOfBirth;
 
     @Getter @Setter
-    private long badgeNumber;
+    private int badgeNumber;
 
     @Getter @Setter
     private int studyCourse;

@@ -12,7 +12,7 @@ public interface SecretaryServiceInterface {
     // ---------------------- SAVE METHODS
 
     void savePerson(PersonDTO personDTO) throws PersonException;
-    long savePersonRet(PersonDTO personDTO) throws PersonException;
+    int savePersonRet(PersonDTO personDTO) throws PersonException;
 
     void saveSecretary(SecretaryDTO secretaryDTO) throws SecretaryException;
 
@@ -27,7 +27,7 @@ public interface SecretaryServiceInterface {
     void saveClassroom(ClassroomDTO classroomDTO) throws ClassroomException;
 
     void saveActivity(ActivityDTO activityDTO) throws ActivityException;
-    long saveActivityRet(ActivityDTO activityDTO) throws ActivityException;
+    int saveActivityRet(ActivityDTO activityDTO) throws ActivityException;
 
     void saveExam(ExamDTO examDTO) throws ExamException, ActivityException;
 
@@ -43,49 +43,49 @@ public interface SecretaryServiceInterface {
 
     // ------------------------- RETURN MODEL METHODS
 
-    FacultyModel getFaculty(long id) throws FacultyException;
+    FacultyModel getFaculty(int id) throws FacultyException;
 
-    PersonTypeModel getPersonType(long id) throws PersonTypeException;
+    PersonTypeModel getPersonType(int id) throws PersonTypeException;
 
-    ActivityTypeModel getActivityType(long id) throws ActivityTypeException;
+    ActivityTypeModel getActivityType(int id) throws ActivityTypeException;
 
-    StateModel getState(long id) throws StateException;
+    StateModel getState(int id) throws StateException;
 
-    SupportMaterialModel getSupportMaterial(long id) throws SupportMaterialException;
+    SupportMaterialModel getSupportMaterial(int id) throws SupportMaterialException;
 
-    ActivityModel getActivity(long id) throws ActivityException;
+    ActivityModel getActivity(int id) throws ActivityException;
 
-    PersonModel getPerson(long id) throws PersonException;
+    PersonModel getPerson(int id) throws PersonException;
 
-    ProfessorModel getProfessor(long id) throws ProfessorException;
+    ProfessorModel getProfessor(int id) throws ProfessorException;
 
-    ClassroomModel getClassroom(long id) throws ClassroomException;
+    ClassroomModel getClassroom(int id) throws ClassroomException;
 
-    ReportModel getReporting(long id) throws ReportingException;
+    ReportModel getReporting(int id) throws ReportingException;
 
-    SecretaryRetModel getSecretary(long id) throws SecretaryException, FacultyException;
+    SecretaryRetModel getSecretary(int id) throws SecretaryException, FacultyException;
 
-    StudyCourseModel getStudyCourse(long id) throws StudyCourseException, FacultyException;
+    StudyCourseModel getStudyCourse(int id) throws StudyCourseException, FacultyException;
 
-    SubjectCalendarModel getSubject(long id) throws SubjectException;
+    SubjectCalendarModel getSubject(int id) throws SubjectException;
 
-    ProfessorCalendarModel getProfessorCalendar(long id) throws ProfessorException;
+    ProfessorCalendarModel getProfessorCalendar(int id) throws ProfessorException;
 
-    ActivityTypeCalendarModel getActivityTypeCalendar(long id) throws ActivityTypeException;
+    ActivityTypeCalendarModel getActivityTypeCalendar(int id) throws ActivityTypeException;
 
-    ActivityCalendarModel getActivityCalendar(long id) throws ActivityException, ActivityTypeException;
+    ActivityCalendarModel getActivityCalendar(int id) throws ActivityException, ActivityTypeException;
 
-    CarryoutActivityRetModel getCarryoutActivity(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+    CarryoutActivityRetModel getCarryoutActivity(int id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
             StudyCourseException, FacultyException, SubjectException, ProfessorException;
 
-    CarryoutActivityModel getCarryoutActivityModel(long id) throws CarryoutActivityException;
+    CarryoutActivityModel getCarryoutActivityModel(int id) throws CarryoutActivityException;
 
-    CarryoutActivityCalendarModel getCarryoutActivityCalendar(long id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
+    CarryoutActivityCalendarModel getCarryoutActivityCalendar(int id) throws CarryoutActivityException, ActivityTypeException, ActivityException, ClassroomException,
             StudyCourseException, FacultyException, SubjectException, ProfessorException;
 
     // ------------------------- RETURN LIST METHODS
 
-    List<StudyCourse> getStudyCourses(long faculty) throws StudyCourseException;
+    List<StudyCourse> getStudyCourses(int faculty) throws StudyCourseException;
 
     List<Subject> getSubjects(int study_course) throws SubjectException;
 

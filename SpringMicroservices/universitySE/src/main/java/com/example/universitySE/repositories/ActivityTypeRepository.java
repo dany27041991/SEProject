@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ActivityTypeRepository extends JpaRepository<ActivityType, Integer> {
 
-    Optional<ActivityType> findActivityTypeById(long id);
+    Optional<ActivityType> findActivityTypeById(int id);
 
     List<ActivityType> findAll();
 }
