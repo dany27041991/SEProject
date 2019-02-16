@@ -116,4 +116,27 @@ public interface SecretaryServiceInterface {
 
     List<CarryoutActivityCalendarModel> getTodayCarryoutActivitiesCalendar() throws CarryoutActivityException, ProfessorException, ActivityTypeException, FacultyException,
             ClassroomException, SubjectException, StudyCourseException, ActivityException;
+
+
+
+
+
+    StudentModel getStudent(int id) throws StudentException;
+
+    List<Activity> getNotificationActivitiesSubject(int subject);
+
+    List<Activity> getNotificationActivitiesStudyCourse(int studycourse);
+
+    List<Reporting> getNotificationReportingsProfessor(int professor);
+
+    CarryoutActivityCalendarModel getNotificationCarryoutActivitySubject(int subject) throws CarryoutActivityException, ActivityException, ProfessorException,
+            ActivityTypeException, FacultyException, ClassroomException, SubjectException, StudyCourseException;
+
+    CarryoutActivityCalendarModel getNotificationCarryoutActivityStudyCourse(int studycourse) throws CarryoutActivityException, ActivityException, ProfessorException,
+            ActivityTypeException, FacultyException, ClassroomException, SubjectException, StudyCourseException;
+
+    ReportingRetModel getNotificationReportingProfessor(int professor) throws ReportingException, ProfessorException, FacultyException, ClassroomException, SecretaryException,
+            StateException, SupportMaterialException;
+
+
 }

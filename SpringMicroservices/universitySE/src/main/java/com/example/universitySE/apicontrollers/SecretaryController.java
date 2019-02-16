@@ -922,4 +922,64 @@ public class SecretaryController {
         }
     }
 
+
+
+
+
+
+    @RequestMapping(value = "/notificationcarryoutactivitysubject/{subject}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getNotificationCarryoutActivitySubject(@PathVariable(name = "subject") int subject) {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getNotificationCarryoutActivitySubject(subject)));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/notificationcarryoutactivitystudycourse/{studycourse}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getNotificationCarryoutActivityStudyCourse(@PathVariable(name = "studycourse") int studycourse) {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getNotificationCarryoutActivityStudyCourse(studycourse)));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/notificationreportingprofessor/{professor}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getNotificationReportingProfessor(@PathVariable(name = "professor") int professor) {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getNotificationReportingProfessor(professor)));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/professordetails/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getProfessorDetails(@PathVariable(name = "id") int id) {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getProfessor(id)));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
+    @RequestMapping(value = "/studentdetails/{id}", method = RequestMethod.GET)
+    public ResponseEntity<JSONResponseBody> getStudentDetails(@PathVariable(name = "id") int id) {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(new JSONResponseBody(HttpStatus.OK.value(), secretaryServiceInterface.getStudent(id)));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JSONResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));
+        }
+    }
+
 }

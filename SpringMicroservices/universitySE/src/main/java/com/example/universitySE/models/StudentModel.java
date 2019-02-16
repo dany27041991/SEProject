@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor @NoArgsConstructor
 public class StudentModel {
 
@@ -34,6 +36,17 @@ public class StudentModel {
 
     @Getter @Setter
     private java.util.Date enrollmentyear;
+
+    public StudentModel(int id, String firstname, String lastname, Date birthdate, int badgenumber, int studycourse,
+                        Date enrollmentyear) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+        this.badgenumber = badgenumber;
+        this.studycourse = studycourse;
+        this.enrollmentyear = enrollmentyear;
+    }
 
 
 }

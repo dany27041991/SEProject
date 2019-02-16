@@ -1030,6 +1030,149 @@ public class SecretaryService implements SecretaryServiceInterface, Container {
         }
     }
 
+
+
+
+
+
+
+    @Override
+    public StudentModel getStudent(int id) throws StudentException {
+        Optional<Student> student = studentRepository.findStudentById(id);
+        if (student.isPresent()) {
+
+            log.info("student found");
+            Student studentReturned = student.get();
+            StudentModel studentModel = new StudentModel(studentReturned.getId(), studentReturned.getFirstName(), studentReturned.getLastName(), studentReturned.getDateOfBirth(),
+                    studentReturned.getBadgeNumber(), studentReturned.getStudyCourse(), studentReturned.getEnrollmentYear());
+            return studentModel;
+        }
+        else {
+
+            log.info("student not found");
+            throw new StudentException("student not found");
+        }
+    }
+
+    @Override
+    public List<Activity> getNotificationActivitiesSubject(int subject) {
+        List<Activity> activities = activityRepository.findActivitiesBySubject(subject);
+        return activities;
+    }
+
+    @Override
+    public List<Activity> getNotificationActivitiesStudyCourse(int studycourse) {
+        List<Activity> activities = activityRepository.findActivitiesByStudyCourse(studycourse);
+        return activities;
+    }
+
+    @Override
+    public List<Reporting> getNotificationReportingsProfessor(int professor) {
+        List<Reporting> reportings = reportingRepository.findReportingsByIdProf(professor);
+        return reportings;
+    }
+
+    @Override
+    public CarryoutActivityCalendarModel getNotificationCarryoutActivitySubject(int subject) throws CarryoutActivityException, ActivityException, ProfessorException, ActivityTypeException, FacultyException, ClassroomException, SubjectException, StudyCourseException {
+        List<Activity> activities = getNotificationActivitiesSubject(subject);
+        return modelNotificationCarryoutActivity(activities);
+    }
+
+    @Override
+    public CarryoutActivityCalendarModel getNotificationCarryoutActivityStudyCourse(int studycourse) throws CarryoutActivityException, ActivityException, ProfessorException, ActivityTypeException, FacultyException, ClassroomException, SubjectException, StudyCourseException {
+        List<Activity> activities = getNotificationActivitiesStudyCourse(studycourse);
+        return modelNotificationCarryoutActivity(activities);
+    }
+
+    @Override
+    public ReportingRetModel getNotificationReportingProfessor(int professor) throws ReportingException, ProfessorException, FacultyException, ClassroomException, SecretaryException, StateException, SupportMaterialException {
+        List<Reporting> reportings = getNotificationReportingsProfessor(professor);
+        List<ReportingRetModel> reportingRetModels = getReportingsIterator();
+        List<ReportingRetModel> reportingRetModelsNotification = new ArrayList<>();
+        ReportingRetModel reportingRetModel;
+
+        if (reportingRetModels.isEmpty()) {
+            log.info("reportings not found");
+        }
+        else if (reportings.isEmpty()) {
+            log.info("reportings for professor not found");
+        }
+        int j = 0;
+        int i = 0;
+        while (i < reportingRetModels.size() && j < reportings.size()) {
+            if (reportings.get(j).getIdProf() == reportingRetModels.get(i).getProfessor().getId()) {
+                log.info("reporting match with professor");
+                reportingRetModelsNotification.add(reportingRetModels.get(i));
+                j++;
+                i++;
+            } else {
+                log.info("reporting not match with professor");
+                i++;
+            }
+        }
+
+        if (reportingRetModelsNotification.size() < 1) {
+            throw new ReportingException("reporting not found");
+        }
+
+        reportingRetModel = reportingRetModelsNotification.get(reportingRetModelsNotification.size()-1);
+        return reportingRetModel;
+    }
+
+    private CarryoutActivityCalendarModel modelNotificationCarryoutActivity(List<Activity> activities) throws CarryoutActivityException, ProfessorException, ActivityTypeException,
+            FacultyException, ClassroomException, SubjectException, StudyCourseException, ActivityException {
+
+        List<CarryoutActivityCalendarModel> carryoutActivityCalendarModels = getCarryoutActivitiesCalendar();
+        List<CarryoutActivityCalendarModel> carryoutActivityCalendarModelsNotification = new ArrayList<>();
+        CarryoutActivityCalendarModel carryoutActivityCalendarModel = new CarryoutActivityCalendarModel();
+
+        if (carryoutActivityCalendarModels.isEmpty()) {
+            log.info("carryout activities not found");
+        }
+        else if (activities.isEmpty()) {
+            log.info("activities not found");
+        }
+        int j = 0;
+        int i = 0;
+        while (i < carryoutActivityCalendarModels.size() && j < activities.size()) {
+            if (activities.get(j).getId() == carryoutActivityCalendarModels.get(i).getActivityCalendarModel().getId()) {
+                log.info("activity has a classroom");
+                carryoutActivityCalendarModelsNotification.add(carryoutActivityCalendarModels.get(i));
+                j++;
+                i = 0;
+            } else {
+                log.info("activity without classroom");
+                i++;
+            }
+        }
+
+        if (carryoutActivityCalendarModelsNotification.size() < 1) {
+            throw new CarryoutActivityException("activity not found");
+        }
+        if (carryoutActivityCalendarModelsNotification.size() == 2) {
+            if (carryoutActivityCalendarModelsNotification.get(0).getActivityCalendarModel().getId() < carryoutActivityCalendarModelsNotification.get(1).getActivityCalendarModel().getId()) {
+                carryoutActivityCalendarModel = carryoutActivityCalendarModelsNotification.get(1);
+            }
+            else {
+                carryoutActivityCalendarModel = carryoutActivityCalendarModelsNotification.get(0);
+            }
+        }
+        else if (carryoutActivityCalendarModelsNotification.size() > 2) {
+            for (int k = 0; k < carryoutActivityCalendarModelsNotification.size(); k++) {
+                if (carryoutActivityCalendarModelsNotification.get(k).getActivityCalendarModel().getId() < carryoutActivityCalendarModelsNotification.get(k + 1).getActivityCalendarModel().getId()) {
+                    carryoutActivityCalendarModel = carryoutActivityCalendarModelsNotification.get(k + 1);
+                } else {
+                    carryoutActivityCalendarModel = carryoutActivityCalendarModelsNotification.get(k);
+                }
+            }
+        }
+        else {
+            carryoutActivityCalendarModel = carryoutActivityCalendarModelsNotification.get(0);
+        }
+
+        return carryoutActivityCalendarModel;
+    }
+
     // DESIGN PATTERN ITERATOR PER REPORTINGS
 
     @Override

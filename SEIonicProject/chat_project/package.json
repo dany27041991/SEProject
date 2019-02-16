@@ -34,8 +34,8 @@
     "angularfire2": "^5.1.1",
     "cordova-android": "7.1.4",
     "cordova-browser": "5.0.4",
-    "cordova-ios": "4.5.5",
     "cordova-plugin-badge": "^0.8.8",
+    "cordova-plugin-cocoapod-support": "1.6.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-firebase": "^2.0.5",
     "cordova-plugin-geolocation": "^4.0.1",
@@ -80,11 +80,11 @@
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "AIzaSyDqsCMRUMOmScuwp1BjQlmIGtrETRCuUhE",
         "API_KEY_FOR_IOS": "AIzaSyDqsCMRUMOmScuwp1BjQlmIGtrETRCuUhE"
-      }
+      },
+      "cordova-plugin-cocoapod-support": {}
     },
     "platforms": [
       "android",
-      "ios",
       "browser"
     ]
   }

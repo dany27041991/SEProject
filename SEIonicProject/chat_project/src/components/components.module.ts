@@ -15,6 +15,9 @@ import { LastChannelMessageComponent } from './last-channel-message/last-channel
 import { LastUploadMaterialComponent } from './last-upload-material/last-upload-material';
 import { LastRateProfessorComponent } from './last-rate-professor/last-rate-professor';
 import { RatelessonComponent } from './ratelesson/ratelesson';
+import { LastChangeClassroomProfessorComponent } from './last-change-classroom-professor/last-change-classroom-professor';
+import { LastChangeClassroomStudentComponent } from './last-change-classroom-student/last-change-classroom-student';
+import { LastReportingProfessorComponent } from './last-reporting-professor/last-reporting-professor';
 
 @NgModule({
     declarations: [
@@ -30,7 +33,10 @@ import { RatelessonComponent } from './ratelesson/ratelesson';
       LastChannelMessageComponent,
     LastUploadMaterialComponent,
     LastRateProfessorComponent,
-    RatelessonComponent
+    RatelessonComponent,
+    LastChangeClassroomProfessorComponent,
+    LastChangeClassroomStudentComponent,
+    LastReportingProfessorComponent
     ],
     imports: [
       IonicModule,
@@ -49,7 +55,10 @@ import { RatelessonComponent } from './ratelesson/ratelesson';
       LastChannelMessageComponent,
     LastUploadMaterialComponent,
     LastRateProfessorComponent,
-    RatelessonComponent
+    RatelessonComponent,
+    LastChangeClassroomProfessorComponent,
+    LastChangeClassroomStudentComponent,
+    LastReportingProfessorComponent
     ]
 })
 

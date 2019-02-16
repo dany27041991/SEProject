@@ -19,7 +19,7 @@ export class ModalRatePage {
   private id: number;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private student: StudentProvider, private toast: ToastController) {
-    this.id = navParams.get('i');
+    this.id = this.navParams.get('i');
   }
 
   ionViewDidLoad() {}

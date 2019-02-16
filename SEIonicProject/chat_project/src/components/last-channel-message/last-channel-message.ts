@@ -1,10 +1,7 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component} from '@angular/core';
 import {ChannelMessage} from "../../models/channel/channel-message.interface";
 import {ChatService} from "../../providers/chat/chat.service";
 import {Observable} from "rxjs/Rx";
-import {Channel} from "../../models/channel/channel.interface";
-import {NavController} from "ionic-angular";
-import {Profile} from "../../models/profile/profile.interface";
 
 /**
  * Generated class for the LastChannelMessageComponent component.

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProfessorProvider} from "../../providers/professor/professor.service";
 import {Observable} from "rxjs/Rx";
 import {DownloadInterface} from "../../models/download/download.interface";
@@ -30,7 +30,7 @@ export class DownloadStudentComponent implements OnInit{
     this.navCtrl.push('ModalRatePage', {i});
   }
 
-  private onSearch(value: string) {
+  onSearch(value: string) {
     this.downloadMaterialCopy = JSON.parse(localStorage.getItem('AllDownload'));
     if (value) {
       this.flag = true;

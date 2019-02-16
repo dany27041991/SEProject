@@ -1,0 +1,19 @@
+<ion-list>
+  <ion-item-divider style="color: rebeccapurple" id="lastmessages">Last Change Classroom</ion-item-divider>
+
+  <ion-item>
+    <ion-item *ngIf="lastCalendarProf" text-wrap no-lines>
+      <ion-avatar item-left>
+        <img src="assets/imgs/classroom.png" style="width: 55px; height: 50px">
+      </ion-avatar>
+      <h2 style="font-weight: bold">{{lastCalendarProf.activityCalendarModel.name.name}} of {{lastCalendarProf.subjectCalendarModel.name}},
+      {{lastCalendarProf.studyCourseModel.name}}
+      ({{lastCalendarProf.studyCourseModel.faculty.name}})</h2>
+      <p>
+        <br>Classroom {{lastCalendarProf.classroomModel.name}}
+        <br>Start {{lastCalendarProf.start | date:'short'}}
+        <br>End {{lastCalendarProf.end | date:'short'}}
+      </p>
+    </ion-item>
+  </ion-item>
+</ion-list>

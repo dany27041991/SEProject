@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { GoogleMaps, GoogleMap, CameraPosition, LatLng, GoogleMapsEvent, Marker, MarkerOptions } from '@ionic-native/google-maps'
+import { GoogleMaps, GoogleMap, LatLng, GoogleMapsEvent, Marker, MarkerOptions } from '@ionic-native/google-maps'
 
 /**
  * Generated class for the MapClassroomPage page.
@@ -32,7 +32,7 @@ export class MapClassroomPage {
     this.longitude = this.navParams.get('longitude');
     this.name = this.navParams.get('name');
   }
-  
+
   ngAfterViewInit() {
     let loc: LatLng = new LatLng(this.latitude, this.longitude);
     this.initMap();

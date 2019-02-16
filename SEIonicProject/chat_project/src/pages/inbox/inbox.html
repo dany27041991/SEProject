@@ -10,6 +10,12 @@
 </ion-header>
 <ion-content padding>
 
+  <last-change-classroom-professor [lastCalendarProf]="lastCalendarProf" *ngIf="type_person === 2 && lastCalendarProf"></last-change-classroom-professor>
+
+  <last-change-classroom-student [lastCalendarStud]="lastCalendarStud" *ngIf="type_person === 3 && lastCalendarStud"></last-change-classroom-student>
+
+  <last-reporting-professor [lastReporting]="lastReporting" *ngIf="type_person === 2 && lastReporting"></last-reporting-professor>
+
   <app-ratelesson [lastRateLesson]="lastRateLesson" *ngIf="type_person===2 && lastRateLesson"></app-ratelesson>
 
   <app-last-rate-professor [lastRateRes]="lastRateRes" *ngIf="type_person===2 && lastRateRes"></app-last-rate-professor>

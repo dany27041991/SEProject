@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {RatingTeachingMaterial} from "../../models/rating/RatingTeachingMaterial";
 import {RatelessonInterface} from "../../models/ratelesson/ratelesson.interface";
 
 /**

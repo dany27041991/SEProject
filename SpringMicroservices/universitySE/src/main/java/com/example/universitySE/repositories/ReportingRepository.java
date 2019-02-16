@@ -25,4 +25,6 @@ public interface ReportingRepository extends JpaRepository<Reporting, Integer> {
     @Query(value = "UPDATE Reporting SET note_sec = ?2, state = ?3, id_secretary = ?4 WHERE id = ?1", nativeQuery = true)
     void updateReporting(int id, String note_sec, int state, int id_secretary);
 
+    List<Reporting> findReportingsByIdProf(int professor);
+
 }

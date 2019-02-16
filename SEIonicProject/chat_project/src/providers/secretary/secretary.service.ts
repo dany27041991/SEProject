@@ -18,4 +18,24 @@ export class SecretaryProvider {
       .pipe(map(res => res['response']));
   }
 
+  getLastClassroomChangeBySubject(subject: number) {
+    return this.http.get(this.APIAUTHURL + 'notificationcarryoutactivitysubject/' + subject, {observe: 'response'});
+  }
+
+  getLastClassroomChangeByStudycourse(studycourse: number) {
+    return this.http.get(this.APIAUTHURL + 'notificationcarryoutactivitystudycourse/' + studycourse, {observe: 'response'});
+  }
+
+  getLastReportingByProfessor(professor: number) {
+    return this.http.get(this.APIAUTHURL + 'notificationreportingprofessor/' + professor, {observe: 'response'});
+  }
+
+  getProfessorDetails(id: number) {
+    return this.http.get(this.APIAUTHURL + 'professordetails/' + id, {observe: 'response'});
+  }
+
+  getStudentDetails(id: number) {
+    return this.http.get(this.APIAUTHURL + 'studentdetails/'+ id, {observe: 'response'});
+  }
+
 }

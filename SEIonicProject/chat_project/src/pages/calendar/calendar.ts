@@ -18,9 +18,6 @@ import {RatinglessonPage} from "../ratinglesson/ratinglesson";
   templateUrl: 'calendar.html',
 })
 export class CalendarPage implements OnInit{
-  ngOnInit(): void {
-    this.type = JSON.parse(localStorage.getItem('selectedUser'))['person_type'];
-  }
 
   public calendarActivities: Observable<CalendarInterface[]>;
   public activities: CalendarInterface[];
@@ -32,6 +29,10 @@ export class CalendarPage implements OnInit{
       this.activities = data;
       localStorage.setItem('CalendarActivities', JSON.stringify(data));
     });
+  }
+
+  ngOnInit(): void {
+    this.type = JSON.parse(localStorage.getItem('selectedUser'))['person_type'];
   }
 
   openMap(latitude: number, longitude: number, name: string) {

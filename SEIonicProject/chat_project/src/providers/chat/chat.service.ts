@@ -8,7 +8,6 @@ import { Observable} from "rxjs/Rx";
 import { Profile } from "../../models/profile/profile.interface";
 import {HttpClient} from "@angular/common/http";
 import {Response} from "../../models/response/response.interface";
-import {database} from "firebase";
 import {map} from "rxjs/internal/operators";
 import {SubjectInterface} from "../../models/subject/subject.interface";
 

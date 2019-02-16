@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
-import {SecretaryProvider} from "../../providers/secretary/secretary.service";
 import {DataProvider} from "../../providers/data/data.service";
 
 /**
