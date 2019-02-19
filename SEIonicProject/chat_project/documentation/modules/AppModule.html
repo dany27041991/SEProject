@@ -295,6 +295,7 @@ import {HttpClientModule} from &quot;@angular/common/http&quot;;
 import {ProfessorProvider} from &quot;../providers/professor/professor.service&quot;;
 import {SecretaryProvider} from &quot;../providers/secretary/secretary.service&quot;;
 import {StudentProvider} from &quot;../providers/student/student.service&quot;;
+import {GoogleMaps} from &quot;@ionic-native/google-maps&quot;;
 
 @NgModule({
   declarations: [
@@ -325,7 +326,8 @@ import {StudentProvider} from &quot;../providers/student/student.service&quot;;
     HttpClientModule,
     ProfessorProvider,
     SecretaryProvider,
-    StudentProvider
+    StudentProvider,
+    GoogleMaps
   ]
 })
 export class AppModule {}

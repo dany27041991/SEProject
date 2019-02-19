@@ -80,10 +80,17 @@ import {StudentComponent} from &#x27;./components/student/student.component&#x27
 import {ProfessorComponent} from &#x27;./components/professor/professor.component&#x27;;
 import {SecretaryComponent} from &#x27;./components/secretary/secretary.component&#x27;;
 import {ProfreportingComponent} from &#x27;./components/profreporting/profreporting.component&#x27;;
+import {InsertstudycourseComponent} from &#x27;./components/insertstudycourse/insertstudycourse.component&#x27;;
+import {InsertsubjectComponent} from &#x27;./components/insertsubject/insertsubject.component&#x27;;
+import {InsertclassroomComponent} from &#x27;./components/insertclassroom/insertclassroom.component&#x27;;
+import {InsertuserComponent} from &#x27;./components/insertuser/insertuser.component&#x27;;
+import {InsertactivityComponent} from &#x27;./components/insertactivity/insertactivity.component&#x27;;
 import {SuccessfulComponent} from &#x27;./messages/successful/successful.component&#x27;;
-import {AccessToLocalStorage} from &#x27;./utils/AccessToLocalStorage&#x27;;
 import {UploadComponent} from &#x27;./components/upload/upload.component&#x27;;
 import {ViewreportingComponent} from &#x27;./components/viewreporting/viewreporting.component&#x27;;
+import {SecretaryreportingComponent} from &#x27;./components/secretaryreporting/secretaryreporting.component&#x27;;
+import {DetailsecretaryreportingComponent} from &#x27;./components/detailsecretaryreporting/detailsecretaryreporting.component&#x27;;
+import {DidacticcalendarComponent} from &#x27;./components/didacticcalendar/didacticcalendar.component&#x27;;
 
 const routes: Routes &#x3D; [
   {
@@ -117,6 +124,31 @@ const routes: Routes &#x3D; [
     canActivate: [RouteGuardService]
   },
   {
+    path: &#x27;user/secretary/:id/insertstudycourse&#x27;,
+    component: InsertstudycourseComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: &#x27;user/secretary/:id/insertsubject&#x27;,
+    component: InsertsubjectComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: &#x27;user/secretary/:id/insertclassroom&#x27;,
+    component: InsertclassroomComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: &#x27;user/secretary/:id/insertuser&#x27;,
+    component: InsertuserComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: &#x27;user/secretary/:id/insertactivity&#x27;,
+    component: InsertactivityComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
     path: &#x27;user/successful&#x27;,
     component: SuccessfulComponent,
     canActivate: [RouteGuardService]
@@ -130,8 +162,23 @@ const routes: Routes &#x3D; [
     path: &#x27;user/professor/:id/viewreporting&#x27;,
     component: ViewreportingComponent,
     canActivate: [RouteGuardService]
+  },
+  {
+    path: &#x27;user/secretary/:id/reportings&#x27;,
+    component: SecretaryreportingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: &#x27;user/secretary/:id/detailreportings&#x27;,
+    component: DetailsecretaryreportingComponent,
+    canActivate: [RouteGuardService]
+  },
+  {
+    path: &#x27;user/secretary/:id/didacticcalendar&#x27;,
+    component: DidacticcalendarComponent,
+    canActivate: [RouteGuardService]
   }
-]
+];
 
 @NgModule({
   imports: [

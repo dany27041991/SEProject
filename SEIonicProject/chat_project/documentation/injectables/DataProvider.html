@@ -74,6 +74,10 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#APIAUTHURL">APIAUTHURL</a>
+                            </li>
+                            <li>
                                 <a href="#profileList">profileList</a>
                             </li>
                             <li>
@@ -91,6 +95,9 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                <a href="#addRateLesson">addRateLesson</a>
+                            </li>
                             <li>
                                 <a href="#deleteUserLogoutOnline">deleteUserLogoutOnline</a>
                             </li>
@@ -131,12 +138,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(database: AngularFireDatabase)</code>
+<code>constructor(database: AngularFireDatabase, http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/providers/data/data.service.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/providers/data/data.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -165,6 +172,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -179,6 +198,99 @@
         <h3 id="methods">
             Methods
         </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addRateLesson"></a>
+                        <span class="name">
+                            <b>
+                            addRateLesson
+                            </b>
+                            <a href="#addRateLesson"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>addRateLesson(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, rate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, idStudent: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/providers/data/data.service.ts:77</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>id</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>rate</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                                <tr>
+                                                        <td>idStudent</td>
+                                                        <td>
+                                                                    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
@@ -201,7 +313,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/providers/data/data.service.ts:67</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/providers/data/data.service.ts:69</a></div>
                             </td>
                         </tr>
 
@@ -270,7 +382,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/providers/data/data.service.ts:71</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/providers/data/data.service.ts:73</a></div>
                             </td>
                         </tr>
 
@@ -308,7 +420,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/providers/data/data.service.ts:63</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/providers/data/data.service.ts:65</a></div>
                             </td>
                         </tr>
 
@@ -346,7 +458,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/providers/data/data.service.ts:37</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/providers/data/data.service.ts:39</a></div>
                             </td>
                         </tr>
 
@@ -417,7 +529,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/providers/data/data.service.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/providers/data/data.service.ts:17</a></div>
                             </td>
                         </tr>
 
@@ -498,7 +610,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/providers/data/data.service.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/providers/data/data.service.ts:44</a></div>
                             </td>
                         </tr>
 
@@ -567,7 +679,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/providers/data/data.service.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/providers/data/data.service.ts:50</a></div>
                             </td>
                         </tr>
 
@@ -625,6 +737,39 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="APIAUTHURL"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            APIAUTHURL</b>
+                            <a href="#APIAUTHURL"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;http://localhost:8090/user/faculty/&#x27;</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/providers/data/data.service.ts:10</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="profileList"></a>
                         <span class="name">
                             <b>
@@ -641,7 +786,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/providers/data/data.service.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/providers/data/data.service.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -668,7 +813,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/providers/data/data.service.ts:9</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/providers/data/data.service.ts:11</a></div>
                             </td>
                         </tr>
 
@@ -685,14 +830,16 @@
 import { AngularFireDatabase, AngularFireObject, AngularFireList } from &#x27;@angular/fire/database&#x27;;
 import { User, database } from &#x27;firebase/app&#x27;;
 import { Profile } from &#x27;../../models/profile/profile.interface&#x27;;
+import {HttpClient} from &quot;@angular/common/http&quot;;
 
 @Injectable()
 export class DataProvider {
 
+  private APIAUTHURL &#x3D; &#x27;http://localhost:8090/user/faculty/&#x27;;
   profileObject: AngularFireObject&lt;Profile&gt;;
   profileList: AngularFireList&lt;Profile&gt;;
 
-  constructor(private database: AngularFireDatabase) {
+  constructor(private database: AngularFireDatabase, private http: HttpClient) {
   }
 
   async saveProfile(user: User, profile: Profile) {
@@ -754,6 +901,16 @@ export class DataProvider {
   getAllUsers() {
     return &lt;any&gt;this.database.list(&#x60;profiles&#x60;).valueChanges();
   }
+
+  addRateLesson(id: number, rate: number, idStudent: number) {
+    return this.http.post(this.APIAUTHURL + &#x27;addratinglesson&#x27;,
+      {
+        id: id,
+        rate: rate,
+        id_student: idStudent
+      }, {observe: &#x27;response&#x27;});
+  }
+
   /*getAuthenticatedUserProfile() {
     return this.auth.getAuthenticatedUser().pipe(map(user &#x3D;&gt; user.uid), mergeMap(authId &#x3D;&gt; this.database.object(&#x60;profiles/${authId}&#x60;).snapshotChanges()))
   }*/

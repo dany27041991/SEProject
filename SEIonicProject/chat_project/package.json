@@ -32,8 +32,8 @@
     "angular2-auto-scroll": "^1.0.13",
     "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.1.1",
-    "cordova-android": "7.1.4",
     "cordova-browser": "5.0.4",
+    "cordova-plugin-background-mode": "^0.7.2",
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-cocoapod-support": "1.6.0",
     "cordova-plugin-device": "^2.0.2",
@@ -81,10 +81,10 @@
         "API_KEY_FOR_ANDROID": "AIzaSyDqsCMRUMOmScuwp1BjQlmIGtrETRCuUhE",
         "API_KEY_FOR_IOS": "AIzaSyDqsCMRUMOmScuwp1BjQlmIGtrETRCuUhE"
       },
-      "cordova-plugin-cocoapod-support": {}
+      "cordova-plugin-cocoapod-support": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
-      "android",
       "browser"
     ]
   }

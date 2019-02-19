@@ -86,6 +86,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Optional</span>
                                 <a href="#id">id</a>
                             </li>
                             <li>
@@ -121,7 +122,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/app/models/Subject.ts:7</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/models/Subject.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -141,6 +142,7 @@
                         <a name="id"></a>
                         <span class="name">
                             <b>
+                                <span class="modifier">Optional</span>
                             id</b>
                             <a href="#id"><span class="icon ion-ios-link"></span></a>
                         </span>
@@ -154,7 +156,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="4" class="link-to-prism">src/app/models/Subject.ts:4</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/app/models/Subject.ts:5</a></div>
                             </td>
                         </tr>
 
@@ -181,7 +183,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="5" class="link-to-prism">src/app/models/Subject.ts:5</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/models/Subject.ts:6</a></div>
                             </td>
                         </tr>
 
@@ -208,7 +210,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/models/Subject.ts:6</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/app/models/Subject.ts:7</a></div>
                             </td>
                         </tr>
 
@@ -235,7 +237,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/app/models/Subject.ts:7</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/app/models/Subject.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -257,10 +259,12 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {SubjectInterface} from &#x27;../interfaces/SubjectInterface&#x27;;
 
 export class Subject implements SubjectInterface {
-  id: number;
+
+  id?: number;
   name: string;
   study_course: number;
   year_course: number;
+
   constructor() { }
 }
 </code></pre>

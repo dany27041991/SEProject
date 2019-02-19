@@ -95,6 +95,9 @@
                             <li>
                                 <a href="#rateDownloadMaterial">rateDownloadMaterial</a>
                             </li>
+                            <li>
+                                <a href="#rateLesson">rateLesson</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -237,6 +240,44 @@
                 </tr>
             </tbody>
         </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="rateLesson"></a>
+                        <span class="name">
+                            <b>
+                            rateLesson
+                            </b>
+                            <a href="#rateLesson"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>rateLesson()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/providers/professor/professor.service.ts:26</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 </section>
 
             <section>
@@ -306,6 +347,16 @@ export class ProfessorProvider {
 
   rateDownloadMaterial() {
     return this.http.post(this.APIAUTHURL + &#x27;getRateDownload&#x27;,{}, {observe: &#x27;response&#x27;});
+  }
+
+  rateLesson() {
+    const idUser &#x3D; JSON.parse(localStorage.getItem(&#x27;selectedUser&#x27;))[&#x27;mykey&#x27;];
+    let headers &#x3D; new HttpHeaders(
+      {
+        &#x27;Content-Type&#x27; : &#x27;application/json&#x27;
+      });
+    return this.http.get(this.APIAUTHURL + &#x27;getRateLesson/&#x27;+idUser, {headers})
+      .pipe(map(res &#x3D;&gt; res[&#x27;response&#x27;]));
   }
 }
 </code></pre>

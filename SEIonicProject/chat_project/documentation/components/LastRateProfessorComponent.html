@@ -193,7 +193,7 @@ Components.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input, OnInit} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, Input} from &#x27;@angular/core&#x27;;
 import {RatingTeachingMaterial} from &quot;../../models/rating/RatingTeachingMaterial&quot;;
 
 /**
@@ -219,10 +219,10 @@ export class LastRateProfessorComponent{
     </div>
 
     <div class="tab-pane fade " id="c-templateData">
-        <pre class="line-numbers"><code class="language-html">&lt;ion-list&gt;
+        <pre class="line-numbers"><code class="language-html">&lt;ion-list no-lines&#x3D;&quot;&quot;&gt;
   &lt;ion-item-divider style&#x3D;&quot;color: red&quot; id&#x3D;&quot;lastmessages&quot;&gt;Last Rate Material&lt;/ion-item-divider&gt;
 
-  &lt;ion-item&gt;
+  &lt;ion-item no-lines&#x3D;&quot;&quot;&gt;
     &lt;ion-item *ngIf&#x3D;&quot;lastRateRes&quot; text-wrap no-lines&gt;
         &lt;ion-avatar item-left&gt;
           &lt;img src&#x3D;&quot;assets/imgs/download.png&quot; alt&#x3D;&quot;Avatar&quot;&gt;
@@ -262,8 +262,8 @@ export class LastRateProfessorComponent{
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><ion-list>  <ion-item-divider style="color: red" id="lastmessages">Last Rate Material</ion-item-divider>  <ion-item>    <ion-item *ngIf="lastRateRes" text-wrap no-lines>        <ion-avatar item-left>          <img src="assets/imgs/download.png" alt="Avatar">        </ion-avatar>        <h2 id="profile">{{ lastRateRes.subject.name }}</h2>        <a target="_blank" href="{{ lastRateRes.teachingMaterial.media }}">{{ lastRateRes.teachingMaterial.media }}</a>        <p>Rate download: {{ lastRateRes.feedback_student }}</p>    </ion-item>  </ion-item></ion-list></div>'
-    var COMPONENTS = [{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
+        var COMPONENT_TEMPLATE = '<div><ion-list no-lines="">  <ion-item-divider style="color: red" id="lastmessages">Last Rate Material</ion-item-divider>  <ion-item no-lines="">    <ion-item *ngIf="lastRateRes" text-wrap no-lines>        <ion-avatar item-left>          <img src="assets/imgs/download.png" alt="Avatar">        </ion-avatar>        <h2 id="profile">{{ lastRateRes.subject.name }}</h2>        <a target="_blank" href="{{ lastRateRes.teachingMaterial.media }}">{{ lastRateRes.teachingMaterial.media }}</a>        <p>Rate download: {{ lastRateRes.feedback_student }}</p>    </ion-item>  </ion-item></ion-list></div>'
+    var COMPONENTS = [{'name': 'CalendarPage', 'selector': 'page-calendar'},{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChangeClassroomProfessorComponent', 'selector': 'last-change-classroom-professor'},{'name': 'LastChangeClassroomStudentComponent', 'selector': 'last-change-classroom-student'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastReportingProfessorComponent', 'selector': 'last-reporting-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MapClassroomPage', 'selector': 'page-map-classroom'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RatelessonComponent', 'selector': 'app-ratelesson'},{'name': 'RatinglessonPage', 'selector': 'page-ratinglesson'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'LastRateProfessorComponent'};
 </script>

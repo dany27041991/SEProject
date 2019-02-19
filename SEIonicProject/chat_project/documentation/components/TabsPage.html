@@ -129,6 +129,9 @@
                                 <a href="#tab4Root">tab4Root</a>
                             </li>
                             <li>
+                                <a href="#tab5Root">tab5Root</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#type">type</a>
                             </li>
@@ -156,7 +159,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/pages/tabs/tabs.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/pages/tabs/tabs.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -286,6 +289,33 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
+                        <a name="tab5Root"></a>
+                        <span class="name">
+                            <b>
+                            tab5Root</b>
+                            <a href="#tab5Root"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/pages/tabs/tabs.ts:15</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
                         <a name="type"></a>
                         <span class="name">
                             <b>
@@ -308,7 +338,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/pages/tabs/tabs.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/pages/tabs/tabs.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -335,6 +365,7 @@ export class TabsPage {
   tab2Root: string;
   tab3Root: string;
   tab4Root: string;
+  tab5Root: string;
   public type: number &#x3D; 0;
 
   constructor() {
@@ -342,6 +373,7 @@ export class TabsPage {
     this.tab2Root &#x3D; &#x27;ChannelsPage&#x27;;
     this.tab3Root &#x3D; &#x27;ProfilePage&#x27;;
     this.tab4Root &#x3D; &#x27;DownloadPage&#x27;;
+    this.tab5Root &#x3D; &#x27;CalendarPage&#x27;;
     setTimeout(()&#x3D;&gt;{
       this.type &#x3D; JSON.parse(localStorage.getItem(&#x27;selectedUser&#x27;))[&#x27;person_type&#x27;];
     }, 2000);
@@ -361,12 +393,14 @@ export class TabsPage {
   &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab1Root&quot; tabTitle&#x3D;&quot;Inbox&quot; tabIcon&#x3D;&quot;chatbubbles&quot;&gt;&lt;/ion-tab&gt;
   &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab2Root&quot; tabTitle&#x3D;&quot;Channels&quot; tabIcon&#x3D;&quot;people&quot;&gt;&lt;/ion-tab&gt;
   &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab4Root&quot; tabTitle&#x3D;&quot;Download&quot; tabIcon&#x3D;&quot;cloud-download&quot;&gt;&lt;/ion-tab&gt;
+  &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab5Root&quot; tabTitle&#x3D;&quot;Calendar&quot; tabIcon&#x3D;&quot;calendar&quot;&gt;&lt;/ion-tab&gt;
   &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab3Root&quot; tabTitle&#x3D;&quot;Profile&quot; tabIcon&#x3D;&quot;contact&quot;&gt;&lt;/ion-tab&gt;
 &lt;/ion-tabs&gt;
 
 &lt;ion-tabs *ngIf &#x3D; &quot;type&#x3D;&#x3D;&#x3D;2&quot;&gt;
   &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab1Root&quot; tabTitle&#x3D;&quot;Inbox&quot; tabIcon&#x3D;&quot;chatbubbles&quot;&gt;&lt;/ion-tab&gt;
   &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab2Root&quot; tabTitle&#x3D;&quot;Channels&quot; tabIcon&#x3D;&quot;people&quot;&gt;&lt;/ion-tab&gt;
+  &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab5Root&quot; tabTitle&#x3D;&quot;Calendar&quot; tabIcon&#x3D;&quot;calendar&quot;&gt;&lt;/ion-tab&gt;
   &lt;ion-tab [tabsHideOnSubPages]&#x3D;&quot;true&quot; [root]&#x3D;&quot;tab3Root&quot; tabTitle&#x3D;&quot;Profile&quot; tabIcon&#x3D;&quot;contact&quot;&gt;&lt;/ion-tab&gt;
 &lt;/ion-tabs&gt;
 </code></pre>
@@ -398,8 +432,8 @@ export class TabsPage {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><ion-tabs *ngIf = "type===1">  <ion-tab [show]="false" [tabsHideOnSubPages]="false" [root]="tab1Root" tabTitle="Inbox" tabIcon="chatbubbles"></ion-tab>  <ion-tab [show]="false" [tabsHideOnSubPages]="false" [root]="tab2Root" tabTitle="Channels" tabIcon="people"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab3Root" tabTitle="Profile" tabIcon="contact"></ion-tab></ion-tabs><ion-tabs *ngIf = "type===3">  <ion-tab [tabsHideOnSubPages]="true" [root]="tab1Root" tabTitle="Inbox" tabIcon="chatbubbles"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab2Root" tabTitle="Channels" tabIcon="people"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab4Root" tabTitle="Download" tabIcon="cloud-download"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab3Root" tabTitle="Profile" tabIcon="contact"></ion-tab></ion-tabs><ion-tabs *ngIf = "type===2">  <ion-tab [tabsHideOnSubPages]="true" [root]="tab1Root" tabTitle="Inbox" tabIcon="chatbubbles"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab2Root" tabTitle="Channels" tabIcon="people"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab3Root" tabTitle="Profile" tabIcon="contact"></ion-tab></ion-tabs></div>'
-    var COMPONENTS = [{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
+        var COMPONENT_TEMPLATE = '<div><ion-tabs *ngIf = "type===1">  <ion-tab [show]="false" [tabsHideOnSubPages]="false" [root]="tab1Root" tabTitle="Inbox" tabIcon="chatbubbles"></ion-tab>  <ion-tab [show]="false" [tabsHideOnSubPages]="false" [root]="tab2Root" tabTitle="Channels" tabIcon="people"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab3Root" tabTitle="Profile" tabIcon="contact"></ion-tab></ion-tabs><ion-tabs *ngIf = "type===3">  <ion-tab [tabsHideOnSubPages]="true" [root]="tab1Root" tabTitle="Inbox" tabIcon="chatbubbles"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab2Root" tabTitle="Channels" tabIcon="people"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab4Root" tabTitle="Download" tabIcon="cloud-download"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab5Root" tabTitle="Calendar" tabIcon="calendar"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab3Root" tabTitle="Profile" tabIcon="contact"></ion-tab></ion-tabs><ion-tabs *ngIf = "type===2">  <ion-tab [tabsHideOnSubPages]="true" [root]="tab1Root" tabTitle="Inbox" tabIcon="chatbubbles"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab2Root" tabTitle="Channels" tabIcon="people"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab5Root" tabTitle="Calendar" tabIcon="calendar"></ion-tab>  <ion-tab [tabsHideOnSubPages]="true" [root]="tab3Root" tabTitle="Profile" tabIcon="contact"></ion-tab></ion-tabs></div>'
+    var COMPONENTS = [{'name': 'CalendarPage', 'selector': 'page-calendar'},{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChangeClassroomProfessorComponent', 'selector': 'last-change-classroom-professor'},{'name': 'LastChangeClassroomStudentComponent', 'selector': 'last-change-classroom-student'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastReportingProfessorComponent', 'selector': 'last-reporting-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MapClassroomPage', 'selector': 'page-map-classroom'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RatelessonComponent', 'selector': 'app-ratelesson'},{'name': 'RatinglessonPage', 'selector': 'page-ratinglesson'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'TabsPage'};
 </script>

@@ -152,7 +152,7 @@ Components.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/components/last-channel-message/last-channel-message.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/components/last-channel-message/last-channel-message.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -220,7 +220,7 @@ Components.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/components/last-channel-message/last-channel-message.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/components/last-channel-message/last-channel-message.ts:18</a></div>
                             </td>
                         </tr>
 
@@ -233,13 +233,10 @@ Components.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component} from &#x27;@angular/core&#x27;;
 import {ChannelMessage} from &quot;../../models/channel/channel-message.interface&quot;;
 import {ChatService} from &quot;../../providers/chat/chat.service&quot;;
 import {Observable} from &quot;rxjs/Rx&quot;;
-import {Channel} from &quot;../../models/channel/channel.interface&quot;;
-import {NavController} from &quot;ionic-angular&quot;;
-import {Profile} from &quot;../../models/profile/profile.interface&quot;;
 
 /**
  * Generated class for the LastChannelMessageComponent component.
@@ -309,7 +306,7 @@ export class LastChannelMessageComponent {
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><ion-list>  <ion-item-divider style="font-weight: bold; color: orange" id="lastmessages">Last Channels Messages</ion-item-divider>  <ion-item *ngFor="let message of lastChannelMessages | async">    <ion-item text-wrap="" no-lines>      <h2 style="font-weight: bold; color: darkblue">{{ message.subject }}</h2>      <ion-avatar item-left>        <img src="assets/imgs/profile-placeholder.png" alt="Avatar">      </ion-avatar>      <h2 id="profile">{{ message.name }} {{ message.lastname }}:</h2>      <p>{{ message.content }}</p>    </ion-item>  </ion-item></ion-list></div>'
-    var COMPONENTS = [{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
+    var COMPONENTS = [{'name': 'CalendarPage', 'selector': 'page-calendar'},{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChangeClassroomProfessorComponent', 'selector': 'last-change-classroom-professor'},{'name': 'LastChangeClassroomStudentComponent', 'selector': 'last-change-classroom-student'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastReportingProfessorComponent', 'selector': 'last-reporting-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MapClassroomPage', 'selector': 'page-map-classroom'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RatelessonComponent', 'selector': 'app-ratelesson'},{'name': 'RatinglessonPage', 'selector': 'page-ratinglesson'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'LastChannelMessageComponent'};
 </script>

@@ -152,7 +152,6 @@
                                 <a href="#ngOnInit">ngOnInit</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
                                 <a href="#onSearch">onSearch</a>
                             </li>
                         </ul>
@@ -351,7 +350,6 @@
                         <a name="onSearch"></a>
                         <span class="name">
                             <b>
-                                <span class="modifier">Private</span>
                             onSearch
                             </b>
                             <a href="#onSearch"><span class="icon ion-ios-link"></span></a>
@@ -360,8 +358,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>onSearch(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+<code>onSearch(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                     </td>
                 </tr>
 
@@ -510,7 +507,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, EventEmitter, Input, OnInit, Output} from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit} from &#x27;@angular/core&#x27;;
 import {ProfessorProvider} from &quot;../../providers/professor/professor.service&quot;;
 import {Observable} from &quot;rxjs/Rx&quot;;
 import {DownloadInterface} from &quot;../../models/download/download.interface&quot;;
@@ -542,7 +539,7 @@ export class DownloadStudentComponent implements OnInit{
     this.navCtrl.push(&#x27;ModalRatePage&#x27;, {i});
   }
 
-  private onSearch(value: string) {
+  onSearch(value: string) {
     this.downloadMaterialCopy &#x3D; JSON.parse(localStorage.getItem(&#x27;AllDownload&#x27;));
     if (value) {
       this.flag &#x3D; true;
@@ -630,7 +627,7 @@ export class DownloadStudentComponent implements OnInit{
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
         var COMPONENT_TEMPLATE = '<div><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><ion-item no-lines="" text-wrap="" text-center="">  <h1 style="font-weight: bold; color: red">FILTER BY SUBJECT OR NAMEFILE:</h1>  <input class="input-res" type="text" placeholder="Insert your text here!" (keyup)="onSearch($event.target.value)"/></ion-item><ion-item text-wrap="" text-center="">  <h1 style="font-weight: bold; color: orange">LIST OF DOWNLOAD MATERIAL FOR SUBJECT:</h1></ion-item><div *ngIf="flag; else nofilter">  <ion-list text-wrap *ngFor="let download of downloadMaterialCopy">    <ion-item no-lines="" style="font-weight: bold" text-wrap>{{download.id}} {{download.subject.name}}:      <a [href]="download[\'media\']" target="blank">{{download[\'media\']}}</a>    </ion-item>    <ion-item text-center="" align-items-center="">      <button class="addrating" ion-button class="button-small-ios button-ios-primary" (click)="addRating(download.id)">Add Your Rate</button>    </ion-item>  </ion-list></div><ng-template #nofilter>  <ion-list text-wrap *ngFor="let download of downloadMaterial | async">    <ion-item no-lines="" style="font-weight: bold" text-wrap>{{download.id}} {{download.subject.name}}:      <a [href]="download[\'media\']" target="blank">{{download[\'media\']}}</a>    </ion-item>    <ion-item text-center="" align-items-center="">      <button class="addrating" ion-button class="button-small-ios button-ios-primary" (click)="addRating(download.id)">Add Your Rate</button>    </ion-item>  </ion-list></ng-template></div>'
-    var COMPONENTS = [{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
+    var COMPONENTS = [{'name': 'CalendarPage', 'selector': 'page-calendar'},{'name': 'ChannelChatPage', 'selector': 'page-channel-chat'},{'name': 'ChannelsPage', 'selector': 'page-channels'},{'name': 'DownloadPage', 'selector': 'page-download'},{'name': 'DownloadStudentComponent', 'selector': 'app-download-student'},{'name': 'EditProfileFormComponent', 'selector': 'app-edit-profile-form'},{'name': 'EditProfilePage', 'selector': 'page-edit-profile'},{'name': 'InboxPage', 'selector': 'page-inbox'},{'name': 'LastChangeClassroomProfessorComponent', 'selector': 'last-change-classroom-professor'},{'name': 'LastChangeClassroomStudentComponent', 'selector': 'last-change-classroom-student'},{'name': 'LastChannelMessageComponent', 'selector': 'app-last-channel-message'},{'name': 'LastMessageListComponent', 'selector': 'app-last-message-list'},{'name': 'LastRateProfessorComponent', 'selector': 'app-last-rate-professor'},{'name': 'LastReportingProfessorComponent', 'selector': 'last-reporting-professor'},{'name': 'LastUploadMaterialComponent', 'selector': 'app-last-upload-material'},{'name': 'LoginFormComponent', 'selector': 'app-login-form'},{'name': 'LoginPage', 'selector': 'page-login'},{'name': 'MapClassroomPage', 'selector': 'page-map-classroom'},{'name': 'MessagePage', 'selector': 'page-message'},{'name': 'ModalRatePage', 'selector': 'page-modal-rate'},{'name': 'MyApp', 'selector': ''},{'name': 'OnlineUsersComponent', 'selector': 'app-online-users'},{'name': 'ProfilePage', 'selector': 'page-profile'},{'name': 'ProfileSearchComponent', 'selector': 'app-profile-search'},{'name': 'ProfileViewComponent', 'selector': 'app-profile-view'},{'name': 'RatelessonComponent', 'selector': 'app-ratelesson'},{'name': 'RatinglessonPage', 'selector': 'page-ratinglesson'},{'name': 'RegisterFormComponent', 'selector': 'app-register-form'},{'name': 'RegisterPage', 'selector': 'page-register'},{'name': 'SearchUserPage', 'selector': 'page-search-user'},{'name': 'SendMessageBoxComponent', 'selector': 'app-send-message-box'},{'name': 'TabsPage', 'selector': 'page-tabs'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'DownloadStudentComponent'};
 </script>

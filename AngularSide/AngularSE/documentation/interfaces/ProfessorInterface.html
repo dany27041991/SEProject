@@ -83,6 +83,9 @@
                                         <a href="#biography">biography</a>
                                 </li>
                                 <li>
+                                        <a href="#date_of_birth">date_of_birth</a>
+                                </li>
+                                <li>
                                         <a href="#firstname">firstname</a>
                                 </li>
                                 <li>
@@ -92,6 +95,7 @@
                                         <a href="#lastname">lastname</a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#person_type">person_type</a>
                                 </li>
                                 <li>
@@ -102,6 +106,7 @@
                                         <a href="#subject">subject</a>
                                 </li>
                                 <li>
+                                            <span class="modifier">Optional</span>
                                         <a href="#username">username</a>
                                 </li>
                             </ul>
@@ -143,6 +148,35 @@
                                             <i>Optional</i>
                                         </td>
                                     </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="date_of_birth"></a>
+                                        <span class="name"><b>date_of_birth</b><a href="#date_of_birth"><span class="icon ion-ios-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>date_of_birth:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                                        </td>
+                                    </tr>
+
 
 
 
@@ -259,6 +293,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -351,6 +390,11 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
 
 
 
@@ -365,14 +409,16 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Subject} from &#x27;../models/Subject&#x27;;
 
 export interface ProfessorInterface {
+
   id: number;
-  username: string;
-  person_type: number;
+  username?: string;
+  person_type?: number;
   firstname: string;
   lastname: string;
   biography?: string;
   receptiontime: string;
   subject?: Subject;
+  date_of_birth: Date;
 }
 </code></pre>
     </div>
