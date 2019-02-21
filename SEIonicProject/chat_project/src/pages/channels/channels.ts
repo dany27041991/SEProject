@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ChatService } from '../../providers/chat/chat.service';
 import { Channel } from '../../models/channel/channel.interface';
@@ -10,13 +10,16 @@ import {Response} from "../../models/response/response.interface";
   selector: 'page-channels',
   templateUrl: 'channels.html',
 })
-export class ChannelsPage {
+export class ChannelsPage implements OnInit{
 
   channelList: AngularFireList<Channel[]>;
   subject: Array<number>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController, private chat: ChatService) {
-    chat.addAllSubjectChannel();
+  }
+
+  ngOnInit(): void {
+    this.chat.addAllSubjectChannel();
   }
 
   showAddChannelDialog() {

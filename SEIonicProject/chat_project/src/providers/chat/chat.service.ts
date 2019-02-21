@@ -29,7 +29,8 @@ export class ChatService {
     }
 
     addAllSubjectChannel() {
-      this.database.list(`channel-names`).valueChanges().subscribe((channelExisting: Array<SubjectInterface>) => {
+      this.database.object('channel-names').remove();
+      this.database.list('channel-names').valueChanges().subscribe((channelExisting: Array<SubjectInterface>) => {
         localStorage.setItem('ExistingChannel', JSON.stringify(channelExisting));
       });
       setTimeout(() => {
